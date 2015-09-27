@@ -1,0 +1,23 @@
+{
+  "name": "react-d3-tooltip",
+  "version": "0.0.0",
+  "description": "react-d3 tooltip implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:react-d3/react-d3-tooltip.git"
+  },
+  "keywords": [
+    "react-d3",
+    "tooltip"
+  ],
+  "author": "chilijung <chilijung@gmail.com> (http://lijung.com/)",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/react-d3/react-d3-tooltip/issues"
+  },
+  "homepage": "https://github.com/react-d3/react-d3-tooltip"
+}
