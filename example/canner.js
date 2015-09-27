@@ -5,14 +5,19 @@ var tooltip_charts = [
   "line",
   "line_multi",
   "scatter",
-  "area_stack"
+  "area_stack",
+  "bar"
 ]
 
-var prod_tooltip_link = tooltip_charts.map(function(d) {
+var prefix_tooltip_charts = tooltip_charts.map(function(d) {
+  return 'tooltip_' + d;
+})
+
+var prod_tooltip_link = prefix_tooltip_charts.map(function(d) {
   return 'min/' + d + '.min'
 })
 
-var dev_tooltip_link = tooltip_charts.map(function(d) {
+var dev_tooltip_link = prefix_tooltip_charts.map(function(d) {
   return 'origin/' + d
 })
 
@@ -20,7 +25,7 @@ module.exports = [{
   "layout": "./gallery.hbs",
   "filename": "./example/tooltip_gallery.html",
   "data": {
-    "charts": tooltip_charts,
+    "charts": prefix_tooltip_charts,
     "link": ENV? prod_tooltip_link: dev_tooltip_link,
     "mode": ENV
   }
@@ -54,6 +59,38 @@ module.exports = [{
   "data": {
     "title": "Tooltip Area Stack Chart",
     "type": "tooltip_area_stack",
+    "prefix": ENV? 'min': 'origin'
+  }
+},{
+  "layout": "./charts.hbs",
+  "filename": "./example/tooltip_bar.html",
+  "data": {
+    "title": "Tooltip Bar Chart",
+    "type": "tooltip_bar",
+    "prefix": ENV? 'min': 'origin'
+  }
+},{
+  "layout": "./charts.hbs",
+  "filename": "./example/tooltip_bar_group.html",
+  "data": {
+    "title": "Tooltip Bar Group",
+    "type": "tooltip_bar_group",
+    "prefix": ENV? 'min': 'origin'
+  }
+},{
+  "layout": "./charts.hbs",
+  "filename": "./example/tooltip_bar_stack.html",
+  "data": {
+    "title": "Tooltip Bar Stack",
+    "type": "tooltip_bar_stack",
+    "prefix": ENV? 'min': 'origin'
+  }
+},{
+  "layout": "./charts.hbs",
+  "filename": "./example/tooltip_pie.html",
+  "data": {
+    "title": "Tooltip Pie",
+    "type": "tooltip_pie",
     "prefix": ENV? 'min': 'origin'
   }
 }]

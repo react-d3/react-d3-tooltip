@@ -71,6 +71,8 @@ export default class Voronoi extends Component {
       .entries(d3.merge(dataset.map((d) => { return d.data; })))
       .map((d) => { return d.values; })
 
+    console.log(nestData)
+
     var voronoiPolygon = this._setGeomVoronoi().call(this, nestData)
 
     if(focus)

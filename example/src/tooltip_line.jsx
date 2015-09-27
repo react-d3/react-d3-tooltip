@@ -6,7 +6,7 @@ import {
 } from 'react';
 
 import {
-  TooltipLine as TooltipLine
+  LineTooltip as LineTooltip
 } from '../../index';
 
 (() => {
@@ -17,7 +17,7 @@ import {
     height = 500,
     margins = {top: 20, right: 50, bottom: 30, left: 50},
     id = "test-chart",
-    title = "Simple Line Chart With Brush",
+    title = "Simple Line Chart With Tooltip",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     showLegend = true,
@@ -54,7 +54,7 @@ import {
     yLabel = "Age";
 
   React.render(
-    <TooltipLine
+    <LineTooltip
       title= {title}
       data= {generalChartData}
       width= {width}

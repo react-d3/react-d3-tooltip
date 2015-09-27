@@ -6,19 +6,19 @@ import {
 } from 'react';
 
 import {
-  LineTooltip as LineTooltip
+  BrushScatter as BrushScatter
 } from '../../index';
 
 (() => {
-
   var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
+
   const parseDate = d3.time.format("%Y%m%d").parse;
 
   const width = 960,
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Multipule Line Chart With Tooltip",
+    title = "Scatter Plot With Brush",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
@@ -31,18 +31,20 @@ import {
       {
         field: 'New York',
         name: 'New York Temp',
-        color: '#ff7f0e'
+        color: '#ff7f0e',
+        symbol: "cross"
       },
       {
         field: 'San Francisco',
         name: 'San Francisco Temp',
-        color: '#2ca02c'
+        color: '#2ca02c',
+        symbol: 'diamond'
       },
       {
         field: 'Austin',
         name: 'Austin Temp',
         color: '#7777ff',
-        area: true
+        symbol: 'triangle-down'
       }
     ],
     interpolate = 'monotone',
@@ -67,8 +69,9 @@ import {
     yAxisClassName = 'y-axis',
     yLabel = "Temperature (ºF)";
 
+
   React.render(
-    <LineTooltip
+    <BrushScatter
       title= {title}
       data= {generalChartData}
       width= {width}
@@ -90,8 +93,6 @@ import {
       showLegend= {showLegend}
       showXAxis= {showXAxis}
       showYAxis= {showYAxis}
-      showXGrid= {true}
-      showYGrid= {true}
       showTooltip= {true}
       brushHeight= {brushHeight}
       yBrushRange= {yBrushRange}
@@ -112,6 +113,6 @@ import {
       yLabel = {yLabel}
       yLabelPosition = 'left'
     />
-  , document.getElementById('data_tooltip_line_multi')
+  , document.getElementById('data_brush_scatter')
   )
 })()

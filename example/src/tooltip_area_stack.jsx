@@ -6,7 +6,7 @@ import {
 } from 'react';
 
 import {
-  BrushAreaStack as BrushAreaStack
+  AreaStackTooltip as AreaStackTooltip
 } from '../../index';
 
 (() => {
@@ -19,7 +19,7 @@ import {
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Stack Area Chart",
+    title = "Stack Area Chart With Tooltip",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
@@ -71,7 +71,7 @@ import {
     yLabel = "Browser rate (%)";
 
   React.render(
-    <BrushAreaStack
+    <AreaStackTooltip
       title= {title}
       data= {generalChartData}
       width= {width}
@@ -114,6 +114,6 @@ import {
       yLabel = {yLabel}
       yLabelPosition = 'left'
     />
-  , document.getElementById('data_brush_area_stack')
+  , document.getElementById('data_tooltip_area_stack')
   )
 })()

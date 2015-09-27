@@ -6,69 +6,52 @@ import {
 } from 'react';
 
 import {
-  LineTooltip as LineTooltip
+  BarTooltip
 } from '../../index';
 
 (() => {
-
-  var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
-  const parseDate = d3.time.format("%Y%m%d").parse;
+  var generalChartData = require('dsv?delimiter=\t!./data/letter.tsv')
 
   const width = 960,
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Multipule Line Chart With Tooltip",
+    title = "Bar Chart With Tooltip",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
     showLegend = true,
     showXAxis = true,
     showYAxis = true,
-    brushHeight = 200,
-    yBrushRange = [brushHeight - margins.top - margins.bottom, 0],
     chartSeries = [
       {
-        field: 'New York',
-        name: 'New York Temp',
-        color: '#ff7f0e'
-      },
-      {
-        field: 'San Francisco',
-        name: 'San Francisco Temp',
-        color: '#2ca02c'
-      },
-      {
-        field: 'Austin',
-        name: 'Austin Temp',
-        color: '#7777ff',
-        area: true
+        field: 'frequency',
+        name: 'Frequency'
       }
     ],
-    interpolate = 'monotone',
     x = (d) => {
-      return parseDate(d.date);
+      return d.letter;
     },
     xOrient = 'bottom',
     xTickOrient = 'bottom',
-    xDomain = d3.extent(generalChartData, (d) => { return x(d); }),
-    xRange = [0, width - margins.left - margins.right],
-    xScale = 'time',
+    xDomain = generalChartData.map((d) => { return d.letter; }),
+    xRangeRoundBands = {interval: [0, width - margins.left - margins.right], padding: .1},
+    xScale = 'ordinal',
     xAxisClassName = 'x-axis',
-    xLabel = "Date",
+    xLabel = "Letter",
     y = (d) => {
-      return d;
+      return +d;
     },
     yOrient = 'left',
-    yTickOrient = 'left',
-    yDomain = [20, 100],
+    yTickOrient = 'right',
     yRange = [height - margins.top - margins.bottom, 0],
+    yDomain = [0, +d3.max(generalChartData, (d) => { return d.frequency; })],
     yScale = 'linear',
     yAxisClassName = 'y-axis',
-    yLabel = "Temperature (ºF)";
+    yLabel = "Frequency";
 
   React.render(
-    <LineTooltip
+    <BarTooltip
       title= {title}
       data= {generalChartData}
       width= {width}
@@ -82,22 +65,19 @@ import {
       xAxisClassName= {xAxisClassName}
       legendClassName= {legendClassName}
       legendPosition= 'right'
+      categoricalColors= {d3.scale.category10()}
       chartSeries = {chartSeries}
-      interpolate = {interpolate}
       lineClass = 'test-line-class'
+      barClass= 'test-bar-class'
       scatterClass = 'test-line-dot-class'
       showScatter = {true}
       showLegend= {showLegend}
       showXAxis= {showXAxis}
       showYAxis= {showYAxis}
-      showXGrid= {true}
-      showYGrid= {true}
       showTooltip= {true}
-      brushHeight= {brushHeight}
-      yBrushRange= {yBrushRange}
       x= {x}
       xDomain= {xDomain}
-      xRange= {xRange}
+      xRangeRoundBands= {xRangeRoundBands}
       xScale= {xScale}
       xOrient= {xOrient}
       xTickOrient= {xTickOrient}
@@ -105,13 +85,14 @@ import {
       xLabelPosition = 'bottom'
       y= {y}
       yOrient= {yOrient}
-      yDomain= {yDomain}
       yRange= {yRange}
+      yDomain= {yDomain}
       yScale= {yScale}
       yTickOrient= {yTickOrient}
+      yTicks= {[10, "%"]}
       yLabel = {yLabel}
       yLabelPosition = 'left'
     />
-  , document.getElementById('data_tooltip_line_multi')
+  , document.getElementById('data_tooltip_bar')
   )
 })()

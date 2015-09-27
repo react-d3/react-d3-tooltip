@@ -6,19 +6,20 @@ import {
 } from 'react';
 
 import {
-  LineTooltip as LineTooltip
+  BrushAreaStack as BrushAreaStack
 } from '../../index';
 
 (() => {
+  var generalChartData = require('dsv?delimiter=\t!./data/browser.tsv')
 
-  var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
-  const parseDate = d3.time.format("%Y%m%d").parse;
+  const parseDate = d3.time.format("%y-%b-%d").parse;
+  const formatPercent = d3.format(".0%");
 
   const width = 960,
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Multipule Line Chart With Tooltip",
+    title = "Stack Area Chart",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
@@ -27,25 +28,28 @@ import {
     showYAxis = true,
     brushHeight = 200,
     yBrushRange = [brushHeight - margins.top - margins.bottom, 0],
+    interpolate = 'basis',
     chartSeries = [
       {
-        field: 'New York',
-        name: 'New York Temp',
-        color: '#ff7f0e'
+        field: 'IE',
+        name: 'IE browser'
       },
       {
-        field: 'San Francisco',
-        name: 'San Francisco Temp',
-        color: '#2ca02c'
+        field: 'Chrome',
+        name: 'Chrome browser'
       },
       {
-        field: 'Austin',
-        name: 'Austin Temp',
-        color: '#7777ff',
-        area: true
+        field: 'Firefox'
+      },
+      {
+        field: 'Safari',
+        name: 'Safari browser'
+      },
+      {
+        field: 'Opera',
+        name: 'Opera browser'
       }
     ],
-    interpolate = 'monotone',
     x = (d) => {
       return parseDate(d.date);
     },
@@ -57,18 +61,17 @@ import {
     xAxisClassName = 'x-axis',
     xLabel = "Date",
     y = (d) => {
-      return d;
+      return d / 100;
     },
     yOrient = 'left',
-    yTickOrient = 'left',
-    yDomain = [20, 100],
+    yTickOrient = 'right',
     yRange = [height - margins.top - margins.bottom, 0],
     yScale = 'linear',
     yAxisClassName = 'y-axis',
-    yLabel = "Temperature (ºF)";
+    yLabel = "Browser rate (%)";
 
   React.render(
-    <LineTooltip
+    <BrushAreaStack
       title= {title}
       data= {generalChartData}
       width= {width}
@@ -82,6 +85,7 @@ import {
       xAxisClassName= {xAxisClassName}
       legendClassName= {legendClassName}
       legendPosition= 'right'
+      categoricalColors= {d3.scale.category10()}
       chartSeries = {chartSeries}
       interpolate = {interpolate}
       lineClass = 'test-line-class'
@@ -90,8 +94,6 @@ import {
       showLegend= {showLegend}
       showXAxis= {showXAxis}
       showYAxis= {showYAxis}
-      showXGrid= {true}
-      showYGrid= {true}
       showTooltip= {true}
       brushHeight= {brushHeight}
       yBrushRange= {yBrushRange}
@@ -105,13 +107,13 @@ import {
       xLabelPosition = 'bottom'
       y= {y}
       yOrient= {yOrient}
-      yDomain= {yDomain}
       yRange= {yRange}
       yScale= {yScale}
       yTickOrient= {yTickOrient}
+      yTickFormat= {formatPercent}
       yLabel = {yLabel}
       yLabelPosition = 'left'
     />
-  , document.getElementById('data_tooltip_line_multi')
+  , document.getElementById('data_brush_area_stack')
   )
 })()

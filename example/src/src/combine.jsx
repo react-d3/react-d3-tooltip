@@ -6,8 +6,8 @@ import {
 } from 'react';
 
 import {
-  LineTooltip as LineTooltip
-} from '../../index';
+  default as Combine
+} from './combine_component';
 
 (() => {
 
@@ -15,10 +15,10 @@ import {
   const parseDate = d3.time.format("%Y%m%d").parse;
 
   const width = 960,
-    height = 500,
+    height = 300,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Multipule Line Chart With Tooltip",
+    title = "Multipule Line Chart With Brush",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
@@ -67,8 +67,9 @@ import {
     yAxisClassName = 'y-axis',
     yLabel = "Temperature (ºF)";
 
+
   React.render(
-    <LineTooltip
+    <Combine
       title= {title}
       data= {generalChartData}
       width= {width}
@@ -93,6 +94,7 @@ import {
       showXGrid= {true}
       showYGrid= {true}
       showTooltip= {true}
+      showBrush= {true}
       brushHeight= {brushHeight}
       yBrushRange= {yBrushRange}
       x= {x}
@@ -112,6 +114,6 @@ import {
       yLabel = {yLabel}
       yLabelPosition = 'left'
     />
-  , document.getElementById('data_tooltip_line_multi')
+  , document.getElementById('data_combine')
   )
 })()

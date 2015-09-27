@@ -11,7 +11,7 @@ import {
 } from 'react-d3-core';
 
 import {
-  LineChart as LineChart,
+  AreaStackChart as AreaStackChart,
   series as series
 } from 'react-d3-basics';
 
@@ -27,13 +27,13 @@ import {
   default as Voronoi
 } from './utils/voronoi';
 
-export default class LineTooltip extends TooltipSet {
+export default class AreaStackTooltip extends TooltipSet {
 
   render() {
 
     var chartSeriesData = series(this.props)
 
-    var voronoi = <Voronoi dataset={chartSeriesData} {...this.props} {...this.state} focus={true} onMouseOver= {this.voronoiMouseOver.bind(this)} onMouseOut= {this.voronoiMouseOut.bind(this)}/>
+    var voronoi = <Voronoi dataset={chartSeriesData} {...this.props} {...this.state} stack={true} focus={true} onMouseOver= {this.voronoiMouseOver.bind(this)} onMouseOut= {this.voronoiMouseOut.bind(this)}/>
     var tooltip = <Tooltip {...this.props} {...this.state}/>
 
 
@@ -41,7 +41,7 @@ export default class LineTooltip extends TooltipSet {
       <div>
         {tooltip}
         <Chart {...this.props}>
-          <LineChart {...this.props} {...this.state}/>
+          <AreaStackChart {...this.props} {...this.state}/>
           {voronoi}
         </Chart>
       </div>

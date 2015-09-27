@@ -6,7 +6,7 @@ import {
 } from 'react';
 
 import {
-  LineTooltip as LineTooltip
+  BrushLine as BrushLine
 } from '../../index';
 
 (() => {
@@ -18,7 +18,7 @@ import {
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Multipule Line Chart With Tooltip",
+    title = "Multipule Line Chart With Brush",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
@@ -67,8 +67,21 @@ import {
     yAxisClassName = 'y-axis',
     yLabel = "Temperature (ºF)";
 
+  /*
+  ** Inherit variables:
+  **
+  ** - id
+  ** - x
+  ** - xDomain
+  ** - xRange
+  ** - xScale
+  ** - y
+  ** - yDomain
+  ** - yRange
+  ** - yScale
+  */
   React.render(
-    <LineTooltip
+    <BrushLine
       title= {title}
       data= {generalChartData}
       width= {width}
@@ -112,6 +125,6 @@ import {
       yLabel = {yLabel}
       yLabelPosition = 'left'
     />
-  , document.getElementById('data_tooltip_line_multi')
+  , document.getElementById('data_brush_line_multi')
   )
 })()

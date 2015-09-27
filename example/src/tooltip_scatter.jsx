@@ -6,7 +6,7 @@ import {
 } from 'react';
 
 import {
-  BrushScatter as BrushScatter
+  ScatterTooltip as ScatterTooltip
 } from '../../index';
 
 (() => {
@@ -18,7 +18,7 @@ import {
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Scatter Plot With Brush",
+    title = "Scatter Plot With Tooltip",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
@@ -71,7 +71,7 @@ import {
 
 
   React.render(
-    <BrushScatter
+    <ScatterTooltip
       title= {title}
       data= {generalChartData}
       width= {width}
@@ -113,6 +113,6 @@ import {
       yLabel = {yLabel}
       yLabelPosition = 'left'
     />
-  , document.getElementById('data_brush_scatter')
+  , document.getElementById('data_tooltip_scatter')
   )
 })()

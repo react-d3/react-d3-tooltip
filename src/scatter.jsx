@@ -11,7 +11,7 @@ import {
 } from 'react-d3-core';
 
 import {
-  LineChart as LineChart,
+  ScatterPlot as ScatterPlot,
   series as series
 } from 'react-d3-basics';
 
@@ -27,7 +27,7 @@ import {
   default as Voronoi
 } from './utils/voronoi';
 
-export default class LineTooltip extends TooltipSet {
+export default class ScatterTooltip extends TooltipSet {
 
   render() {
 
@@ -41,7 +41,7 @@ export default class LineTooltip extends TooltipSet {
       <div>
         {tooltip}
         <Chart {...this.props}>
-          <LineChart {...this.props} {...this.state}/>
+          <ScatterPlot {...this.props} {...this.state}/>
           {voronoi}
         </Chart>
       </div>
