@@ -17,23 +17,10 @@ module.exports = [{
   name: 'chartComponent',
   devtool: ENV ? "source-map": '',
   entry: {
-    line: js_root + '/line.jsx',
-    line_multi: js_root + '/line_multi.jsx',
-    scatter: js_root + '/scatter.jsx',
-    area: js_root + '/area.jsx',
-    area_stack: js_root + '/area_stack.jsx',
-    bar: js_root + '/bar.jsx',
-    bar_group: js_root + '/bar_group.jsx',
-    bar_stack: js_root + '/bar_stack.jsx',
-    pie: js_root + '/pie.jsx',
-    donut: js_root + '/donut.jsx',
-    brush_line: js_root + '/brush_line.jsx',
-    brush_line_multi: js_root + '/brush_line_multi.jsx',
-    brush_scatter: js_root + '/brush_scatter.jsx',
-    brush_area_stack: js_root + '/brush_area_stack.jsx',
-    combine: js_root + '/combine.jsx',
-    animate_line: js_root + '/animate_line.jsx',
-    animate_multi: js_root + '/animate_multi.jsx'
+    tooltip_line: js_root + '/tooltip_line.jsx',
+    tooltip_line_multi: js_root + '/tooltip_line_multi.jsx',
+    tooltip_scatter: js_root + '/tooltip_scatter.jsx',
+    tooltip_area_stack: js_root + '/tooltip_area_stack.jsx'
   },
 
   output: {
