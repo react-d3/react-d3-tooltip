@@ -33,3 +33,24 @@ export {BarTooltip as BarTooltip}
 export {BarStackTooltip as BarStackTooltip}
 export {BarGroupTooltip as BarGroupTooltip}
 export {PieTooltip as PieTooltip}
+
+// inherit
+
+import {
+  default as TooltipSet
+} from './src/inherit/index';
+
+export {TooltipSet as TooltipSet}
+
+// utils
+
+import {
+  default as Tooltip
+} from './src/utils/tooltip';
+
+import {
+  default as Voronoi
+} from './src/utils/voronoi';
+
+export {Tooltip as Tooltip}
+export {Voronoi as Voronoi}
