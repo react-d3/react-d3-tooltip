@@ -23,7 +23,7 @@ var dev_tooltip_link = prefix_tooltip_charts.map(function(d) {
 
 module.exports = [{
   "layout": "./gallery.hbs",
-  "filename": "./example/tooltip_gallery.html",
+  "filename": "./example/gallery.html",
   "data": {
     "charts": prefix_tooltip_charts,
     "link": ENV? prod_tooltip_link: dev_tooltip_link,
