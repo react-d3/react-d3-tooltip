@@ -4,7 +4,11 @@
   "description": "react-d3 tooltip implementation",
   "main": "index.jsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "NODE_ENV=0 webpack -w",
+    "site-build": "NODE_ENV=1 webpack && NODE_ENV=1 canner-core build ./example/canner.js",
+    "site": "git subtree push --prefix example origin gh-pages && git push origin master",
+    "dev": "NODE_ENV=0 canner-core build ./example/canner.js && npm run watch"
   },
   "repository": {
     "type": "git",

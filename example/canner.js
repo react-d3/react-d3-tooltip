@@ -27,7 +27,8 @@ module.exports = [{
   "data": {
     "charts": prefix_tooltip_charts,
     "link": ENV? prod_tooltip_link: dev_tooltip_link,
-    "mode": ENV
+    "mode": ENV,
+    "title": "react-d3-tooltip"
   }
 },{
   "layout": "./charts.hbs",
