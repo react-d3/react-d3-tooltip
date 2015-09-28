@@ -6,7 +6,10 @@ var tooltip_charts = [
   "line_multi",
   "scatter",
   "area_stack",
-  "bar"
+  "bar",
+  "bar_stack",
+  "bar_group",
+  "pie"
 ]
 
 var prefix_tooltip_charts = tooltip_charts.map(function(d) {
