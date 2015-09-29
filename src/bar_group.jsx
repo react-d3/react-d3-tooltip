@@ -13,7 +13,7 @@ import {
 import {
   BarGroupChart as BarGroupChart,
   series as series
-} from 'react-d3-basics';
+} from 'react-d3-basic';
 
 import {
   default as TooltipSet

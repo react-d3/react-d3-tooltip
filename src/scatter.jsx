@@ -13,7 +13,7 @@ import {
 import {
   ScatterPlot as ScatterPlot,
   series as series
-} from 'react-d3-basics';
+} from 'react-d3-basic';
 
 import {
   default as TooltipSet

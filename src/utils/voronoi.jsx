@@ -52,7 +52,6 @@ export default class Voronoi extends Component {
 
   _mkVoronoi() {
     const {
-      dataset,
       x,
       y,
       onMouseOver,
@@ -65,13 +64,18 @@ export default class Voronoi extends Component {
     // because d3.geom.voronoi does not handle coincident points (and this data from the government comes pre-rounded to a tenth of a degree), d3.nest is used to collapse coincident points before constructing the Voronoi.
     // see example: http://bl.ocks.org/mbostock/8033015
 
+    if(stack) {
+      const _setStack = this._setStack();
+      var dataset = _setStack(this.props.dataset);
+    }else {
+      var dataset =  this.props.dataset;
+    }
+
     var nestData = d3.nest()
-      .key((d) => { return d.x + "," + d.y; })
+      .key((d) => { return d.x + "," + d.y + "," + d.y0; })
       .rollup((v) => { return v[0]; })
       .entries(d3.merge(dataset.map((d) => { return d.data; })))
       .map((d) => { return d.values; })
-
-    console.log(nestData)
 
     var voronoiPolygon = this._setGeomVoronoi().call(this, nestData)
 
@@ -87,6 +91,11 @@ export default class Voronoi extends Component {
       .datum((d) => { return d.point; })
       .on("mouseover",  (d) => { return focus? onMouseOver(d, focusDom, stack): onMouseOver(d)})
       .on("mouseout", (d) => { return focus? onMouseOut(d, focusDom, stack): onMouseOut(d)})
+  }
+
+  _setStack () {
+    return d3.layout.stack()
+      .values((d) => { return d.data; });
   }
 
   _mkFocus() {
@@ -131,6 +140,8 @@ export default class Voronoi extends Component {
       yScaleSet,
       stack
     } = this.props;
+
+
 
     var voronoi = initVoronoi()
       .x((d) => { return xScaleSet(d.x); })
