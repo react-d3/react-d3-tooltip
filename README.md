@@ -2,6 +2,12 @@
 
 `react-d3` tooltip implementation.
 
+## Install
+
+```
+npm install --save react-d3-tooltip
+```
+
 ## Support Tooltip Component
 
 - Line Chart: export as `LineTooltip`
@@ -11,6 +17,10 @@
 - Bar Stack: export as `BarStackTooltip`
 - Bar Group: export as `BarGroupTooltip`
 - Pie Chart: export as `PieTooltip`
+
+## Gallery
+
+![img](http://www.reactd3.org/img/tooltip/cover.png)
 
 ## License
 
