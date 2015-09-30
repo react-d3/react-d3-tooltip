@@ -1,6 +1,6 @@
 {
   "name": "react-d3-tooltip",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "react-d3 tooltip implementation",
   "main": "index.jsx",
   "scripts": {
