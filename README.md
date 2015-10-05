@@ -1,5 +1,7 @@
 # react-d3-tooltip
 
+[![Dependency Status](https://gemnasium.com/react-d3/react-d3-tooltip.svg)](https://gemnasium.com/react-d3/react-d3-tooltip)
+
 `react-d3` tooltip implementation.
 
 ## Install
