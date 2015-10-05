@@ -6,7 +6,7 @@ import {
   PropTypes,
 } from 'react';
 
-require('../css/voronoi.css');
+require('../../css/voronoi.css');
 
 export default class Voronoi extends Component {
   constructor (props) {

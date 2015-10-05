@@ -1,29 +1,25 @@
 "use strict";
 
-import {
-  default as React,
-  Component,
-} from 'react';
+var React = require('react');
+var LineTooltip = require('../../lib').LineTooltip;
 
-import {
-  LineTooltip as LineTooltip
-} from '../../index';
-
-(() => {
+(function() {
 
   var generalChartData = require('json!./data/user.json');
 
-  const width = 960,
+  var width = 960,
     height = 500,
     margins = {top: 20, right: 50, bottom: 30, left: 50},
     id = "test-chart",
-    title = "Simple Line Chart With Tooltip",
+    title = "Simple Line Chart",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
+    lineClassName = 'test-line-class',
+    scatterClassName = 'test-line-dot-class',
     showLegend = true,
     showXAxis = true,
     showYAxis = true,
-    brushHeight = 200,
+    showScatter = true,
     chartSeries = [
       {
         field: 'age',
@@ -31,7 +27,7 @@ import {
         color: '#ff7f0e'
       }
     ],
-    x = (d) => {
+    x = function(d) {
       return d.index;
     },
     xOrient = 'bottom',
@@ -40,58 +36,56 @@ import {
     xRange = [0, width - margins.left - margins.right],
     xScale = 'linear',
     xAxisClassName = 'x-axis',
+    xLabelPosition = 'bottom',
     xLabel = "Index",
-    y = (d) => {
+    y = function(d) {
       return d;
     },
     yOrient = 'right',
     yTickOrient = 'left',
-    yDomain = d3.extent(generalChartData, (d) => {return d.age;}),
+    yDomain = d3.extent(generalChartData, function(d) {return d.age;}),
     yRange = [height - margins.top - margins.bottom, 0],
-    yBrushRange = [brushHeight - margins.top - margins.bottom, 0],
     yScale = 'linear',
     yAxisClassName = 'y-axis',
-    yLabel = "Age";
+    yLabel = "Age",
+    yLabelPosition = 'right'
 
   React.render(
-    <LineTooltip
-      title= {title}
-      data= {generalChartData}
-      width= {width}
-      height= {height}
-      id= {id}
-      margins= {margins}
-      svgClassName= {svgClassName}
-      titleClassName= {titleClassName}
-      yAxisClassName= {yAxisClassName}
-      xAxisClassName= {xAxisClassName}
-      chartSeries= {chartSeries}
-      lineClass = 'test-line-class'
-      scatterClass = 'test-line-dot-class'
-      showScatter = {true}
-      showLegend= {showLegend}
-      showXAxis= {showXAxis}
-      showYAxis= {showYAxis}
-      showTooltip= {true}
-      brushHeight= {brushHeight}
-      yBrushRange= {yBrushRange}
-      x= {x}
-      xDomain= {xDomain}
-      xRange= {xRange}
-      xScale= {xScale}
-      xOrient= {xOrient}
-      xTickOrient= {xTickOrient}
-      xLabel = {xLabel}
-      xLabelPosition = 'bottom'
-      y= {y}
-      yOrient= {yOrient}
-      yDomain= {yDomain}
-      yRange= {yRange}
-      yScale= {yScale}
-      yTickOrient= {yTickOrient}
-      yLabel = {yLabel}
-      yLabelPosition = 'right'
-    />
-  , document.getElementById('data_tooltip_line')
+      <LineTooltip
+        title= {title}
+        data= {generalChartData}
+        width= {width}
+        height= {height}
+        id= {id}
+        margins= {margins}
+        svgClassName= {svgClassName}
+        titleClassName= {titleClassName}
+        yAxisClassName= {yAxisClassName}
+        xAxisClassName= {xAxisClassName}
+        chartSeries= {chartSeries}
+        lineClassName = {lineClassName}
+        scatterClassName = {scatterClassName}
+        showScatter = {showScatter}
+        showLegend= {showLegend}
+        showXAxis= {showXAxis}
+        showYAxis= {showYAxis}
+        x= {x}
+        xDomain= {xDomain}
+        xRange= {xRange}
+        xScale= {xScale}
+        xOrient= {xOrient}
+        xTickOrient= {xTickOrient}
+        xLabel = {xLabel}
+        xLabelPosition = {xLabelPosition}
+        y= {y}
+        yOrient= {yOrient}
+        yDomain= {yDomain}
+        yRange= {yRange}
+        yScale= {yScale}
+        yTickOrient= {yTickOrient}
+        yLabel = {yLabel}
+        yLabelPosition = {yLabelPosition}
+      />
+    , document.getElementById('data_tooltip_line')
   )
 })()

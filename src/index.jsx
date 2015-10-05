@@ -1,30 +1,30 @@
 import {
   default as LineTooltip
-} from './src/line';
+} from './line';
 
 import {
   default as AreaStackTooltip
-} from './src/area_stack';
+} from './area_stack';
 
 import {
   default as ScatterTooltip
-} from './src/scatter';
+} from './scatter';
 
 import {
   default as BarTooltip
-} from './src/bar';
+} from './bar';
 
 import {
   default as BarStackTooltip
-} from './src/bar_stack';
+} from './bar_stack';
 
 import {
   default as BarGroupTooltip
-} from './src/bar_group';
+} from './bar_group';
 
 import {
   default as PieTooltip
-} from './src/pie';
+} from './pie';
 
 export {LineTooltip as LineTooltip}
 export {AreaStackTooltip as AreaStackTooltip}
@@ -38,7 +38,7 @@ export {PieTooltip as PieTooltip}
 
 import {
   default as TooltipSet
-} from './src/inherit/index';
+} from './inherit/index';
 
 export {TooltipSet as TooltipSet}
 
@@ -46,11 +46,11 @@ export {TooltipSet as TooltipSet}
 
 import {
   default as Tooltip
-} from './src/utils/tooltip';
+} from './utils/tooltip';
 
 import {
   default as Voronoi
-} from './src/utils/voronoi';
+} from './utils/voronoi';
 
 export {Tooltip as Tooltip}
 export {Voronoi as Voronoi}

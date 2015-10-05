@@ -1,25 +1,20 @@
 "use strict";
 
-import {
-  default as React,
-  Component,
-} from 'react';
+var React = require('react');
+var BarTooltip = require('../../lib').BarTooltip;
 
-import {
-  BarTooltip
-} from '../../index';
-
-(() => {
+(function() {
   var generalChartData = require('dsv?delimiter=\t!./data/letter.tsv')
 
-  const width = 960,
+  var width = 960,
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Bar Chart With Tooltip",
+    title = "Bar Chart",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
+    legendPosition = "right",
     showLegend = true,
     showXAxis = true,
     showYAxis = true,
@@ -29,26 +24,29 @@ import {
         name: 'Frequency'
       }
     ],
-    x = (d) => {
+    x = function(d) {
       return d.letter;
     },
     xOrient = 'bottom',
     xTickOrient = 'bottom',
-    xDomain = generalChartData.map((d) => { return d.letter; }),
+    xDomain = generalChartData.map(function(d) { return d.letter; }),
     xRangeRoundBands = {interval: [0, width - margins.left - margins.right], padding: .1},
     xScale = 'ordinal',
     xAxisClassName = 'x-axis',
     xLabel = "Letter",
-    y = (d) => {
+    xLabelPosition = 'bottom',
+    y = function(d) {
       return +d;
     },
     yOrient = 'left',
     yTickOrient = 'right',
     yRange = [height - margins.top - margins.bottom, 0],
-    yDomain = [0, +d3.max(generalChartData, (d) => { return d.frequency; })],
+    yDomain = [0, +d3.max(generalChartData, function(d) { return d.frequency; })],
     yScale = 'linear',
     yAxisClassName = 'y-axis',
-    yLabel = "Frequency";
+    yLabel = "Frequency",
+    yTicks = [10, "%"],
+    yLabelPosition = 'left';
 
   React.render(
     <BarTooltip
@@ -59,22 +57,16 @@ import {
       id= {id}
       margins= {margins}
       svgClassName= {svgClassName}
-      labelOffset = {30}
       titleClassName= {titleClassName}
       yAxisClassName= {yAxisClassName}
       xAxisClassName= {xAxisClassName}
       legendClassName= {legendClassName}
-      legendPosition= 'right'
+      legendPosition= {legendPosition}
       categoricalColors= {d3.scale.category10()}
       chartSeries = {chartSeries}
-      lineClass = 'test-line-class'
-      barClass= 'test-bar-class'
-      scatterClass = 'test-line-dot-class'
-      showScatter = {true}
       showLegend= {showLegend}
       showXAxis= {showXAxis}
       showYAxis= {showYAxis}
-      showTooltip= {true}
       x= {x}
       xDomain= {xDomain}
       xRangeRoundBands= {xRangeRoundBands}
@@ -82,17 +74,16 @@ import {
       xOrient= {xOrient}
       xTickOrient= {xTickOrient}
       xLabel = {xLabel}
-      xLabelPosition = 'bottom'
       y= {y}
       yOrient= {yOrient}
       yRange= {yRange}
       yDomain= {yDomain}
       yScale= {yScale}
       yTickOrient= {yTickOrient}
-      yTicks= {[10, "%"]}
+      yTicks= {yTicks}
       yLabel = {yLabel}
-      yLabelPosition = 'left'
+      yLabelPosition = {yLabelPosition}
     />
-  , document.getElementById('data_tooltip_bar')
+    , document.getElementById('data_tooltip_bar')
   )
 })()

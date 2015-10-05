@@ -1,32 +1,26 @@
 "use strict";
 
-import {
-  default as React,
-  Component,
-} from 'react';
+var React = require('react');
+var ScatterTooltip = require('../../lib').ScatterTooltip;
 
-import {
-  ScatterTooltip as ScatterTooltip
-} from '../../index';
-
-(() => {
+(function() {
   var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
 
-  const parseDate = d3.time.format("%Y%m%d").parse;
+  var parseDate = d3.time.format("%Y%m%d").parse;
 
-  const width = 960,
+  var width = 960,
     height = 500,
     margins = {top: 50, right: 50, bottom: 50, left: 50},
     id = "test-chart",
-    title = "Scatter Plot With Tooltip",
+    title = "Scatter Plot",
     svgClassName = "test-chart-class",
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
+    legendPosition = 'right',
+    labelOffset = 30,
     showLegend = true,
     showXAxis = true,
     showYAxis = true,
-    brushHeight = 200,
-    yBrushRange = [brushHeight - margins.top - margins.bottom, 0],
     chartSeries = [
       {
         field: 'New York',
@@ -47,8 +41,7 @@ import {
         symbol: 'triangle-down'
       }
     ],
-    interpolate = 'monotone',
-    x = (d) => {
+    x = function(d) {
       return parseDate(d.date);
     },
     xOrient = 'bottom',
@@ -58,7 +51,8 @@ import {
     xScale = 'time',
     xAxisClassName = 'x-axis',
     xLabel = "Date",
-    y = (d) => {
+    xLabelPosition = 'bottom',
+    y = function(d) {
       return d;
     },
     yOrient = 'left',
@@ -67,7 +61,10 @@ import {
     yRange = [height - margins.top - margins.bottom, 0],
     yScale = 'linear',
     yAxisClassName = 'y-axis',
-    yLabel = "Temperature (ºF)";
+    yLabel = "Temperature (ºF)",
+    yLabelPosition = 'left',
+    scatterClassName = 'test-line-dot-class';
+
 
 
   React.render(
@@ -79,23 +76,17 @@ import {
       id= {id}
       margins= {margins}
       svgClassName= {svgClassName}
-      labelOffset = {30}
+      labelOffset = {labelOffset}
       titleClassName= {titleClassName}
       yAxisClassName= {yAxisClassName}
       xAxisClassName= {xAxisClassName}
       legendClassName= {legendClassName}
-      legendPosition= 'right'
+      legendPosition= {legendPosition}
       chartSeries = {chartSeries}
-      interpolate = {interpolate}
-      lineClass = 'test-line-class'
-      scatterClass = 'test-line-dot-class'
-      showScatter = {true}
+      scatterClassName = {scatterClassName}
       showLegend= {showLegend}
       showXAxis= {showXAxis}
       showYAxis= {showYAxis}
-      showTooltip= {true}
-      brushHeight= {brushHeight}
-      yBrushRange= {yBrushRange}
       x= {x}
       xDomain= {xDomain}
       xRange= {xRange}
@@ -103,7 +94,7 @@ import {
       xOrient= {xOrient}
       xTickOrient= {xTickOrient}
       xLabel = {xLabel}
-      xLabelPosition = 'bottom'
+      xLabelPosition = {xLabelPosition}
       y= {y}
       yOrient= {yOrient}
       yDomain= {yDomain}
@@ -111,7 +102,7 @@ import {
       yScale= {yScale}
       yTickOrient= {yTickOrient}
       yLabel = {yLabel}
-      yLabelPosition = 'left'
+      yLabelPosition = {yLabelPosition}
     />
   , document.getElementById('data_tooltip_scatter')
   )

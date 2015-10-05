@@ -6,7 +6,7 @@ import {
   PropTypes,
 } from 'react';
 
-require('../css/tooltip.css');
+require('../../css/tooltip.css');
 
 export default class Tooltip extends Component {
   constructor (props) {

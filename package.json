@@ -1,14 +1,12 @@
 {
   "name": "react-d3-tooltip",
-  "version": "0.0.7",
+  "version": "0.2.0",
   "description": "react-d3 tooltip implementation",
-  "main": "index.jsx",
+  "main": "./lib/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "NODE_ENV=0 webpack -w",
-    "site-build": "NODE_ENV=1 webpack && NODE_ENV=1 canner-core build ./example/canner.js",
-    "site": "git subtree push --prefix example origin gh-pages && git push origin master",
-    "dev": "NODE_ENV=0 canner-core build ./example/canner.js && npm run watch"
+    "watch": "webpack -w",
+    "build": "rm -rf ./lib && babel -w --stage 0 src --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -30,6 +28,7 @@
     "css-loader": "^0.18.0",
     "dsv-loader": "^1.0.0",
     "json-loader": "^0.5.3",
+    "jsx-loader": "^0.13.2",
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.12.4",
     "webpack": "^1.12.2",
@@ -38,7 +37,7 @@
   "dependencies": {
     "d3": "^3.5.6",
     "react": "^0.13.3",
-    "react-d3-basic": "0.0.10",
-    "react-d3-core": "0.0.16"
+    "react-d3-basic": "^0.2.0",
+    "react-d3-core": "^0.2.1"
   }
 }

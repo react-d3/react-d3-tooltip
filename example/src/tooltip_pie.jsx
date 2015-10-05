@@ -1,22 +1,12 @@
 "use strict";
 
-import {
-  default as React,
-  Component,
-} from 'react';
+var React = require('react');
+var PieTooltip = require('../../lib').PieTooltip;
 
-import {
-  Chart as Chart,
-} from 'react-d3-core';
-
-import {
-  PieTooltip
-} from '../../index';
-
-(() => {
+(function() {
   var generalChartData = require('dsv?delimiter=,!./data/age_pie.csv')
 
-  const width = 960,
+  var width = 960,
     height = 500,
     radius = Math.min(width, height - 120) / 2,
     margins = {top: 50, right: 50, bottom: 20, left: 50},
@@ -26,10 +16,10 @@ import {
     titleClassName = "test-chart-title-class",
     legendClassName = "test-legend",
     showLegend = true,
-    value = (d) => {
+    value = function(d) {
       return +d.population;
     },
-    name = (d) => {
+    name = function(d) {
       return d.age;
     },
     chartSeries = [
@@ -57,12 +47,12 @@ import {
         "field": "45-64",
         "name": "45 to 64"
       }
-    ]
+    ],
+    legendPosition = 'right',
+    outerRadius = radius - 10,
+    innerRadius = 0;
 
-  /*
-  ** Inherit variables:
-  **
-  */
+
   React.render(
     <PieTooltip
       title= {title}
@@ -76,16 +66,15 @@ import {
       svgClassName= {svgClassName}
       titleClassName= {titleClassName}
       legendClassName= {legendClassName}
-      legendPosition= 'right'
+      legendPosition= {legendPosition}
       categoricalColors= {d3.scale.category10()}
       showLegend= {showLegend}
-      showTooltip= {true}
       value = {value}
       name = {name}
-      outerRadius= {radius - 10}
-      innerRadius= {0}
+      outerRadius= {outerRadius}
+      innerRadius= {innerRadius}
       pieSort = {d3.descending}
     />
-    , document.getElementById('data_tooltip_pie')
+  , document.getElementById('data_tooltip_pie')
   )
 })()
