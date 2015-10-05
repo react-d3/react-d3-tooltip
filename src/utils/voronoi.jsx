@@ -6,8 +6,6 @@ import {
   PropTypes,
 } from 'react';
 
-require('../../css/voronoi.css');
-
 export default class Voronoi extends Component {
   constructor (props) {
     super(props);
@@ -78,7 +76,6 @@ export default class Voronoi extends Component {
       .map((d) => { return d.values; })
 
     var voronoiPolygon = this._setGeomVoronoi().call(this, nestData)
-
     if(focus)
       var focusDom = this._mkFocus();
     // make voronoi
@@ -91,6 +88,8 @@ export default class Voronoi extends Component {
       .datum((d) => { return d.point; })
       .on("mouseover",  (d) => { return focus? onMouseOver(d, focusDom, stack): onMouseOver(d)})
       .on("mouseout", (d) => { return focus? onMouseOut(d, focusDom, stack): onMouseOut(d)})
+      .style('fill', 'none')
+      .style('pointer-events', 'all');
   }
 
   _setStack () {

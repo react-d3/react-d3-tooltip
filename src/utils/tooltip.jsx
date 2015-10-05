@@ -6,8 +6,6 @@ import {
   PropTypes,
 } from 'react';
 
-require('../../css/tooltip.css');
-
 export default class Tooltip extends Component {
   constructor (props) {
     super(props);
@@ -31,12 +29,31 @@ export default class Tooltip extends Component {
         };
       }
 
+      var trStyle = {
+        display: 'table-row',
+        backgroundImage: 'linear-gradient(#FFF, #EEE)',
+        padding: '3px',
+        height: '30px'
+      }
+
+      var tdStyle = {
+        display: 'table-cell',
+        padding: '3px',
+        verticalAlign: 'middle',
+        whiteSpace: 'normal',
+        border: '1px solid #D3D3D3'
+      }
+
+      if(colorStyle) {
+        var tdColorStyle = Object.assign(tdStyle, colorStyle);
+      }
+
       return (
-        <div className= "tooltip_tr">
-          <div className= "tooltip_td">
+        <div className= "tooltip_tr" style={trStyle}>
+          <div className= "tooltip_td" style={tdStyle}>
             {d}
           </div>
-          <div className= "tooltip_td" style={colorStyle}>
+          <div className= "tooltip_td" style={colorStyle? tdColorStyle: tdStyle}>
             {contentTooltip[d].toString()}
           </div>
         </div>
@@ -64,13 +81,20 @@ export default class Tooltip extends Component {
       var cvContent = this._mkContent();
     }
 
+    var tableStyle = {
+      display: 'table',
+      borderStyle: 'solid',
+      borderWidth: '1px',
+      boxSizing: 'border-box'
+    };
+
     return (
       <div
         style= {style}
         className= "react-d3-basics__tooltip_utils"
         ref= "tooltip"
         >
-        <div className= "tooltip_table">
+        <div className= "tooltip_table" style={tableStyle}>
           {cvContent}
         </div>
       </div>
