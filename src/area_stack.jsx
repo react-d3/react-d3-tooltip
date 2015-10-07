@@ -31,17 +31,36 @@ export default class AreaStackTooltip extends TooltipSet {
 
   render() {
 
-    var chartSeriesData = series(this.props)
+    const xScaleSet = this.mkXScale();
+    const yScaleSet = this.mkYScale();
+    const chartSeriesData = this.mkSeries();
 
-    var voronoi = <Voronoi dataset={chartSeriesData} {...this.props} {...this.state} stack={true} focus={true} onMouseOver= {this.voronoiMouseOver.bind(this)} onMouseOut= {this.voronoiMouseOut.bind(this)}/>
-    var tooltip = <Tooltip {...this.props} {...this.state}/>
+    var voronoi = (<Voronoi
+      {...this.props}
+      xScaleSet= {xScaleSet}
+      yScaleSet= {yScaleSet}
+      chartSeriesData= {chartSeriesData}
+      {...this.state}
+      stack={true}
+      focus={true}
+      onMouseOver= {this.voronoiMouseOver.bind(this)}
+      onMouseOut= {this.voronoiMouseOut.bind(this)}
+      />)
+
+    var tooltip = (<Tooltip
+      {...this.props}
+      xScaleSet= {xScaleSet}
+      yScaleSet= {yScaleSet}
+      chartSeriesData= {chartSeriesData}
+      {...this.state}
+      />);
 
 
     return (
       <div>
         {tooltip}
         <Chart {...this.props}>
-          <AreaStackChart {...this.props} {...this.state}/>
+          <AreaStackChart {...this.props}/>
           {voronoi}
         </Chart>
       </div>

@@ -6,13 +6,17 @@ import {
   PropTypes,
 } from 'react';
 
+import {
+  default as d3
+} from 'd3';
+
+import {
+  default as ReactFauxDOM
+} from 'react-faux-dom';
+
 export default class Voronoi extends Component {
   constructor (props) {
     super(props);
-    this.state = {
-      xDomainSet: this.props.xDomain,
-      dataSet: this.props.data
-    }
   }
 
   static defaultProps = {
@@ -21,37 +25,12 @@ export default class Voronoi extends Component {
     onMouseOut: (d) => {}
   }
 
-  componentDidMount () {
-    this._mkVoronoi();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      xDomainSet,
-      dataSet,
-    } = nextProps;
-
-    if(this.state.xDomainSet !== xDomainSet) {
-      this.setState({
-        xDomainSet: xDomainSet
-      })
-      d3.select(React.findDOMNode(this.refs.voronoi))
-        .html('');
-      this._mkVoronoi();
-    }else if(!Object.is(this.state.dataSet, dataSet)) {
-      this.setState({
-        dataSet: dataSet
-      })
-      d3.select(React.findDOMNode(this.refs.voronoi))
-        .html('');
-      this._mkVoronoi();
-    }
-  }
-
-  _mkVoronoi() {
+  _mkVoronoi(dom) {
     const {
       x,
       y,
+      xScaleSet,
+      yScaleSet,
       onMouseOver,
       onMouseOut,
       focus,
@@ -75,21 +54,44 @@ export default class Voronoi extends Component {
       .entries(d3.merge(dataset.map((d) => { return d.data; })))
       .map((d) => { return d.values; })
 
-    var voronoiPolygon = this._setGeomVoronoi().call(this, nestData)
+    var voronoiPolygon = this._setGeomVoronoi().call(this, nestData);
+
     if(focus)
-      var focusDom = this._mkFocus();
+      var focusDom = this._mkFocus(dom);
+
     // make voronoi
-    var dom = React.findDOMNode(this.refs.voronoi);
-    d3.select(dom)
-      .selectAll('path')
+    var voronoiChart = d3.select(dom);
+
+    var voronoiPath = voronoiChart.selectAll('path')
       .data(voronoiPolygon)
     .enter().append("path")
       .attr("d", (d) => { return "M" + d.join("L") + "Z"; })
       .datum((d) => { return d.point; })
-      .on("mouseover",  (d) => { return focus? onMouseOver(d, focusDom, stack): onMouseOver(d)})
-      .on("mouseout", (d) => { return focus? onMouseOut(d, focusDom, stack): onMouseOut(d)})
       .style('fill', 'none')
       .style('pointer-events', 'all');
+
+    voronoiPath.each(function(p) {
+      var evtObj = {
+        data: p,
+        xScaleSet: xScaleSet,
+        yScaleSet: yScaleSet,
+        focus: focus,
+        stack: stack
+      }
+
+      this.addEventListener('mouseover', (e, d) => {
+        return focus?
+          onMouseOver(e, d.data, d.xScaleSet, d.yScaleSet, d.focus, d.stack):
+          onMouseOver(e, d.data, d.xScaleSet, d.yScaleSet)
+        }, evtObj)
+      this.addEventListener('mouseout', (e, d) => {
+        return focus?
+          onMouseOut(e, d.data, d.xScaleSet, d.yScaleSet, d.focus, d.stack):
+          onMouseOut(e, d.data, d.xScaleSet, d.yScaleSet)
+        }, evtObj)
+    })
+
+    return voronoiChart;
   }
 
   _setStack () {
@@ -97,12 +99,12 @@ export default class Voronoi extends Component {
       .values((d) => { return d.data; });
   }
 
-  _mkFocus() {
+  _mkFocus(dom) {
     const {
       height
     } = this.props;
 
-    var focusDom = d3.select(React.findDOMNode(this.refs.voronoi))
+    var focusDom = d3.select(dom)
       .append("g")
         .attr("transform", "translate(-100,-100)")
         .attr("class", "react-d3-basics__voronoi_utils__focus");
@@ -123,8 +125,6 @@ export default class Voronoi extends Component {
       .attr("y2", height)
       .style("stroke-width", 2)
       .style("stroke-opacity", 0.5)
-
-    return focusDom;
   }
 
   _setGeomVoronoi () {
@@ -140,8 +140,6 @@ export default class Voronoi extends Component {
       stack
     } = this.props;
 
-
-
     var voronoi = initVoronoi()
       .x((d) => { return xScaleSet(d.x); })
       .y((d) => { return stack ? yScaleSet(d.y + d.y0): yScaleSet(d.y); })
@@ -154,12 +152,11 @@ export default class Voronoi extends Component {
   }
 
   render() {
-    return (
-      <g
-        className= "react-d3-basics__voronoi_utils"
-        ref= "voronoi"
-        >
-      </g>
-    )
+
+    var voronoiPath = ReactFauxDOM.createElement('g');
+    voronoiPath.setAttribute("class", "react-d3-basics__voronoi_utils")
+    var voronoi = this._mkVoronoi(voronoiPath);
+
+    return voronoi.node().toReact();
   }
 }

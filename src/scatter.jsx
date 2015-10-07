@@ -31,17 +31,35 @@ export default class ScatterTooltip extends TooltipSet {
 
   render() {
 
-    var chartSeriesData = series(this.props)
+    const xScaleSet = this.mkXScale();
+    const yScaleSet = this.mkYScale();
+    const chartSeriesData = this.mkSeries();
 
-    var voronoi = <Voronoi dataset={chartSeriesData} {...this.props} {...this.state} focus={true} onMouseOver= {this.voronoiMouseOver.bind(this)} onMouseOut= {this.voronoiMouseOut.bind(this)}/>
-    var tooltip = <Tooltip {...this.props} {...this.state}/>
+    var voronoi = (<Voronoi
+      {...this.props}
+      {...this.state}
+      xScaleSet= {xScaleSet}
+      yScaleSet= {yScaleSet}
+      dataset= {chartSeriesData}
+      focus={true}
+      onMouseOver= {this.voronoiMouseOver.bind(this)}
+      onMouseOut= {this.voronoiMouseOut.bind(this)}
+      />)
+
+    var tooltip = (<Tooltip
+      {...this.props}
+      {...this.state}
+      xScaleSet= {xScaleSet}
+      yScaleSet= {yScaleSet}
+      dataset= {chartSeriesData}
+      />);
 
 
     return (
       <div>
         {tooltip}
         <Chart {...this.props}>
-          <ScatterPlot {...this.props} {...this.state}/>
+          <ScatterPlot {...this.props}/>
           {voronoi}
         </Chart>
       </div>

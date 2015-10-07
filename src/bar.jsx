@@ -50,10 +50,17 @@ export default class BarTooltip extends TooltipSet {
 
   render() {
 
-    var chartSeriesData = series(this.props)
+    const xScaleSet = this.mkXScale();
+    const yScaleSet = this.mkYScale();
+    const chartSeriesData = this.mkSeries();
 
-    var tooltip = <Tooltip {...this.props} {...this.state}/>
-
+    var tooltip = (<Tooltip
+      {...this.props}
+      {...this.state}
+      xScaleSet= {xScaleSet}
+      yScaleSet= {yScaleSet}
+      dataset= {chartSeriesData}
+      />);
 
     return (
       <div>

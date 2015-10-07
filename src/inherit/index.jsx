@@ -10,36 +10,70 @@ import {
   scale as scale
 } from 'react-d3-core';
 
+import {
+  series as series
+} from 'react-d3-basic';
+
 export default class TooltipSet extends Component {
   constructor(props) {
     super(props);
 
-    var xScale = {
-      scale: props.xScale,
-      range: props.xRange,
-      domain: props.xDomain,
-      rangeRoundBands: props.xRangeRoundBands
-    }
-
-    var yScale = {
-      scale: props.yScale,
-      range: props.yRange,
-      domain: props.yDomain,
-      rangeRoundBands: props.yRangeRoundBands
-    }
-
     this.state = {
       xTooltip: null,
       yTooltip: null,
-      contentTooltip: null,
-      xScaleSet: scale(xScale),
-      yScaleSet: scale(yScale)
+      contentTooltip: null
     }
   }
 
-  voronoiMouseOut(d, focus) {
-    if(focus)
-      focus.attr("transform", "translate(-100,-100)");
+  mkXScale() {
+    const {
+      data,
+      xScale,
+      xRange,
+      xDomain,
+      xRangeRoundBands,
+    } = this.props;
+
+    var newXScale = {
+      scale: xScale,
+      range: xRange,
+      domain: xDomain,
+      rangeRoundBands: xRangeRoundBands
+    };
+
+    return scale(newXScale);
+  }
+
+  mkYScale() {
+    const {
+      data,
+      yScale,
+      yRange,
+      yDomain,
+      yRangeRoundBands,
+    } = this.props;
+
+    var newYScale = {
+      scale: yScale,
+      range: yRange,
+      domain: yDomain,
+      rangeRoundBands: yRangeRoundBands
+    }
+
+    return scale(newYScale);
+  }
+
+  mkSeries() {
+    return series(this.props);
+  }
+
+  voronoiMouseOut(e, d, xScaleSet, yScaleSet, focus) {
+    // console.log(d, xScaleSet. yScaleSet, focus);
+    if(focus){
+      var focusDom = d3.select(".react-d3-basics__voronoi_utils__focus");
+
+      focusDom.attr("transform", "translate(-100,-100)");
+    }
 
     this.setState({
       xTooltip: null,
@@ -48,32 +82,30 @@ export default class TooltipSet extends Component {
     })
   }
 
-  voronoiMouseOver(d, focus, stack) {
-    const {
-      xScaleSet,
-      yScaleSet
-    } = this.state;
+  voronoiMouseOver(e, d, xScaleSet, yScaleSet, focus, stack) {
 
     var newY = stack? yScaleSet(d.y + d.y0): yScaleSet(d.y);
 
     if(focus) {
-      focus.attr("transform", "translate(" + xScaleSet(d.x) + "," + newY + ")");
+      var focusDom = d3.select(".react-d3-basics__voronoi_utils__focus")
 
-      focus.select(".focus__inner_circle")
+      focusDom.attr("transform", "translate(" + xScaleSet(d.x) + "," + newY + ")");
+
+      focusDom.select(".focus__inner_circle")
         .style('fill', d.color)
 
-      focus.select(".focus__line")
+      focusDom.select(".focus__line")
         .style('stroke', d.color)
 
-      focus.select(".focus__outer_circle")
+      focusDom.select(".focus__outer_circle")
         .style('fill', 'none')
         .style('stroke', d.color)
         .style('stroke-width', 3)
     }
 
     this.setState({
-      xTooltip: d3.event.clientX,
-      yTooltip: d3.event.clientY,
+      xTooltip: e.clientX,
+      yTooltip: e.clientY,
       contentTooltip: d
     })
   }
