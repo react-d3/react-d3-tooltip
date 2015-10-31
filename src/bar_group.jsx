@@ -25,22 +25,17 @@ import {
 
 export default class BarGroupTooltip extends TooltipSet {
 
-  _mouseOver(d, dom) {
-
-    d3.select(dom)
-      .style("fill-opacity", 1);
+  _mouseOver(e) {
+    var d = JSON.parse(e.target.getAttribute('data-react-d3-origin'));
 
     this.setState({
-      xTooltip: d3.event.clientX,
-      yTooltip: d3.event.clientY,
+      xTooltip: e.clientX,
+      yTooltip: e.clientY,
       contentTooltip: d
     })
   }
 
-  _mouseOut(d, dom, opacity) {
-    d3.select(dom)
-      .style("fill-opacity", opacity);
-
+  _mouseOut(e) {
     this.setState({
       xTooltip: null,
       yTooltip: null,

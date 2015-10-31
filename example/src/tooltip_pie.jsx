@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var PieTooltip = require('../../lib').PieTooltip;
 
 (function() {
@@ -53,7 +54,7 @@ var PieTooltip = require('../../lib').PieTooltip;
     innerRadius = 0;
 
 
-  React.render(
+  ReactDOM.render(
     <PieTooltip
       title= {title}
       data= {generalChartData}

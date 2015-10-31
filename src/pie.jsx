@@ -25,32 +25,16 @@ import {
 export default class PieTooltip extends TooltipSet {
 
 
-  _mouseOver(d, dom, arc) {
-
-    d3.select(dom)
-      .style("fill-opacity", 1);
-
-    d3.select(dom)
-      .transition()
-      .duration(1000)
-      .attr('d', arc);
-
+  _mouseOver(e) {
+    var d = JSON.parse(e.target.getAttribute('data-react-d3-origin'));
     this.setState({
-      xTooltip: d3.event.clientX,
-      yTooltip: d3.event.clientY,
-      contentTooltip: d.data
+      xTooltip: e.clientX,
+      yTooltip: e.clientY,
+      contentTooltip: d
     })
   }
 
-  _mouseOut(d, dom, opacity, arc) {
-    d3.select(dom)
-      .style("fill-opacity", opacity);
-
-    d3.select(dom)
-      .transition()
-      .duration(1000)
-      .attr('d', arc);
-
+  _mouseOut(e) {
     this.setState({
       xTooltip: null,
       yTooltip: null,

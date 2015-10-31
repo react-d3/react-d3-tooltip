@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var BarStackTooltip = require('../../lib').BarStackTooltip;
 
 (function() {
@@ -89,7 +90,7 @@ var BarStackTooltip = require('../../lib').BarStackTooltip;
     yOuterTickSize = 6
 
 
-  React.render(
+  ReactDOM.render(
     <BarStackTooltip
       title= {title}
       data= {generalChartData}
