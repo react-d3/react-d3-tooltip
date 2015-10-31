@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var BarTooltip = require('../../lib').BarTooltip;
 
 (function() {
@@ -48,7 +49,7 @@ var BarTooltip = require('../../lib').BarTooltip;
     yTicks = [10, "%"],
     yLabelPosition = 'left';
 
-  React.render(
+  ReactDOM.render(
     <BarTooltip
       title= {title}
       data= {generalChartData}

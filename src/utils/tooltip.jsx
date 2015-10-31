@@ -49,11 +49,11 @@ export default class Tooltip extends Component {
       }
 
       return (
-        <div className= "tooltip_tr" style={trStyle}>
-          <div className= "tooltip_td" style={tdStyle}>
+        <div className= "tooltip_tr" style={trStyle} key={i}>
+          <div className= "tooltip_td" style={tdStyle} key={i}>
             {d}
           </div>
-          <div className= "tooltip_td" style={colorStyle? tdColorStyle: tdStyle}>
+          <div className= "tooltip_td" style={colorStyle? tdColorStyle: tdStyle} key={i.i}>
             {contentTooltip[d].toString()}
           </div>
         </div>

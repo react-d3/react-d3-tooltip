@@ -25,6 +25,10 @@ export default class Voronoi extends Component {
     onMouseOut: (d) => {}
   }
 
+  shouldComponentUpdate (nextProps, nextState) {
+    return false;
+  }
+
   _mkVoronoi(dom) {
     const {
       x,
@@ -40,7 +44,6 @@ export default class Voronoi extends Component {
 
     // because d3.geom.voronoi does not handle coincident points (and this data from the government comes pre-rounded to a tenth of a degree), d3.nest is used to collapse coincident points before constructing the Voronoi.
     // see example: http://bl.ocks.org/mbostock/8033015
-
     if(stack) {
       const _setStack = this._setStack();
       var dataset = _setStack(this.props.dataset);
@@ -66,29 +69,31 @@ export default class Voronoi extends Component {
       .data(voronoiPolygon)
     .enter().append("path")
       .attr("d", (d) => { return "M" + d.join("L") + "Z"; })
-      .datum((d) => { return d.point; })
+      .attr('data-react-d3-tooltip-origin', (d) => { return JSON.stringify(d.point)})
+      .attr('data-react-d3-tooltip', (d) => {
+
+        var x = xScaleSet(d.point.x);
+        var y = yScaleSet(d.point.y);
+        var y0 = yScaleSet(d.point.y0);
+        var y1 = yScaleSet(d.point.y0 + d.point.y);
+
+        return JSON.stringify({x: x, y: y, y0: y0, y1: y1, color: d.point.color});
+      })
+      .datum((d) => {return d.point; })
       .style('fill', 'none')
       .style('pointer-events', 'all');
 
     voronoiPath.each(function(p) {
-      var evtObj = {
-        data: p,
-        xScaleSet: xScaleSet,
-        yScaleSet: yScaleSet,
-        focus: focus,
-        stack: stack
-      }
-
-      this.addEventListener('mouseover', (e, d) => {
+      this.addEventListener('mouseover', (e) => {
         return focus?
-          onMouseOver(e, d.data, d.xScaleSet, d.yScaleSet, d.focus, d.stack):
-          onMouseOver(e, d.data, d.xScaleSet, d.yScaleSet)
-        }, evtObj)
-      this.addEventListener('mouseout', (e, d) => {
+          onMouseOver(e, focus, stack):
+          onMouseOver(e, focus)
+        })
+      this.addEventListener('mouseout', (e) => {
         return focus?
-          onMouseOut(e, d.data, d.xScaleSet, d.yScaleSet, d.focus, d.stack):
-          onMouseOut(e, d.data, d.xScaleSet, d.yScaleSet)
-        }, evtObj)
+          onMouseOut(e, focus, stack):
+          onMouseOut(e, focus)
+        })
     })
 
     return voronoiChart;

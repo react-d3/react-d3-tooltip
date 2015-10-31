@@ -25,10 +25,8 @@ import {
 
 export default class BarTooltip extends TooltipSet {
 
-  _mouseOver(d, dom) {
-
-    d3.select(dom)
-      .style("fill-opacity", 1);
+  _mouseOver(e) {
+    var d = JSON.parse(e.target.getAttribute('data-react-d3-tooltip'));
 
     this.setState({
       xTooltip: d3.event.clientX,
@@ -37,10 +35,7 @@ export default class BarTooltip extends TooltipSet {
     })
   }
 
-  _mouseOut(d, dom, opacity) {
-    d3.select(dom)
-      .style("fill-opacity", opacity);
-
+  _mouseOut() {
     this.setState({
       xTooltip: null,
       yTooltip: null,

@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var AreaStackTooltip = require('../../lib').AreaStackTooltip;
 
 (function() {
@@ -61,7 +62,7 @@ var AreaStackTooltip = require('../../lib').AreaStackTooltip;
     yScale = 'linear',
     yAxisClassName = 'y-axis';
 
-  React.render(
+  ReactDOM.render(
     <AreaStackTooltip
       title= {title}
       data= {generalChartData}

@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var LineTooltip = require('../../lib').LineTooltip;
 
 (function() {
@@ -32,8 +33,7 @@ var LineTooltip = require('../../lib').LineTooltip;
       {
         field: 'Austin',
         name: 'Austin Temp',
-        color: '#7777ff',
-        area: true
+        color: '#7777ff'
       }
     ],
     interpolate = 'monotone',
@@ -42,7 +42,7 @@ var LineTooltip = require('../../lib').LineTooltip;
     },
     xOrient = 'bottom',
     xTickOrient = 'bottom',
-    xDomain = d3.extent(generalChartData, function(d) { return x(d); }),
+    xDomain = d3.extent(generalChartData, function(d) {return x(d); }),
     xRange = [0, width - margins.left - margins.right],
     xScale = 'time',
     xAxisClassName = 'x-axis',
@@ -64,7 +64,7 @@ var LineTooltip = require('../../lib').LineTooltip;
     xLabelPosition = 'bottom',
     yLabelPosition = 'left';
 
-  React.render(
+  ReactDOM.render(
       <LineTooltip
         title= {title}
         data= {generalChartData}

@@ -67,8 +67,7 @@ export default class TooltipSet extends Component {
     return series(this.props);
   }
 
-  voronoiMouseOut(e, d, xScaleSet, yScaleSet, focus) {
-    // console.log(d, xScaleSet. yScaleSet, focus);
+  voronoiMouseOut(e, focus) {
     if(focus){
       var focusDom = d3.select(".react-d3-basics__voronoi_utils__focus");
 
@@ -82,31 +81,32 @@ export default class TooltipSet extends Component {
     })
   }
 
-  voronoiMouseOver(e, d, xScaleSet, yScaleSet, focus, stack) {
-
-    var newY = stack? yScaleSet(d.y + d.y0): yScaleSet(d.y);
+  voronoiMouseOver(e, focus, stack) {
+    var d = JSON.parse(e.target.getAttribute('data-react-d3-tooltip'));
+    var d_origin = JSON.parse(e.target.getAttribute('data-react-d3-tooltip-origin'));
+    var newY = stack? (d.y1): (d.y);
 
     if(focus) {
       var focusDom = d3.select(".react-d3-basics__voronoi_utils__focus")
 
-      focusDom.attr("transform", "translate(" + xScaleSet(d.x) + "," + newY + ")");
+      focusDom.attr("transform", "translate(" + d.x + "," + newY + ")");
 
       focusDom.select(".focus__inner_circle")
         .style('fill', d.color)
 
       focusDom.select(".focus__line")
-        .style('stroke', d.color)
+        .style('stroke', '#CCC')
 
       focusDom.select(".focus__outer_circle")
         .style('fill', 'none')
-        .style('stroke', d.color)
+        .style('stroke', '#CCC')
         .style('stroke-width', 3)
     }
 
     this.setState({
       xTooltip: e.clientX,
       yTooltip: e.clientY,
-      contentTooltip: d
+      contentTooltip: d_origin
     })
   }
 

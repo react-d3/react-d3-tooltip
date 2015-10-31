@@ -37,7 +37,6 @@ export default class ScatterTooltip extends TooltipSet {
 
     var voronoi = (<Voronoi
       {...this.props}
-      {...this.state}
       xScaleSet= {xScaleSet}
       yScaleSet= {yScaleSet}
       dataset= {chartSeriesData}

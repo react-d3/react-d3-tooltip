@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var LineTooltip = require('../../lib').LineTooltip;
 
 (function() {
@@ -50,7 +51,7 @@ var LineTooltip = require('../../lib').LineTooltip;
     yLabel = "Age",
     yLabelPosition = 'right'
 
-  React.render(
+  ReactDOM.render(
       <LineTooltip
         title= {title}
         data= {generalChartData}

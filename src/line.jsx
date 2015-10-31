@@ -37,7 +37,6 @@ export default class LineTooltip extends TooltipSet {
 
     var voronoi = (<Voronoi
       {...this.props}
-      {...this.state}
       xScaleSet= {xScaleSet}
       yScaleSet= {yScaleSet}
       dataset= {chartSeriesData}
@@ -53,7 +52,6 @@ export default class LineTooltip extends TooltipSet {
       yScaleSet= {yScaleSet}
       dataset= {chartSeriesData}
       />);
-
 
     return (
       <div>

@@ -39,8 +39,7 @@ export default class AreaStackTooltip extends TooltipSet {
       {...this.props}
       xScaleSet= {xScaleSet}
       yScaleSet= {yScaleSet}
-      chartSeriesData= {chartSeriesData}
-      {...this.state}
+      dataset= {chartSeriesData}
       stack={true}
       focus={true}
       onMouseOver= {this.voronoiMouseOver.bind(this)}

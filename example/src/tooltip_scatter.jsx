@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var ScatterTooltip = require('../../lib').ScatterTooltip;
 
 (function() {
@@ -67,7 +68,7 @@ var ScatterTooltip = require('../../lib').ScatterTooltip;
 
 
 
-  React.render(
+  ReactDOM.render(
     <ScatterTooltip
       title= {title}
       data= {generalChartData}
