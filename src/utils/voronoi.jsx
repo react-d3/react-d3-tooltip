@@ -25,8 +25,30 @@ export default class Voronoi extends Component {
     onMouseOut: (d) => {}
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    return false;
+  componentDidMount () {
+    const {
+      onMouseOver,
+      onMouseOut,
+      focus,
+      stack
+    } = this.props;
+
+    var voronoiPath = this.refs["react-d3-basics__voronoi_utils"];
+
+    d3.select(voronoiPath)
+      .selectAll("path")
+      .each(function(p) {
+        this.addEventListener('mouseover', (e) => {
+          return focus?
+            onMouseOver(e, focus, stack):
+            onMouseOver(e, focus)
+          })
+        this.addEventListener('mouseout', (e) => {
+          return focus?
+            onMouseOut(e, focus, stack):
+            onMouseOut(e, focus)
+          })
+      })
   }
 
   _mkVoronoi(dom) {
@@ -35,8 +57,6 @@ export default class Voronoi extends Component {
       y,
       xScaleSet,
       yScaleSet,
-      onMouseOver,
-      onMouseOut,
       focus,
       stack,
       height
@@ -82,19 +102,6 @@ export default class Voronoi extends Component {
       .datum((d) => {return d.point; })
       .style('fill', 'none')
       .style('pointer-events', 'all');
-
-    voronoiPath.each(function(p) {
-      this.addEventListener('mouseover', (e) => {
-        return focus?
-          onMouseOver(e, focus, stack):
-          onMouseOver(e, focus)
-        })
-      this.addEventListener('mouseout', (e) => {
-        return focus?
-          onMouseOut(e, focus, stack):
-          onMouseOut(e, focus)
-        })
-    })
 
     return voronoiChart;
   }
@@ -160,6 +167,8 @@ export default class Voronoi extends Component {
 
     var voronoiPath = ReactFauxDOM.createElement('g');
     voronoiPath.setAttribute("class", "react-d3-basics__voronoi_utils")
+    voronoiPath.setAttribute("ref", "react-d3-basics__voronoi_utils");
+
     var voronoi = this._mkVoronoi(voronoiPath);
 
     return voronoi.node().toReact();
