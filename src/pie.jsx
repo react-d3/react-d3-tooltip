@@ -27,6 +27,7 @@ export default class PieTooltip extends TooltipSet {
 
   _mouseOver(e) {
     var d = JSON.parse(e.target.getAttribute('data-react-d3-origin'));
+
     this.setState({
       xTooltip: e.clientX,
       yTooltip: e.clientY,
