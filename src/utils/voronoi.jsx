@@ -7,10 +7,6 @@ import {
 } from 'react';
 
 import {
-  default as d3
-} from 'd3';
-
-import {
   default as ReactFauxDOM
 } from 'react-faux-dom';
 
@@ -25,42 +21,20 @@ export default class Voronoi extends Component {
     onMouseOut: (d) => {}
   }
 
-  componentDidMount () {
-    const {
-      onMouseOver,
-      onMouseOut,
-      focus,
-      stack
-    } = this.props;
-
-    var voronoiPath = this.refs["react-d3-basics__voronoi_utils"];
-
-    d3.select(voronoiPath)
-      .selectAll("path")
-      .each(function(p) {
-        this.addEventListener('mouseover', (e) => {
-          return focus?
-            onMouseOver(e, focus, stack):
-            onMouseOver(e, focus)
-          })
-        this.addEventListener('mouseout', (e) => {
-          return focus?
-            onMouseOut(e, focus, stack):
-            onMouseOut(e, focus)
-          })
-      })
-  }
-
   _mkVoronoi(dom) {
     const {
       x,
       y,
       xScaleSet,
       yScaleSet,
+      onMouseOut,
+      onMouseOver,
       focus,
       stack,
       height
     } = this.props;
+
+    var focusDom;
 
     // because d3.geom.voronoi does not handle coincident points (and this data from the government comes pre-rounded to a tenth of a degree), d3.nest is used to collapse coincident points before constructing the Voronoi.
     // see example: http://bl.ocks.org/mbostock/8033015
@@ -80,7 +54,7 @@ export default class Voronoi extends Component {
     var voronoiPolygon = this._setGeomVoronoi().call(this, nestData);
 
     if(focus)
-      var focusDom = this._mkFocus(dom);
+      focusDom = this._mkFocus(dom);
 
     // make voronoi
     var voronoiChart = d3.select(dom);
@@ -89,15 +63,15 @@ export default class Voronoi extends Component {
       .data(voronoiPolygon)
     .enter().append("path")
       .attr("d", (d) => { return "M" + d.join("L") + "Z"; })
-      .attr('data-react-d3-tooltip-origin', (d) => { return JSON.stringify(d.point)})
-      .attr('data-react-d3-tooltip', (d) => {
-
-        var x = xScaleSet(d.point.x);
-        var y = yScaleSet(d.point.y);
-        var y0 = yScaleSet(d.point.y0);
-        var y1 = yScaleSet(d.point.y0 + d.point.y);
-
-        return JSON.stringify({x: x, y: y, y0: y0, y1: y1, color: d.point.color});
+      .on("mouseover", (d, i) => {
+        return focus?
+          onMouseOver(d, i, xScaleSet, yScaleSet, focusDom, stack):
+          onMouseOver(d, i, xScaleSet, yScaleSet, focusDom)
+      })
+      .on("mouseout", (d, i) => {
+        return focus?
+          onMouseOut(d, i, focusDom, stack):
+          onMouseOut(d, i, focusDom)
       })
       .datum((d) => {return d.point; })
       .style('fill', 'none')
@@ -137,6 +111,8 @@ export default class Voronoi extends Component {
       .attr("y2", height)
       .style("stroke-width", 2)
       .style("stroke-opacity", 0.5)
+
+    return focusDom;
   }
 
   _setGeomVoronoi () {
@@ -167,7 +143,6 @@ export default class Voronoi extends Component {
 
     var voronoiPath = ReactFauxDOM.createElement('g');
     voronoiPath.setAttribute("class", "react-d3-basics__voronoi_utils")
-    voronoiPath.setAttribute("ref", "react-d3-basics__voronoi_utils");
 
     var voronoi = this._mkVoronoi(voronoiPath);
 
