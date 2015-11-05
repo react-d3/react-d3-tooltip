@@ -21,6 +21,8 @@ var BarTooltip = require('../../lib').BarTooltip;
 
   ReactDOM.render(
     <BarTooltip
+      width= {600}
+      height= {400}
       data= {generalChartData}
       chartSeries = {chartSeries}
       x= {x}

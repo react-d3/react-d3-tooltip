@@ -31,6 +31,22 @@ export default class BarGroupTooltip extends TooltipSet {
 
   constructor(props) {
     super(props);
+
+    const {
+      margins,
+      width,
+      height
+    } = this.props;
+
+    this.state = {
+      xRange: this.props.xRange || [0, width - margins.left - margins.right],
+      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
+      xRangeRoundBands: this.props.xRangeRoundBands || {interval: [0, width - margins.left - margins.right], padding: .1},
+      xTooltip: null,
+      yTooltip: null,
+      contentTooltip: null
+    }
+
     this.mkSeries();
   }
 

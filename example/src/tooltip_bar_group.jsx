@@ -7,12 +7,6 @@ var BarGroupTooltip = require('../../lib').BarGroupTooltip;
 (function() {
   var generalChartData = require('dsv?delimiter=,!./data/age.csv')
 
-  var ageNames = d3.keys(generalChartData[0]).filter(function(key) { return key !== "State"; });
-
-  generalChartData.forEach(function(d) {
-    d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
-  });
-
   var chartSeries = [
       {
         field: 'Under 5 Years',
@@ -52,6 +46,8 @@ var BarGroupTooltip = require('../../lib').BarGroupTooltip;
 
   ReactDOM.render(
     <BarGroupTooltip
+      width= {600}
+      height= {400}
       data= {generalChartData}
       chartSeries = {chartSeries}
       x= {x}

@@ -35,6 +35,21 @@ export default class ScatterTooltip extends TooltipSet {
   constructor(props) {
     super(props);
 
+    const {
+      margins,
+      width,
+      height
+    } = this.props;
+
+    this.state = {
+      xRange: this.props.xRange || [0, width - margins.left - margins.right],
+      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
+      xRangeRoundBands: this.props.xRangeRoundBands || {interval: [0, width - margins.left - margins.right], padding: .1},
+      xTooltip: null,
+      yTooltip: null,
+      contentTooltip: null
+    }
+
     this.mkXDomain();
     this.mkYDomain();
     this.mkXScale(this.setXDomain);
@@ -52,6 +67,7 @@ export default class ScatterTooltip extends TooltipSet {
 
     var voronoi = (<Voronoi
       {...this.props}
+      {...this.state}
       xScaleSet= {xScaleSet}
       yScaleSet= {yScaleSet}
       dataset= {chartSeriesData}
@@ -73,7 +89,7 @@ export default class ScatterTooltip extends TooltipSet {
       <div>
         {tooltip}
         <Chart {...this.props}>
-          <ScatterPlot {...this.props}/>
+          <ScatterPlot {...this.props} {...this.state}/>
           {voronoi}
         </Chart>
       </div>

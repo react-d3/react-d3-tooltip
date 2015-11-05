@@ -36,6 +36,8 @@ var ScatterTooltip = require('../../lib').ScatterTooltip;
 
   ReactDOM.render(
     <ScatterTooltip
+      width= {600}
+      height= {400}
       data= {generalChartData}
       chartSeries = {chartSeries}
       x= {x}

@@ -40,6 +40,8 @@ var AreaStackTooltip = require('../../lib').AreaStackTooltip;
 
   ReactDOM.render(
     <AreaStackTooltip
+      width= {600}
+      height= {400}
       data= {generalChartData}
       chartSeries = {chartSeries}
       x= {x}

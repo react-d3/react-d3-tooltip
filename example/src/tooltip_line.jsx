@@ -21,6 +21,8 @@ var LineTooltip = require('../../lib').LineTooltip;
 
   ReactDOM.render(
       <LineTooltip
+        width= {600}
+        height= {300}
         data= {generalChartData}
         chartSeries= {chartSeries}
         x= {x}

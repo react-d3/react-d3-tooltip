@@ -29,6 +29,21 @@ import {
 export default class PieTooltip extends TooltipSet {
   constructor(props) {
     super(props);
+
+    const {
+      width,
+      height
+    } = this.props;
+
+    const radius = this.props.radius || Math.min(width, height - 120) / 2;
+
+    this.state = {
+      radius: radius,
+      outerRadius: radius - 10,
+      xTooltip: null,
+      yTooltip: null,
+      contentTooltip: null
+    }
   }
 
   static defaultProps = pieProps

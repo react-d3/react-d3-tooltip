@@ -20,12 +20,6 @@ import {
 export default class TooltipSet extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      xTooltip: null,
-      yTooltip: null,
-      contentTooltip: null
-    }
   }
 
   static propTypes = {
@@ -56,9 +50,12 @@ export default class TooltipSet extends Component {
     const {
       data,
       xScale,
-      xRange,
-      xRangeRoundBands,
     } = this.props;
+
+    const {
+      xRange,
+      xRangeRoundBands
+    } = this.state;
 
     var newXScale = {
       scale: xScale,
@@ -73,10 +70,13 @@ export default class TooltipSet extends Component {
   mkYScale(yDomain) {
     const {
       data,
-      yScale,
-      yRange,
-      yRangeRoundBands,
+      yScale
     } = this.props;
+
+    const {
+      yRange,
+      yRangeRoundBands
+    } = this.state;
 
     var newYScale = {
       scale: yScale,

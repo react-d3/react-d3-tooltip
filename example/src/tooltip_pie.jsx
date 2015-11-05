@@ -43,6 +43,8 @@ var PieTooltip = require('../../lib').PieTooltip;
 
   ReactDOM.render(
     <PieTooltip
+      width= {600}
+      height= {400}
       data= {generalChartData}
       value = {value}
       name = {name}

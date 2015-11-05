@@ -46,6 +46,8 @@ var BarStackTooltip = require('../../lib').BarStackTooltip;
 
   ReactDOM.render(
     <BarStackTooltip
+      width= {600}
+      height= {400}
       data= {generalChartData}
       chartSeries = {chartSeries}
       x= {x}
