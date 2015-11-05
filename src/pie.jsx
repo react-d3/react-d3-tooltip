@@ -22,20 +22,26 @@ import {
   default as Tooltip
 } from './utils/tooltip';
 
+import {
+  pieProps,
+} from './commonProps';
+
 export default class PieTooltip extends TooltipSet {
+  constructor(props) {
+    super(props);
+  }
 
+  static defaultProps = pieProps
 
-  _mouseOver(e) {
-    var d = JSON.parse(e.target.getAttribute('data-react-d3-origin'));
-
+  _mouseOver(d, i) {
     this.setState({
-      xTooltip: e.clientX,
-      yTooltip: e.clientY,
-      contentTooltip: d
+      xTooltip: d3.event.clientX,
+      yTooltip: d3.event.clientY,
+      contentTooltip: d.data
     })
   }
 
-  _mouseOut(e) {
+  _mouseOut(d) {
     this.setState({
       xTooltip: null,
       yTooltip: null,

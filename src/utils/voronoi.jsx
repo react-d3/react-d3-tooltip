@@ -21,6 +21,10 @@ export default class Voronoi extends Component {
     onMouseOut: (d) => {}
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
+
   _mkVoronoi(dom) {
     const {
       x,

@@ -27,13 +27,29 @@ import {
   default as Voronoi
 } from './utils/voronoi';
 
+import {
+  default as CommonProps,
+} from './commonProps';
+
 export default class AreaStackTooltip extends TooltipSet {
+
+  constructor(props) {
+    super(props);
+
+    this.mkXDomain();
+    this.mkYDomain(true);
+    this.mkXScale(this.setXDomain);
+    this.mkYScale(this.setYDomain);
+    this.mkSeries();
+  }
+
+  static defaultProps = CommonProps
 
   render() {
 
-    const xScaleSet = this.mkXScale();
-    const yScaleSet = this.mkYScale();
-    const chartSeriesData = this.mkSeries();
+    const xScaleSet = this.setXScale;
+    const yScaleSet = this.setYScale;
+    const chartSeriesData = this.setSeries;
 
     var voronoi = (<Voronoi
       {...this.props}
@@ -48,8 +64,6 @@ export default class AreaStackTooltip extends TooltipSet {
 
     var tooltip = (<Tooltip
       {...this.props}
-      xScaleSet= {xScaleSet}
-      yScaleSet= {yScaleSet}
       chartSeriesData= {chartSeriesData}
       {...this.state}
       />);

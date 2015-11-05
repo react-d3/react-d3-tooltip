@@ -23,14 +23,23 @@ import {
   default as Tooltip
 } from './utils/tooltip';
 
+import {
+  default as CommonProps,
+} from './commonProps';
+
 export default class BarTooltip extends TooltipSet {
 
-  _mouseOver(e) {
-    var d = JSON.parse(e.target.getAttribute('data-react-d3-origin'));
+  constructor(props) {
+    super(props);
+    this.mkSeries();
+  }
 
+  static defaultProps = CommonProps
+
+  _mouseOver(d, i) {
     this.setState({
-      xTooltip: e.clientX,
-      yTooltip: e.clientY,
+      xTooltip: d3.event.clientX,
+      yTooltip: d3.event.clientY,
       contentTooltip: d
     })
   }
@@ -44,16 +53,11 @@ export default class BarTooltip extends TooltipSet {
   }
 
   render() {
-
-    const xScaleSet = this.mkXScale();
-    const yScaleSet = this.mkYScale();
-    const chartSeriesData = this.mkSeries();
+    const chartSeriesData = this.setSeries;
 
     var tooltip = (<Tooltip
       {...this.props}
       {...this.state}
-      xScaleSet= {xScaleSet}
-      yScaleSet= {yScaleSet}
       dataset= {chartSeriesData}
       />);
 

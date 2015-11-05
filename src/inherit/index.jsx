@@ -7,12 +7,15 @@ import {
 } from 'react';
 
 import {
-  scale as scale
+  scale,
+  xDomainCount,
+  yDomainCount,
 } from 'react-d3-core';
 
 import {
   series as series
 } from 'react-d3-basic';
+
 
 export default class TooltipSet extends Component {
   constructor(props) {
@@ -25,12 +28,35 @@ export default class TooltipSet extends Component {
     }
   }
 
-  mkXScale() {
+  static propTypes = {
+    data: PropTypes.array.isRequired,
+    chartSeries: PropTypes.array.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    x: PropTypes.func,
+    xDomain: PropTypes.array,
+    xRange: PropTypes.array,
+    xScale: PropTypes.string,
+    xRangeRoundBands: PropTypes.object,
+    y: PropTypes.func,
+    yDomain: PropTypes.array,
+    yRange: PropTypes.array,
+    yScale: PropTypes.string
+  }
+
+  mkXDomain() {
+    return this.setXDomain = xDomainCount(this.props);
+  }
+
+  mkYDomain(stack) {
+    return this.setYDomain = yDomainCount(this.props, stack);
+  }
+
+  mkXScale(xDomain) {
     const {
       data,
       xScale,
       xRange,
-      xDomain,
       xRangeRoundBands,
     } = this.props;
 
@@ -41,15 +67,14 @@ export default class TooltipSet extends Component {
       rangeRoundBands: xRangeRoundBands
     };
 
-    return scale(newXScale);
+    return this.setXScale = scale(newXScale);
   }
 
-  mkYScale() {
+  mkYScale(yDomain) {
     const {
       data,
       yScale,
       yRange,
-      yDomain,
       yRangeRoundBands,
     } = this.props;
 
@@ -60,11 +85,11 @@ export default class TooltipSet extends Component {
       rangeRoundBands: yRangeRoundBands
     }
 
-    return scale(newYScale);
+    return this.setYScale = scale(newYScale);
   }
 
   mkSeries() {
-    return series(this.props);
+    return this.setSeries = series(this.props);
   }
 
   voronoiMouseOut(d, i, focus) {

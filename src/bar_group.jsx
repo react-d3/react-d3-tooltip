@@ -23,19 +23,28 @@ import {
   default as Tooltip
 } from './utils/tooltip';
 
+import {
+  default as CommonProps,
+} from './commonProps';
+
 export default class BarGroupTooltip extends TooltipSet {
 
-  _mouseOver(e) {
-    var d = JSON.parse(e.target.getAttribute('data-react-d3-origin'));
+  constructor(props) {
+    super(props);
+    this.mkSeries();
+  }
 
+  static defaultProps = CommonProps
+
+  _mouseOver(d, i) {
     this.setState({
-      xTooltip: e.clientX,
-      yTooltip: e.clientY,
+      xTooltip: d3.event.clientX,
+      yTooltip: d3.event.clientY,
       contentTooltip: d
     })
   }
 
-  _mouseOut(e) {
+  _mouseOut() {
     this.setState({
       xTooltip: null,
       yTooltip: null,
@@ -44,8 +53,7 @@ export default class BarGroupTooltip extends TooltipSet {
   }
 
   render() {
-
-    var chartSeriesData = series(this.props)
+    const chartSeriesData = this.setSeries;
 
     var tooltip = <Tooltip {...this.props} {...this.state}/>
 
