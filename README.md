@@ -13,7 +13,7 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var LineTooltip = require('../../lib').LineTooltip;
+var LineTooltip = require('react-d3-tooltip').LineTooltip;
 
 (function() {
 
