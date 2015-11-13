@@ -1,4 +1,4 @@
-"use sctrict"
+"use strict"
 
 import {
   default as React,
@@ -90,44 +90,6 @@ export default class TooltipSet extends Component {
 
   mkSeries() {
     return this.setSeries = series(this.props);
-  }
-
-  voronoiMouseOut(d, i, focus) {
-    if(focus)
-      focus.attr("transform", "translate(-100,-100)");
-
-    this.setState({
-      xTooltip: null,
-      yTooltip: null,
-      contentTooltip: null
-    })
-  }
-
-  voronoiMouseOver(d, i, xScaleSet, yScaleSet, focus, stack) {
-    var newY = stack? yScaleSet(d.y + d.y0): yScaleSet(d.y);
-
-    if(focus) {
-      var fDom = d3.select('.react-d3-basics__voronoi_utils__focus');
-
-      fDom.attr("transform", "translate(" + xScaleSet(d.x) + "," + newY + ")");
-
-      fDom.select(".focus__inner_circle")
-        .style('fill', d.color)
-
-      fDom.select(".focus__line")
-        .style('stroke', "#CCC")
-
-      fDom.select(".focus__outer_circle")
-        .style('fill', 'none')
-        .style('stroke', "#CCC")
-        .style('stroke-width', 3)
-    }
-
-    this.setState({
-      xTooltip: d3.event.clientX,
-      yTooltip: d3.event.clientY,
-      contentTooltip: d
-    })
   }
 
 }

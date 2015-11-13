@@ -7,90 +7,68 @@ import {
 } from 'react';
 
 import {
-  Chart as Chart,
-} from 'react-d3-core';
-
-import {
-  ScatterPlot as ScatterPlot,
-  series as series
-} from 'react-d3-basic';
-
-import {
-  default as TooltipSet
-} from './inherit/index';
-
-import {
   default as Tooltip
 } from './utils/tooltip';
 
 import {
-  default as Voronoi
-} from './utils/voronoi';
+  Chart as Chart,
+} from 'react-d3-core';
+
+import {
+  default as Focus
+} from './utils/focus';
+
+import {
+  default as ScatterVoronoi
+} from './components/scatterPlot'
+
+import {
+  default as VoronoiEvt
+} from './inherit/voronoiEvt'
 
 import {
   default as CommonProps,
 } from './commonProps';
 
-export default class ScatterTooltip extends TooltipSet {
+export default class ScatterTooltip extends VoronoiEvt {
   constructor(props) {
     super(props);
-
-    const {
-      margins,
-      width,
-      height
-    } = this.props;
-
-    this.state = {
-      xRange: this.props.xRange || [0, width - margins.left - margins.right],
-      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
-      xRangeRoundBands: this.props.xRangeRoundBands || {interval: [0, width - margins.left - margins.right], padding: .1},
-      xTooltip: null,
-      yTooltip: null,
-      contentTooltip: null
-    }
-
-    this.mkXDomain();
-    this.mkYDomain();
-    this.mkXScale(this.setXDomain);
-    this.mkYScale(this.setYDomain);
-    this.mkSeries();
   }
 
   static defaultProps = CommonProps
 
   render() {
 
-    const xScaleSet = this.setXScale;
-    const yScaleSet = this.setYScale;
-    const chartSeriesData = this.setSeries;
+    const {
+      focus
+    } = this.props;
 
-    var voronoi = (<Voronoi
-      {...this.props}
-      {...this.state}
-      xScaleSet= {xScaleSet}
-      yScaleSet= {yScaleSet}
-      dataset= {chartSeriesData}
-      focus={true}
-      onMouseOver= {this.voronoiMouseOver.bind(this)}
-      onMouseOut= {this.voronoiMouseOut.bind(this)}
-      />)
+    var focusDom;
 
     var tooltip = (<Tooltip
       {...this.props}
       {...this.state}
-      xScaleSet= {xScaleSet}
-      yScaleSet= {yScaleSet}
-      dataset= {chartSeriesData}
       />);
 
+    var Scatter = (
+      <ScatterVoronoi
+        {...this.props}
+        {...this.state}
+        onMouseOver= {this.voronoiMouseOver.bind(this)}
+        onMouseOut= {this.voronoiMouseOut.bind(this)}
+        />
+    )
+
+    if(focus) {
+      focusDom = <Focus {...this.props} {...this.state}/>
+    }
 
     return (
       <div>
         {tooltip}
         <Chart {...this.props}>
-          <ScatterPlot {...this.props} {...this.state}/>
-          {voronoi}
+          {Scatter}
+          {focusDom}
         </Chart>
       </div>
     )

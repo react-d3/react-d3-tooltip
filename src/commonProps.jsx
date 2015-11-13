@@ -10,7 +10,8 @@ export default {
   margins: margins,
   y: (d) => {return +d;},
   xScale: 'linear',
-  yScale: 'linear'
+  yScale: 'linear',
+  focus: true
 }
 
 export const pieProps = {
