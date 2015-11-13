@@ -57,43 +57,43 @@ var ReactD3Tooltip =
 
 	var _line2 = _interopRequireDefault(_line);
 
-	var _area_stack = __webpack_require__(98);
+	var _area_stack = __webpack_require__(102);
 
 	var _area_stack2 = _interopRequireDefault(_area_stack);
 
-	var _scatter = __webpack_require__(99);
+	var _scatter = __webpack_require__(104);
 
 	var _scatter2 = _interopRequireDefault(_scatter);
 
-	var _bar = __webpack_require__(100);
+	var _bar = __webpack_require__(106);
 
 	var _bar2 = _interopRequireDefault(_bar);
 
-	var _bar_stack = __webpack_require__(101);
+	var _bar_stack = __webpack_require__(109);
 
 	var _bar_stack2 = _interopRequireDefault(_bar_stack);
 
-	var _bar_group = __webpack_require__(102);
+	var _bar_group = __webpack_require__(111);
 
 	var _bar_group2 = _interopRequireDefault(_bar_group);
 
-	var _pie = __webpack_require__(103);
+	var _pie = __webpack_require__(113);
 
 	var _pie2 = _interopRequireDefault(_pie);
 
 	// inherit
 
-	var _inheritIndex = __webpack_require__(94);
+	var _inheritIndex = __webpack_require__(77);
 
 	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
 
 	// utils
 
-	var _utilsTooltip = __webpack_require__(95);
+	var _utilsTooltip = __webpack_require__(3);
 
 	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
 
-	var _utilsVoronoi = __webpack_require__(96);
+	var _utilsVoronoi = __webpack_require__(98);
 
 	var _utilsVoronoi2 = _interopRequireDefault(_utilsVoronoi);
 
@@ -134,77 +134,54 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
-
-	var _reactD3Basic = __webpack_require__(74);
-
-	var _inheritIndex = __webpack_require__(94);
-
-	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
-
-	var _utilsTooltip = __webpack_require__(95);
+	var _utilsTooltip = __webpack_require__(3);
 
 	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
 
-	var _utilsVoronoi = __webpack_require__(96);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _utilsVoronoi2 = _interopRequireDefault(_utilsVoronoi);
+	var _utilsFocus = __webpack_require__(75);
 
-	var _commonProps = __webpack_require__(97);
+	var _utilsFocus2 = _interopRequireDefault(_utilsFocus);
+
+	var _componentsLineChart = __webpack_require__(76);
+
+	var _componentsLineChart2 = _interopRequireDefault(_componentsLineChart);
+
+	var _inheritVoronoiEvt = __webpack_require__(100);
+
+	var _inheritVoronoiEvt2 = _interopRequireDefault(_inheritVoronoiEvt);
+
+	var _commonProps = __webpack_require__(101);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
-	var LineTooltip = (function (_TooltipSet) {
-	  _inherits(LineTooltip, _TooltipSet);
+	var LineTooltip = (function (_VoronoiEvt) {
+	  _inherits(LineTooltip, _VoronoiEvt);
 
 	  function LineTooltip(props) {
 	    _classCallCheck(this, LineTooltip);
 
 	    _get(Object.getPrototypeOf(LineTooltip.prototype), 'constructor', this).call(this, props);
-
-	    var _props = this.props;
-	    var margins = _props.margins;
-	    var width = _props.width;
-	    var height = _props.height;
-
-	    this.state = {
-	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
-	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
-	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 },
-	      xTooltip: null,
-	      yTooltip: null,
-	      contentTooltip: null
-	    };
-
-	    this.mkXDomain();
-	    this.mkYDomain();
-	    this.mkXScale(this.setXDomain);
-	    this.mkYScale(this.setYDomain);
-	    this.mkSeries();
 	  }
 
 	  _createClass(LineTooltip, [{
 	    key: 'render',
 	    value: function render() {
+	      var focus = this.props.focus;
 
-	      var xScaleSet = this.setXScale;
-	      var yScaleSet = this.setYScale;
-	      var chartSeriesData = this.setSeries;
+	      var focusDom;
 
-	      var voronoi = _react2['default'].createElement(_utilsVoronoi2['default'], _extends({}, this.props, this.state, {
-	        xScaleSet: xScaleSet,
-	        yScaleSet: yScaleSet,
-	        dataset: chartSeriesData,
-	        focus: true,
+	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state));
+
+	      var LineChart = _react2['default'].createElement(_componentsLineChart2['default'], _extends({}, this.props, this.state, {
 	        onMouseOver: this.voronoiMouseOver.bind(this),
 	        onMouseOut: this.voronoiMouseOut.bind(this)
 	      }));
 
-	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state, {
-	        xScaleSet: xScaleSet,
-	        yScaleSet: yScaleSet,
-	        dataset: chartSeriesData
-	      }));
+	      if (focus) {
+	        focusDom = _react2['default'].createElement(_utilsFocus2['default'], _extends({}, this.props, this.state));
+	      }
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -213,8 +190,8 @@ var ReactD3Tooltip =
 	        _react2['default'].createElement(
 	          _reactD3Core.Chart,
 	          this.props,
-	          _react2['default'].createElement(_reactD3Basic.LineChart, _extends({}, this.props, this.state)),
-	          voronoi
+	          LineChart,
+	          focusDom
 	        )
 	      );
 	    }
@@ -225,7 +202,7 @@ var ReactD3Tooltip =
 	  }]);
 
 	  return LineTooltip;
-	})(_inheritIndex2['default']);
+	})(_inheritVoronoiEvt2['default']);
 
 	exports['default'] = LineTooltip;
 	module.exports = exports['default'];
@@ -238,77 +215,6 @@ var ReactD3Tooltip =
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _containerSvg = __webpack_require__(4);
-
-	var _containerSvg2 = _interopRequireDefault(_containerSvg);
-
-	var _containerTitle = __webpack_require__(9);
-
-	var _containerTitle2 = _interopRequireDefault(_containerTitle);
-
-	var _chartContainer = __webpack_require__(10);
-
-	var _chartContainer2 = _interopRequireDefault(_chartContainer);
-
-	var _axisAxis = __webpack_require__(63);
-
-	var _axisAxis2 = _interopRequireDefault(_axisAxis);
-
-	var _axisXaxis = __webpack_require__(64);
-
-	var _axisXaxis2 = _interopRequireDefault(_axisXaxis);
-
-	var _axisYaxis = __webpack_require__(66);
-
-	var _axisYaxis2 = _interopRequireDefault(_axisYaxis);
-
-	var _axisLabel = __webpack_require__(65);
-
-	var _axisLabel2 = _interopRequireDefault(_axisLabel);
-
-	var _legend = __webpack_require__(11);
-
-	var _legend2 = _interopRequireDefault(_legend);
-
-	var _grid = __webpack_require__(67);
-
-	var _grid2 = _interopRequireDefault(_grid);
-
-	// utils
-
-	var _utilsScale = __webpack_require__(8);
-
-	var _utilsXDomain = __webpack_require__(68);
-
-	var _utilsYDomain = __webpack_require__(69);
-
-	__webpack_require__(70);
-
-	exports.Svg = _containerSvg2['default'];
-	exports.Title = _containerTitle2['default'];
-	exports.Chart = _chartContainer2['default'];
-	exports.Xaxis = _axisXaxis2['default'];
-	exports.Yaxis = _axisYaxis2['default'];
-	exports.Legend = _legend2['default'];
-	exports.Grid = _grid2['default'];
-	exports.Axis = _axisAxis2['default'];
-	exports.Label = _axisLabel2['default'];
-	exports.scale = _utilsScale.scale;
-	exports.xDomainCount = _utilsXDomain.xDomain;
-	exports.yDomainCount = _utilsYDomain.yDomain;
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -331,19 +237,239 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _d3 = __webpack_require__(5);
+	var Tooltip = (function (_Component) {
+	  _inherits(Tooltip, _Component);
+
+	  function Tooltip(props) {
+	    _classCallCheck(this, Tooltip);
+
+	    _get(Object.getPrototypeOf(Tooltip.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(Tooltip, [{
+	    key: '_mkContent',
+	    value: function _mkContent() {
+	      var contentTooltip = this.props.contentTooltip;
+
+	      var cv = Object.keys(contentTooltip).map(function (d, i) {
+	        if (d === 'color') {
+	          var colorStyle = {
+	            backgroundColor: contentTooltip[d],
+	            color: '#FFF'
+	          };
+	        }
+
+	        var trStyle = {
+	          display: 'table-row',
+	          backgroundImage: 'linear-gradient(#FFF, #EEE)',
+	          padding: '3px',
+	          height: '30px'
+	        };
+
+	        var tdStyle = {
+	          display: 'table-cell',
+	          padding: '3px',
+	          verticalAlign: 'middle',
+	          whiteSpace: 'normal',
+	          border: '1px solid #D3D3D3'
+	        };
+
+	        var tdHeadStyle = {
+	          display: 'table-cell',
+	          padding: '3px',
+	          verticalAlign: 'middle',
+	          whiteSpace: 'normal',
+	          border: '1px solid #D3D3D3',
+	          backgroundColor: '#555',
+	          color: '#FFF',
+	          textTransform: 'capitalize'
+	        };
+
+	        if (colorStyle) {
+	          var tdColorStyle = Object.assign(tdStyle, colorStyle);
+	        }
+
+	        return _react2['default'].createElement(
+	          'div',
+	          { className: 'tooltip_tr', style: trStyle, key: i },
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'tooltip_td', style: tdHeadStyle, key: i },
+	            d
+	          ),
+	          _react2['default'].createElement(
+	            'div',
+	            { className: 'tooltip_td', style: colorStyle ? tdColorStyle : tdStyle, key: i.i },
+	            contentTooltip[d].toString()
+	          )
+	        );
+	      });
+
+	      return cv;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var xTooltip = _props.xTooltip;
+	      var yTooltip = _props.yTooltip;
+	      var contentTooltip = _props.contentTooltip;
+	      var dist = _props.dist;
+
+	      var style = {
+	        left: xTooltip ? xTooltip + dist : -100,
+	        top: yTooltip ? yTooltip + dist : -100,
+	        position: 'fixed'
+	      };
+
+	      if (contentTooltip) {
+	        var cvContent = this._mkContent();
+	      }
+
+	      var tableStyle = {
+	        display: 'table',
+	        borderStyle: 'solid',
+	        borderWidth: '1px',
+	        boxSizing: 'border-box'
+	      };
+
+	      return _react2['default'].createElement(
+	        'div',
+	        {
+	          style: style,
+	          className: 'react-d3-basics__tooltip_utils',
+	          ref: 'tooltip'
+	        },
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'tooltip_table', style: tableStyle },
+	          cvContent
+	        )
+	      );
+	    }
+	  }], [{
+	    key: 'defaultProps',
+	    value: {
+	      gravity: 's',
+	      dist: 35
+	    },
+	    enumerable: true
+	  }]);
+
+	  return Tooltip;
+	})(_react.Component);
+
+	exports['default'] = Tooltip;
+	module.exports = exports['default'];
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _containerSvg = __webpack_require__(5);
+
+	var _containerSvg2 = _interopRequireDefault(_containerSvg);
+
+	var _containerTitle = __webpack_require__(10);
+
+	var _containerTitle2 = _interopRequireDefault(_containerTitle);
+
+	var _chartContainer = __webpack_require__(11);
+
+	var _chartContainer2 = _interopRequireDefault(_chartContainer);
+
+	var _axisAxis = __webpack_require__(64);
+
+	var _axisAxis2 = _interopRequireDefault(_axisAxis);
+
+	var _axisXaxis = __webpack_require__(65);
+
+	var _axisXaxis2 = _interopRequireDefault(_axisXaxis);
+
+	var _axisYaxis = __webpack_require__(67);
+
+	var _axisYaxis2 = _interopRequireDefault(_axisYaxis);
+
+	var _axisLabel = __webpack_require__(66);
+
+	var _axisLabel2 = _interopRequireDefault(_axisLabel);
+
+	var _legend = __webpack_require__(12);
+
+	var _legend2 = _interopRequireDefault(_legend);
+
+	var _grid = __webpack_require__(68);
+
+	var _grid2 = _interopRequireDefault(_grid);
+
+	// utils
+
+	var _utilsScale = __webpack_require__(9);
+
+	var _utilsXDomain = __webpack_require__(69);
+
+	var _utilsYDomain = __webpack_require__(70);
+
+	__webpack_require__(71);
+
+	exports.Svg = _containerSvg2['default'];
+	exports.Title = _containerTitle2['default'];
+	exports.Chart = _chartContainer2['default'];
+	exports.Xaxis = _axisXaxis2['default'];
+	exports.Yaxis = _axisYaxis2['default'];
+	exports.Legend = _legend2['default'];
+	exports.Grid = _grid2['default'];
+	exports.Axis = _axisAxis2['default'];
+	exports.Label = _axisLabel2['default'];
+	exports.scale = _utilsScale.scale;
+	exports.xDomainCount = _utilsXDomain.xDomain;
+	exports.yDomainCount = _utilsYDomain.yDomain;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _d3 = __webpack_require__(6);
 
 	var _d32 = _interopRequireDefault(_d3);
 
-	var _reactDom = __webpack_require__(6);
+	var _reactDom = __webpack_require__(7);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
-	var _utilsScale = __webpack_require__(8);
+	var _utilsScale = __webpack_require__(9);
 
 	var ChartSvg = (function (_Component) {
 	  _inherits(ChartSvg, _Component);
@@ -445,19 +571,19 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = d3;
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = ReactDOM;
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -473,7 +599,7 @@ var ReactD3Tooltip =
 	module.exports = exports["default"];
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {'use strict';
@@ -517,10 +643,10 @@ var ReactD3Tooltip =
 
 	  return func;
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -543,7 +669,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -604,7 +730,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -629,19 +755,19 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _containerSvg = __webpack_require__(4);
+	var _containerSvg = __webpack_require__(5);
 
 	var _containerSvg2 = _interopRequireDefault(_containerSvg);
 
-	var _containerTitle = __webpack_require__(9);
+	var _containerTitle = __webpack_require__(10);
 
 	var _containerTitle2 = _interopRequireDefault(_containerTitle);
 
-	var _legend = __webpack_require__(11);
+	var _legend = __webpack_require__(12);
 
 	var _legend2 = _interopRequireDefault(_legend);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -694,7 +820,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -717,15 +843,15 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _d3 = __webpack_require__(5);
+	var _d3 = __webpack_require__(6);
 
 	var _d32 = _interopRequireDefault(_d3);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -842,11 +968,11 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Element = __webpack_require__(13)
-	var Window = __webpack_require__(62)
+	var Element = __webpack_require__(14)
+	var Window = __webpack_require__(63)
 
 	var ReactFauxDOM = {
 	  Element: Element,
@@ -870,16 +996,16 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(2)
-	var clone = __webpack_require__(14)
-	var styleAttr = __webpack_require__(27)
-	var camelCase = __webpack_require__(28)
-	var assign = __webpack_require__(35)
-	var mapValues = __webpack_require__(46)
-	var querySelectorAll = __webpack_require__(58)
+	var clone = __webpack_require__(15)
+	var styleAttr = __webpack_require__(28)
+	var camelCase = __webpack_require__(29)
+	var assign = __webpack_require__(36)
+	var mapValues = __webpack_require__(47)
+	var querySelectorAll = __webpack_require__(59)
 
 	function styleCamelCase (name) {
 	  var camel = camelCase(name)
@@ -1203,7 +1329,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1214,9 +1340,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseClone = __webpack_require__(15),
-	    bindCallback = __webpack_require__(25),
-	    isIterateeCall = __webpack_require__(26);
+	var baseClone = __webpack_require__(16),
+	    bindCallback = __webpack_require__(26),
+	    isIterateeCall = __webpack_require__(27);
 
 	/**
 	 * Creates a clone of `value`. If `isDeep` is `true` nested objects are cloned,
@@ -1287,7 +1413,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -1298,12 +1424,12 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var arrayCopy = __webpack_require__(16),
-	    arrayEach = __webpack_require__(17),
-	    baseAssign = __webpack_require__(18),
-	    baseFor = __webpack_require__(24),
-	    isArray = __webpack_require__(23),
-	    keys = __webpack_require__(20);
+	var arrayCopy = __webpack_require__(17),
+	    arrayEach = __webpack_require__(18),
+	    baseAssign = __webpack_require__(19),
+	    baseFor = __webpack_require__(25),
+	    isArray = __webpack_require__(24),
+	    keys = __webpack_require__(21);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -1565,7 +1691,7 @@ var ReactD3Tooltip =
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	/**
@@ -1600,7 +1726,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	/**
@@ -1637,7 +1763,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1648,8 +1774,8 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseCopy = __webpack_require__(19),
-	    keys = __webpack_require__(20);
+	var baseCopy = __webpack_require__(20),
+	    keys = __webpack_require__(21);
 
 	/**
 	 * The base implementation of `_.assign` without support for argument juggling,
@@ -1670,7 +1796,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	/**
@@ -1708,7 +1834,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1719,9 +1845,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(21),
-	    isArguments = __webpack_require__(22),
-	    isArray = __webpack_require__(23);
+	var getNative = __webpack_require__(22),
+	    isArguments = __webpack_require__(23),
+	    isArray = __webpack_require__(24);
 
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -1950,7 +2076,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	/**
@@ -2093,7 +2219,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	/**
@@ -2205,7 +2331,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	/**
@@ -2391,7 +2517,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	/**
@@ -2483,7 +2609,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	/**
@@ -2554,7 +2680,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/**
@@ -2692,7 +2818,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	/*
@@ -2770,7 +2896,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2781,7 +2907,7 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var createCompounder = __webpack_require__(29);
+	var createCompounder = __webpack_require__(30);
 
 	/**
 	 * Converts `string` to camel case.
@@ -2812,7 +2938,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2823,8 +2949,8 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var deburr = __webpack_require__(30),
-	    words = __webpack_require__(32);
+	var deburr = __webpack_require__(31),
+	    words = __webpack_require__(33);
 
 	/**
 	 * Creates a function that produces compound words out of the words in a
@@ -2852,7 +2978,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2863,7 +2989,7 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseToString = __webpack_require__(31);
+	var baseToString = __webpack_require__(32);
 
 	/** Used to match [combining diacritical marks](https://en.wikipedia.org/wiki/Combining_Diacritical_Marks). */
 	var reComboMark = /[\u0300-\u036f\ufe20-\ufe23]/g;
@@ -2926,7 +3052,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	/**
@@ -2954,7 +3080,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -2965,8 +3091,8 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseToString = __webpack_require__(33),
-	    isIterateeCall = __webpack_require__(34);
+	var baseToString = __webpack_require__(34),
+	    isIterateeCall = __webpack_require__(35);
 
 	/** Used to match words to create compound words. */
 	var reWords = (function() {
@@ -3006,7 +3132,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	/**
@@ -3034,7 +3160,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	/**
@@ -3172,7 +3298,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3183,9 +3309,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseAssign = __webpack_require__(36),
-	    createAssigner = __webpack_require__(42),
-	    keys = __webpack_require__(38);
+	var baseAssign = __webpack_require__(37),
+	    createAssigner = __webpack_require__(43),
+	    keys = __webpack_require__(39);
 
 	/**
 	 * A specialized version of `_.assign` for customizing assigned values without
@@ -3258,7 +3384,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3269,8 +3395,8 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseCopy = __webpack_require__(37),
-	    keys = __webpack_require__(38);
+	var baseCopy = __webpack_require__(38),
+	    keys = __webpack_require__(39);
 
 	/**
 	 * The base implementation of `_.assign` without support for argument juggling,
@@ -3291,7 +3417,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	/**
@@ -3329,7 +3455,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3340,9 +3466,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(39),
-	    isArguments = __webpack_require__(40),
-	    isArray = __webpack_require__(41);
+	var getNative = __webpack_require__(40),
+	    isArguments = __webpack_require__(41),
+	    isArray = __webpack_require__(42);
 
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -3571,7 +3697,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 	/**
@@ -3714,7 +3840,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports) {
 
 	/**
@@ -3826,7 +3952,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports) {
 
 	/**
@@ -4012,7 +4138,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4023,9 +4149,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var bindCallback = __webpack_require__(43),
-	    isIterateeCall = __webpack_require__(44),
-	    restParam = __webpack_require__(45);
+	var bindCallback = __webpack_require__(44),
+	    isIterateeCall = __webpack_require__(45),
+	    restParam = __webpack_require__(46);
 
 	/**
 	 * Creates a function that assigns properties of source object(s) to a given
@@ -4070,7 +4196,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports) {
 
 	/**
@@ -4141,7 +4267,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	/**
@@ -4279,7 +4405,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports) {
 
 	/**
@@ -4352,7 +4478,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4363,9 +4489,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseCallback = __webpack_require__(47),
-	    baseFor = __webpack_require__(57),
-	    keys = __webpack_require__(51);
+	var baseCallback = __webpack_require__(48),
+	    baseFor = __webpack_require__(58),
+	    keys = __webpack_require__(52);
 
 	/**
 	 * The base implementation of `_.forOwn` without support for callback
@@ -4449,7 +4575,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4460,10 +4586,10 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseIsEqual = __webpack_require__(48),
-	    bindCallback = __webpack_require__(55),
-	    isArray = __webpack_require__(49),
-	    pairs = __webpack_require__(56);
+	var baseIsEqual = __webpack_require__(49),
+	    bindCallback = __webpack_require__(56),
+	    isArray = __webpack_require__(50),
+	    pairs = __webpack_require__(57);
 
 	/** Used to match property names within property paths. */
 	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\n\\]|\\.)*?\1)\]/,
@@ -4877,7 +5003,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4888,9 +5014,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var isArray = __webpack_require__(49),
-	    isTypedArray = __webpack_require__(50),
-	    keys = __webpack_require__(51);
+	var isArray = __webpack_require__(50),
+	    isTypedArray = __webpack_require__(51),
+	    keys = __webpack_require__(52);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -5225,7 +5351,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports) {
 
 	/**
@@ -5411,7 +5537,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports) {
 
 	/**
@@ -5527,7 +5653,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5538,9 +5664,9 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(52),
-	    isArguments = __webpack_require__(53),
-	    isArray = __webpack_require__(54);
+	var getNative = __webpack_require__(53),
+	    isArguments = __webpack_require__(54),
+	    isArray = __webpack_require__(55);
 
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -5769,7 +5895,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports) {
 
 	/**
@@ -5912,7 +6038,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports) {
 
 	/**
@@ -6024,7 +6150,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports) {
 
 	/**
@@ -6210,7 +6336,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports) {
 
 	/**
@@ -6281,7 +6407,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6292,7 +6418,7 @@ var ReactD3Tooltip =
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var keys = __webpack_require__(51);
+	var keys = __webpack_require__(52);
 
 	/**
 	 * Converts `value` to an object if it's not one.
@@ -6365,7 +6491,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports) {
 
 	/**
@@ -6457,13 +6583,13 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(59);
+	module.exports = __webpack_require__(60);
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6472,8 +6598,8 @@ var ReactD3Tooltip =
 	 * @author yiminghe@gmail.com
 	 */
 
-	var util = __webpack_require__(60);
-	var parser = __webpack_require__(61);
+	var util = __webpack_require__(61);
+	var parser = __webpack_require__(62);
 
 	var EXPANDO_SELECTOR_KEY = '_ks_data_selector_id_',
 	  caches = {},
@@ -7166,7 +7292,7 @@ var ReactD3Tooltip =
 	 */
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports) {
 
 	/**
@@ -7517,7 +7643,7 @@ var ReactD3Tooltip =
 	};
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -8726,7 +8852,7 @@ var ReactD3Tooltip =
 	}
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports) {
 
 	var Window = {
@@ -8741,7 +8867,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8764,15 +8890,15 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _d3 = __webpack_require__(5);
+	var _d3 = __webpack_require__(6);
 
 	var _d32 = _interopRequireDefault(_d3);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
-	var _utilsScale = __webpack_require__(8);
+	var _utilsScale = __webpack_require__(9);
 
 	var Axis = (function (_Component) {
 	  _inherits(Axis, _Component);
@@ -8879,7 +9005,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8902,15 +9028,15 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axis = __webpack_require__(63);
+	var _axis = __webpack_require__(64);
 
 	var _axis2 = _interopRequireDefault(_axis);
 
-	var _label = __webpack_require__(65);
+	var _label = __webpack_require__(66);
 
 	var _label2 = _interopRequireDefault(_label);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -9045,7 +9171,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9068,15 +9194,15 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _d3 = __webpack_require__(5);
+	var _d3 = __webpack_require__(6);
 
 	var _d32 = _interopRequireDefault(_d3);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -9172,7 +9298,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9195,15 +9321,15 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axis = __webpack_require__(63);
+	var _axis = __webpack_require__(64);
 
 	var _axis2 = _interopRequireDefault(_axis);
 
-	var _label = __webpack_require__(65);
+	var _label = __webpack_require__(66);
 
 	var _label2 = _interopRequireDefault(_label);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -9337,7 +9463,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9360,11 +9486,11 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _axisAxis = __webpack_require__(63);
+	var _axisAxis = __webpack_require__(64);
 
 	var _axisAxis2 = _interopRequireDefault(_axisAxis);
 
-	var _commonProps = __webpack_require__(7);
+	var _commonProps = __webpack_require__(8);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -9500,7 +9626,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {'use strict';
@@ -9528,10 +9654,10 @@ var ReactD3Tooltip =
 	    });
 	  }
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -9587,19 +9713,19 @@ var ReactD3Tooltip =
 	    return d3.extent([].concat.apply([], domainArr));
 	  }
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(71);
+	var content = __webpack_require__(72);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(73)(content, {});
+	var update = __webpack_require__(74)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -9616,10 +9742,10 @@ var ReactD3Tooltip =
 	}
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(72)();
+	exports = module.exports = __webpack_require__(73)();
 	// imports
 
 
@@ -9630,7 +9756,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports) {
 
 	/*
@@ -9686,7 +9812,7 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -9911,7 +10037,304 @@ var ReactD3Tooltip =
 
 
 /***/ },
-/* 74 */
+/* 75 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactFauxDom = __webpack_require__(13);
+
+	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
+
+	var Focus = (function (_Component) {
+	  _inherits(Focus, _Component);
+
+	  function Focus(props) {
+	    _classCallCheck(this, Focus);
+
+	    _get(Object.getPrototypeOf(Focus.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(Focus, [{
+	    key: '_mkFocus',
+	    value: function _mkFocus(dom) {
+	      var _props = this.props;
+	      var height = _props.height;
+	      var focusX = _props.focusX;
+	      var focusY = _props.focusY;
+	      var contentTooltip = _props.contentTooltip;
+
+	      var focusDom = d3.select(dom).append("g").attr("transform", 'translate(' + focusX + ',' + focusY + ')').attr("class", "react-d3-basics__voronoi_utils__focus");
+
+	      focusDom.append("circle").attr("class", "focus__inner_circle").attr("r", 3).style('fill', function () {
+	        return contentTooltip ? contentTooltip.color : '#CCC';
+	      });
+
+	      focusDom.append("circle").attr("class", "focus__outer_circle").attr("r", 7).style('fill', 'none').style('stroke', "#CCC").style('stroke-width', 3);
+
+	      focusDom.append("line").attr("class", "focus__line").attr("x1", 0).attr("y1", -height).attr("x2", 0).attr("y2", height).style('stroke', "#CCC").style("stroke-width", 2).style("stroke-opacity", 0.5);
+
+	      return focusDom;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var focusDom = _reactFauxDom2['default'].createElement('g');
+	      focusDom.setAttribute("class", "react-d3-basics__voronoi_utils__focus");
+
+	      var focus = this._mkFocus(focusDom);
+
+	      return focus.node().toReact();
+	    }
+	  }]);
+
+	  return Focus;
+	})(_react.Component);
+
+	exports['default'] = Focus;
+	module.exports = exports['default'];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 76 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _inheritIndex = __webpack_require__(77);
+
+	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
+
+	var _reactD3Basic = __webpack_require__(78);
+
+	var _utilsVoronoi = __webpack_require__(98);
+
+	var _utilsVoronoi2 = _interopRequireDefault(_utilsVoronoi);
+
+	var _utilsTooltipUpdate = __webpack_require__(99);
+
+	var LineChartContainer = (function (_TooltipSet) {
+	  _inherits(LineChartContainer, _TooltipSet);
+
+	  function LineChartContainer(props) {
+	    _classCallCheck(this, LineChartContainer);
+
+	    _get(Object.getPrototypeOf(LineChartContainer.prototype), 'constructor', this).call(this, props);
+
+	    var _props = this.props;
+	    var margins = _props.margins;
+	    var width = _props.width;
+	    var height = _props.height;
+
+	    this.state = {
+	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
+	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
+	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 }
+	    };
+
+	    this.mkXDomain();
+	    this.mkYDomain();
+	    this.mkXScale(this.setXDomain);
+	    this.mkYScale(this.setYDomain);
+	    this.mkSeries();
+	  }
+
+	  _createClass(LineChartContainer, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return !(0, _utilsTooltipUpdate.isTooltipUpdate)(nextProps, nextState, this);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var xScaleSet = this.setXScale;
+	      var yScaleSet = this.setYScale;
+	      var chartSeriesData = this.setSeries;
+
+	      var _props2 = this.props;
+	      var onMouseOut = _props2.onMouseOut;
+	      var onMouseOver = _props2.onMouseOver;
+
+	      var voronoi = _react2['default'].createElement(_utilsVoronoi2['default'], _extends({}, this.props, {
+	        xScaleSet: xScaleSet,
+	        yScaleSet: yScaleSet,
+	        dataset: chartSeriesData,
+	        focus: true,
+	        onMouseOver: onMouseOver,
+	        onMouseOut: onMouseOut
+	      }));
+
+	      return _react2['default'].createElement(
+	        'g',
+	        null,
+	        _react2['default'].createElement(_reactD3Basic.LineChart, this.props),
+	        voronoi
+	      );
+	    }
+	  }]);
+
+	  return LineChartContainer;
+	})(_inheritIndex2['default']);
+
+	exports['default'] = LineChartContainer;
+	module.exports = exports['default'];
+
+/***/ },
+/* 77 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactD3Core = __webpack_require__(4);
+
+	var _reactD3Basic = __webpack_require__(78);
+
+	var TooltipSet = (function (_Component) {
+	  _inherits(TooltipSet, _Component);
+
+	  function TooltipSet(props) {
+	    _classCallCheck(this, TooltipSet);
+
+	    _get(Object.getPrototypeOf(TooltipSet.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(TooltipSet, [{
+	    key: 'mkXDomain',
+	    value: function mkXDomain() {
+	      return this.setXDomain = (0, _reactD3Core.xDomainCount)(this.props);
+	    }
+	  }, {
+	    key: 'mkYDomain',
+	    value: function mkYDomain(stack) {
+	      return this.setYDomain = (0, _reactD3Core.yDomainCount)(this.props, stack);
+	    }
+	  }, {
+	    key: 'mkXScale',
+	    value: function mkXScale(xDomain) {
+	      var _props = this.props;
+	      var data = _props.data;
+	      var xScale = _props.xScale;
+	      var _state = this.state;
+	      var xRange = _state.xRange;
+	      var xRangeRoundBands = _state.xRangeRoundBands;
+
+	      var newXScale = {
+	        scale: xScale,
+	        range: xRange,
+	        domain: xDomain,
+	        rangeRoundBands: xRangeRoundBands
+	      };
+
+	      return this.setXScale = (0, _reactD3Core.scale)(newXScale);
+	    }
+	  }, {
+	    key: 'mkYScale',
+	    value: function mkYScale(yDomain) {
+	      var _props2 = this.props;
+	      var data = _props2.data;
+	      var yScale = _props2.yScale;
+	      var _state2 = this.state;
+	      var yRange = _state2.yRange;
+	      var yRangeRoundBands = _state2.yRangeRoundBands;
+
+	      var newYScale = {
+	        scale: yScale,
+	        range: yRange,
+	        domain: yDomain,
+	        rangeRoundBands: yRangeRoundBands
+	      };
+
+	      return this.setYScale = (0, _reactD3Core.scale)(newYScale);
+	    }
+	  }, {
+	    key: 'mkSeries',
+	    value: function mkSeries() {
+	      return this.setSeries = (0, _reactD3Basic.series)(this.props);
+	    }
+	  }], [{
+	    key: 'propTypes',
+	    value: {
+	      data: _react.PropTypes.array.isRequired,
+	      chartSeries: _react.PropTypes.array.isRequired,
+	      width: _react.PropTypes.number,
+	      height: _react.PropTypes.number,
+	      x: _react.PropTypes.func,
+	      xDomain: _react.PropTypes.array,
+	      xRange: _react.PropTypes.array,
+	      xScale: _react.PropTypes.string,
+	      xRangeRoundBands: _react.PropTypes.object,
+	      y: _react.PropTypes.func,
+	      yDomain: _react.PropTypes.array,
+	      yRange: _react.PropTypes.array,
+	      yScale: _react.PropTypes.string
+	    },
+	    enumerable: true
+	  }]);
+
+	  return TooltipSet;
+	})(_react.Component);
+
+	exports['default'] = TooltipSet;
+	module.exports = exports['default'];
+
+/***/ },
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Export utils
@@ -9924,79 +10347,79 @@ var ReactD3Tooltip =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _utilsSeries = __webpack_require__(75);
+	var _utilsSeries = __webpack_require__(79);
 
 	// Export inherit components
 
-	var _inheritXyPlot = __webpack_require__(76);
+	var _inheritXyPlot = __webpack_require__(80);
 
 	var _inheritXyPlot2 = _interopRequireDefault(_inheritXyPlot);
 
-	var _inheritPieLayout = __webpack_require__(77);
+	var _inheritPieLayout = __webpack_require__(81);
 
 	var _inheritPieLayout2 = _interopRequireDefault(_inheritPieLayout);
 
 	// Export basic component of charts
 
-	var _componentsLine = __webpack_require__(78);
+	var _componentsLine = __webpack_require__(82);
 
 	var _componentsLine2 = _interopRequireDefault(_componentsLine);
 
-	var _componentsArea = __webpack_require__(79);
+	var _componentsArea = __webpack_require__(83);
 
 	var _componentsArea2 = _interopRequireDefault(_componentsArea);
 
-	var _componentsArea_stack = __webpack_require__(80);
+	var _componentsArea_stack = __webpack_require__(84);
 
 	var _componentsArea_stack2 = _interopRequireDefault(_componentsArea_stack);
 
-	var _componentsBar = __webpack_require__(81);
+	var _componentsBar = __webpack_require__(85);
 
 	var _componentsBar2 = _interopRequireDefault(_componentsBar);
 
-	var _componentsBar_group = __webpack_require__(82);
+	var _componentsBar_group = __webpack_require__(86);
 
 	var _componentsBar_group2 = _interopRequireDefault(_componentsBar_group);
 
-	var _componentsBar_stack = __webpack_require__(83);
+	var _componentsBar_stack = __webpack_require__(87);
 
 	var _componentsBar_stack2 = _interopRequireDefault(_componentsBar_stack);
 
-	var _componentsPie = __webpack_require__(84);
+	var _componentsPie = __webpack_require__(88);
 
 	var _componentsPie2 = _interopRequireDefault(_componentsPie);
 
-	var _componentsScatter = __webpack_require__(85);
+	var _componentsScatter = __webpack_require__(89);
 
 	var _componentsScatter2 = _interopRequireDefault(_componentsScatter);
 
 	// Export high level charts
 
-	var _line = __webpack_require__(86);
+	var _line = __webpack_require__(90);
 
 	var _line2 = _interopRequireDefault(_line);
 
-	var _scatter = __webpack_require__(88);
+	var _scatter = __webpack_require__(92);
 
 	var _scatter2 = _interopRequireDefault(_scatter);
 
-	var _area_stack = __webpack_require__(89);
+	var _area_stack = __webpack_require__(93);
 
 	var _area_stack2 = _interopRequireDefault(_area_stack);
 
-	var _bar = __webpack_require__(90);
+	var _bar = __webpack_require__(94);
 
 	var _bar2 = _interopRequireDefault(_bar);
 
-	var _bar_group = __webpack_require__(91);
+	var _bar_group = __webpack_require__(95);
 
 	var _bar_group2 = _interopRequireDefault(_bar_group);
 
-	var _bar_stack = __webpack_require__(92);
+	var _bar_stack = __webpack_require__(96);
 
 	var _bar_stack2 = _interopRequireDefault(_bar_stack);
 
-	var _pie = __webpack_require__(93);
+	var _pie = __webpack_require__(97);
 
 	var _pie2 = _interopRequireDefault(_pie);
 
@@ -10020,7 +10443,7 @@ var ReactD3Tooltip =
 	exports.PieChart = _pie2['default'];
 
 /***/ },
-/* 75 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -10063,10 +10486,10 @@ var ReactD3Tooltip =
 
 	  return chartSeriesData;
 	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 76 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10089,9 +10512,9 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _utilsSeries = __webpack_require__(75);
+	var _utilsSeries = __webpack_require__(79);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
 	var xyChart = (function (_Component) {
 	  _inherits(xyChart, _Component);
@@ -10207,7 +10630,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 77 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10298,7 +10721,7 @@ var ReactD3Tooltip =
 	module.exports = exports["default"];
 
 /***/ },
-/* 78 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -10321,7 +10744,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -10399,10 +10822,11 @@ var ReactD3Tooltip =
 
 	exports['default'] = Line;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 79 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -10425,7 +10849,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -10517,10 +10941,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = AreaSimple;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 80 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -10543,7 +10967,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -10664,10 +11088,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = AreaStack;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 81 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -10690,7 +11114,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -10776,10 +11200,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = Bar;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 82 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -10802,7 +11226,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -10888,10 +11312,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = BarGroup;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 83 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -10914,7 +11338,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -11036,10 +11460,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = BarStack;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 84 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -11062,7 +11486,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -11164,10 +11588,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = Pie;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 85 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -11190,7 +11614,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -11273,10 +11697,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = Scatter;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 86 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11301,25 +11725,25 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _inheritXyPlot = __webpack_require__(76);
+	var _inheritXyPlot = __webpack_require__(80);
 
 	var _inheritXyPlot2 = _interopRequireDefault(_inheritXyPlot);
 
-	var _componentsLine = __webpack_require__(78);
+	var _componentsLine = __webpack_require__(82);
 
 	var _componentsLine2 = _interopRequireDefault(_componentsLine);
 
-	var _componentsArea = __webpack_require__(79);
+	var _componentsArea = __webpack_require__(83);
 
 	var _componentsArea2 = _interopRequireDefault(_componentsArea);
 
-	var _componentsScatter = __webpack_require__(85);
+	var _componentsScatter = __webpack_require__(89);
 
 	var _componentsScatter2 = _interopRequireDefault(_componentsScatter);
 
-	var _commonProps = __webpack_require__(87);
+	var _commonProps = __webpack_require__(91);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -11425,7 +11849,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 87 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -11458,10 +11882,10 @@ var ReactD3Tooltip =
 	  pieSort: d3.descending
 	};
 	exports.pieProps = pieProps;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 88 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11486,17 +11910,17 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _inheritXyPlot = __webpack_require__(76);
+	var _inheritXyPlot = __webpack_require__(80);
 
 	var _inheritXyPlot2 = _interopRequireDefault(_inheritXyPlot);
 
-	var _componentsScatter = __webpack_require__(85);
+	var _componentsScatter = __webpack_require__(89);
 
 	var _componentsScatter2 = _interopRequireDefault(_componentsScatter);
 
-	var _commonProps = __webpack_require__(87);
+	var _commonProps = __webpack_require__(91);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -11584,7 +12008,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 89 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11609,17 +12033,17 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _inheritXyPlot = __webpack_require__(76);
+	var _inheritXyPlot = __webpack_require__(80);
 
 	var _inheritXyPlot2 = _interopRequireDefault(_inheritXyPlot);
 
-	var _componentsArea_stack = __webpack_require__(80);
+	var _componentsArea_stack = __webpack_require__(84);
 
 	var _componentsArea_stack2 = _interopRequireDefault(_componentsArea_stack);
 
-	var _commonProps = __webpack_require__(87);
+	var _commonProps = __webpack_require__(91);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -11702,7 +12126,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 90 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11727,17 +12151,17 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _inheritXyPlot = __webpack_require__(76);
+	var _inheritXyPlot = __webpack_require__(80);
 
 	var _inheritXyPlot2 = _interopRequireDefault(_inheritXyPlot);
 
-	var _componentsBar = __webpack_require__(81);
+	var _componentsBar = __webpack_require__(85);
 
 	var _componentsBar2 = _interopRequireDefault(_componentsBar);
 
-	var _commonProps = __webpack_require__(87);
+	var _commonProps = __webpack_require__(91);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -11825,7 +12249,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 91 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -11850,17 +12274,17 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _inheritXyPlot = __webpack_require__(76);
+	var _inheritXyPlot = __webpack_require__(80);
 
 	var _inheritXyPlot2 = _interopRequireDefault(_inheritXyPlot);
 
-	var _componentsBar_group = __webpack_require__(82);
+	var _componentsBar_group = __webpack_require__(86);
 
 	var _componentsBar_group2 = _interopRequireDefault(_componentsBar_group);
 
-	var _commonProps = __webpack_require__(87);
+	var _commonProps = __webpack_require__(91);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -11966,10 +12390,10 @@ var ReactD3Tooltip =
 
 	exports['default'] = BarGroupChart;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 92 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11994,17 +12418,17 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _inheritXyPlot = __webpack_require__(76);
+	var _inheritXyPlot = __webpack_require__(80);
 
 	var _inheritXyPlot2 = _interopRequireDefault(_inheritXyPlot);
 
-	var _componentsBar_stack = __webpack_require__(83);
+	var _componentsBar_stack = __webpack_require__(87);
 
 	var _componentsBar_stack2 = _interopRequireDefault(_componentsBar_stack);
 
-	var _commonProps = __webpack_require__(87);
+	var _commonProps = __webpack_require__(91);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
@@ -12088,7 +12512,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 93 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12113,17 +12537,17 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _inheritPieLayout = __webpack_require__(77);
+	var _inheritPieLayout = __webpack_require__(81);
 
 	var _inheritPieLayout2 = _interopRequireDefault(_inheritPieLayout);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _componentsPie = __webpack_require__(84);
+	var _componentsPie = __webpack_require__(88);
 
 	var _componentsPie2 = _interopRequireDefault(_componentsPie);
 
-	var _commonProps = __webpack_require__(87);
+	var _commonProps = __webpack_require__(91);
 
 	var PieChart = (function (_PieLayout) {
 	  _inherits(PieChart, _PieLayout);
@@ -12179,298 +12603,7 @@ var ReactD3Tooltip =
 	module.exports = exports['default'];
 
 /***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(d3) {'use strict';
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactD3Core = __webpack_require__(3);
-
-	var _reactD3Basic = __webpack_require__(74);
-
-	"use sctrict";
-
-	var TooltipSet = (function (_Component) {
-	  _inherits(TooltipSet, _Component);
-
-	  function TooltipSet(props) {
-	    _classCallCheck(this, TooltipSet);
-
-	    _get(Object.getPrototypeOf(TooltipSet.prototype), 'constructor', this).call(this, props);
-	  }
-
-	  _createClass(TooltipSet, [{
-	    key: 'mkXDomain',
-	    value: function mkXDomain() {
-	      return this.setXDomain = (0, _reactD3Core.xDomainCount)(this.props);
-	    }
-	  }, {
-	    key: 'mkYDomain',
-	    value: function mkYDomain(stack) {
-	      return this.setYDomain = (0, _reactD3Core.yDomainCount)(this.props, stack);
-	    }
-	  }, {
-	    key: 'mkXScale',
-	    value: function mkXScale(xDomain) {
-	      var _props = this.props;
-	      var data = _props.data;
-	      var xScale = _props.xScale;
-	      var _state = this.state;
-	      var xRange = _state.xRange;
-	      var xRangeRoundBands = _state.xRangeRoundBands;
-
-	      var newXScale = {
-	        scale: xScale,
-	        range: xRange,
-	        domain: xDomain,
-	        rangeRoundBands: xRangeRoundBands
-	      };
-
-	      return this.setXScale = (0, _reactD3Core.scale)(newXScale);
-	    }
-	  }, {
-	    key: 'mkYScale',
-	    value: function mkYScale(yDomain) {
-	      var _props2 = this.props;
-	      var data = _props2.data;
-	      var yScale = _props2.yScale;
-	      var _state2 = this.state;
-	      var yRange = _state2.yRange;
-	      var yRangeRoundBands = _state2.yRangeRoundBands;
-
-	      var newYScale = {
-	        scale: yScale,
-	        range: yRange,
-	        domain: yDomain,
-	        rangeRoundBands: yRangeRoundBands
-	      };
-
-	      return this.setYScale = (0, _reactD3Core.scale)(newYScale);
-	    }
-	  }, {
-	    key: 'mkSeries',
-	    value: function mkSeries() {
-	      return this.setSeries = (0, _reactD3Basic.series)(this.props);
-	    }
-	  }, {
-	    key: 'voronoiMouseOut',
-	    value: function voronoiMouseOut(d, i, focus) {
-	      if (focus) focus.attr("transform", "translate(-100,-100)");
-
-	      this.setState({
-	        xTooltip: null,
-	        yTooltip: null,
-	        contentTooltip: null
-	      });
-	    }
-	  }, {
-	    key: 'voronoiMouseOver',
-	    value: function voronoiMouseOver(d, i, xScaleSet, yScaleSet, focus, stack) {
-	      var newY = stack ? yScaleSet(d.y + d.y0) : yScaleSet(d.y);
-
-	      if (focus) {
-	        var fDom = d3.select('.react-d3-basics__voronoi_utils__focus');
-
-	        fDom.attr("transform", "translate(" + xScaleSet(d.x) + "," + newY + ")");
-
-	        fDom.select(".focus__inner_circle").style('fill', d.color);
-
-	        fDom.select(".focus__line").style('stroke', "#CCC");
-
-	        fDom.select(".focus__outer_circle").style('fill', 'none').style('stroke', "#CCC").style('stroke-width', 3);
-	      }
-
-	      this.setState({
-	        xTooltip: d3.event.clientX,
-	        yTooltip: d3.event.clientY,
-	        contentTooltip: d
-	      });
-	    }
-	  }], [{
-	    key: 'propTypes',
-	    value: {
-	      data: _react.PropTypes.array.isRequired,
-	      chartSeries: _react.PropTypes.array.isRequired,
-	      width: _react.PropTypes.number,
-	      height: _react.PropTypes.number,
-	      x: _react.PropTypes.func,
-	      xDomain: _react.PropTypes.array,
-	      xRange: _react.PropTypes.array,
-	      xScale: _react.PropTypes.string,
-	      xRangeRoundBands: _react.PropTypes.object,
-	      y: _react.PropTypes.func,
-	      yDomain: _react.PropTypes.array,
-	      yRange: _react.PropTypes.array,
-	      yScale: _react.PropTypes.string
-	    },
-	    enumerable: true
-	  }]);
-
-	  return TooltipSet;
-	})(_react.Component);
-
-	exports['default'] = TooltipSet;
-	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var Tooltip = (function (_Component) {
-	  _inherits(Tooltip, _Component);
-
-	  function Tooltip(props) {
-	    _classCallCheck(this, Tooltip);
-
-	    _get(Object.getPrototypeOf(Tooltip.prototype), 'constructor', this).call(this, props);
-	  }
-
-	  _createClass(Tooltip, [{
-	    key: '_mkContent',
-	    value: function _mkContent() {
-	      var contentTooltip = this.props.contentTooltip;
-
-	      var cv = Object.keys(contentTooltip).map(function (d, i) {
-	        if (d === 'color') {
-	          var colorStyle = {
-	            backgroundColor: contentTooltip[d],
-	            color: '#FFF'
-	          };
-	        }
-
-	        var trStyle = {
-	          display: 'table-row',
-	          backgroundImage: 'linear-gradient(#FFF, #EEE)',
-	          padding: '3px',
-	          height: '30px'
-	        };
-
-	        var tdStyle = {
-	          display: 'table-cell',
-	          padding: '3px',
-	          verticalAlign: 'middle',
-	          whiteSpace: 'normal',
-	          border: '1px solid #D3D3D3'
-	        };
-
-	        if (colorStyle) {
-	          var tdColorStyle = Object.assign(tdStyle, colorStyle);
-	        }
-
-	        return _react2['default'].createElement(
-	          'div',
-	          { className: 'tooltip_tr', style: trStyle, key: i },
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'tooltip_td', style: tdStyle, key: i },
-	            d
-	          ),
-	          _react2['default'].createElement(
-	            'div',
-	            { className: 'tooltip_td', style: colorStyle ? tdColorStyle : tdStyle, key: i.i },
-	            contentTooltip[d].toString()
-	          )
-	        );
-	      });
-
-	      return cv;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var xTooltip = _props.xTooltip;
-	      var yTooltip = _props.yTooltip;
-	      var contentTooltip = _props.contentTooltip;
-	      var dist = _props.dist;
-
-	      var style = {
-	        left: xTooltip ? xTooltip + dist : -100,
-	        top: yTooltip ? yTooltip + dist : -100,
-	        position: 'fixed'
-	      };
-
-	      if (contentTooltip) {
-	        var cvContent = this._mkContent();
-	      }
-
-	      var tableStyle = {
-	        display: 'table',
-	        borderStyle: 'solid',
-	        borderWidth: '1px',
-	        boxSizing: 'border-box'
-	      };
-
-	      return _react2['default'].createElement(
-	        'div',
-	        {
-	          style: style,
-	          className: 'react-d3-basics__tooltip_utils',
-	          ref: 'tooltip'
-	        },
-	        _react2['default'].createElement(
-	          'div',
-	          { className: 'tooltip_table', style: tableStyle },
-	          cvContent
-	        )
-	      );
-	    }
-	  }], [{
-	    key: 'defaultProps',
-	    value: {
-	      gravity: 's',
-	      dist: 35
-	    },
-	    enumerable: true
-	  }]);
-
-	  return Tooltip;
-	})(_react.Component);
-
-	exports['default'] = Tooltip;
-	module.exports = exports['default'];
-
-/***/ },
-/* 96 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -12493,7 +12626,7 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactFauxDom = __webpack_require__(12);
+	var _reactFauxDom = __webpack_require__(13);
 
 	var _reactFauxDom2 = _interopRequireDefault(_reactFauxDom);
 
@@ -12521,11 +12654,8 @@ var ReactD3Tooltip =
 	      var yScaleSet = _props.yScaleSet;
 	      var onMouseOut = _props.onMouseOut;
 	      var onMouseOver = _props.onMouseOver;
-	      var focus = _props.focus;
 	      var stack = _props.stack;
 	      var height = _props.height;
-
-	      var focusDom;
 
 	      // because d3.geom.voronoi does not handle coincident points (and this data from the government comes pre-rounded to a tenth of a degree), d3.nest is used to collapse coincident points before constructing the Voronoi.
 	      // see example: http://bl.ocks.org/mbostock/8033015
@@ -12548,17 +12678,15 @@ var ReactD3Tooltip =
 
 	      var voronoiPolygon = this._setGeomVoronoi().call(this, nestData);
 
-	      if (focus) focusDom = this._mkFocus(dom);
-
 	      // make voronoi
 	      var voronoiChart = d3.select(dom);
 
 	      var voronoiPath = voronoiChart.selectAll('path').data(voronoiPolygon).enter().append("path").attr("d", function (d) {
 	        return "M" + d.join("L") + "Z";
 	      }).on("mouseover", function (d, i) {
-	        return focus ? onMouseOver(d, i, xScaleSet, yScaleSet, focusDom, stack) : onMouseOver(d, i, xScaleSet, yScaleSet, focusDom);
+	        onMouseOver(d, i, xScaleSet, yScaleSet, stack);
 	      }).on("mouseout", function (d, i) {
-	        return focus ? onMouseOut(d, i, focusDom, stack) : onMouseOut(d, i, focusDom);
+	        onMouseOut(d, i, stack);
 	      }).datum(function (d) {
 	        return d.point;
 	      }).style('fill', 'none').style('pointer-events', 'all');
@@ -12571,21 +12699,6 @@ var ReactD3Tooltip =
 	      return d3.layout.stack().values(function (d) {
 	        return d.data;
 	      });
-	    }
-	  }, {
-	    key: '_mkFocus',
-	    value: function _mkFocus(dom) {
-	      var height = this.props.height;
-
-	      var focusDom = d3.select(dom).append("g").attr("transform", "translate(-100,-100)").attr("class", "react-d3-basics__voronoi_utils__focus");
-
-	      focusDom.append("circle").attr("class", "focus__inner_circle").attr("r", 3);
-
-	      focusDom.append("circle").attr("class", "focus__outer_circle").attr("r", 7);
-
-	      focusDom.append("line").attr("class", "focus__line").attr("x1", 0).attr("y1", -height).attr("x2", 0).attr("y2", height).style("stroke-width", 2).style("stroke-opacity", 0.5);
-
-	      return focusDom;
 	    }
 	  }, {
 	    key: '_setGeomVoronoi',
@@ -12635,10 +12748,100 @@ var ReactD3Tooltip =
 
 	exports['default'] = Voronoi;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 97 */
+/* 99 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.isTooltipUpdate = isTooltipUpdate;
+
+	function isTooltipUpdate(nextProps, nextState, that) {
+	  if (nextProps.xTooltip !== that.props.xTooltip || nextProps.yTooltip !== that.props.yTooltip) return true;else return false;
+	}
+
+/***/ },
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var VoronoiEvt = (function (_Component) {
+	  _inherits(VoronoiEvt, _Component);
+
+	  function VoronoiEvt(props) {
+	    _classCallCheck(this, VoronoiEvt);
+
+	    _get(Object.getPrototypeOf(VoronoiEvt.prototype), "constructor", this).call(this, props);
+
+	    this.state = {
+	      focusX: -100,
+	      focusY: -100,
+	      xTooltip: null,
+	      yTooltip: null,
+	      contentTooltip: null
+	    };
+	  }
+
+	  _createClass(VoronoiEvt, [{
+	    key: "voronoiMouseOut",
+	    value: function voronoiMouseOut(d, i) {
+
+	      this.setState({
+	        focusX: -100,
+	        focusY: -100,
+	        xTooltip: null,
+	        yTooltip: null,
+	        contentTooltip: null
+	      });
+	    }
+	  }, {
+	    key: "voronoiMouseOver",
+	    value: function voronoiMouseOver(d, i, xScaleSet, yScaleSet, stack) {
+	      var newY = stack ? yScaleSet(d.y + d.y0) : yScaleSet(d.y);
+
+	      this.setState({
+	        focusX: xScaleSet(d.x),
+	        focusY: newY,
+	        xTooltip: d3.event.clientX,
+	        yTooltip: d3.event.clientY,
+	        contentTooltip: d
+	      });
+	    }
+	  }]);
+
+	  return VoronoiEvt;
+	})(_react.Component);
+
+	exports["default"] = VoronoiEvt;
+	module.exports = exports["default"];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -12658,7 +12861,8 @@ var ReactD3Tooltip =
 	    return +d;
 	  },
 	  xScale: 'linear',
-	  yScale: 'linear'
+	  yScale: 'linear',
+	  focus: true
 	};
 	var pieProps = {
 	  width: width,
@@ -12669,10 +12873,10 @@ var ReactD3Tooltip =
 	  pieSort: d3.descending
 	};
 	exports.pieProps = pieProps;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 98 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12697,76 +12901,54 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
-
-	var _reactD3Basic = __webpack_require__(74);
-
-	var _inheritIndex = __webpack_require__(94);
-
-	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
-
-	var _utilsTooltip = __webpack_require__(95);
+	var _utilsTooltip = __webpack_require__(3);
 
 	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
 
-	var _utilsVoronoi = __webpack_require__(96);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _utilsVoronoi2 = _interopRequireDefault(_utilsVoronoi);
+	var _utilsFocus = __webpack_require__(75);
 
-	var _commonProps = __webpack_require__(97);
+	var _utilsFocus2 = _interopRequireDefault(_utilsFocus);
+
+	var _componentsAreaStack = __webpack_require__(103);
+
+	var _componentsAreaStack2 = _interopRequireDefault(_componentsAreaStack);
+
+	var _inheritVoronoiEvt = __webpack_require__(100);
+
+	var _inheritVoronoiEvt2 = _interopRequireDefault(_inheritVoronoiEvt);
+
+	var _commonProps = __webpack_require__(101);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
-	var AreaStackTooltip = (function (_TooltipSet) {
-	  _inherits(AreaStackTooltip, _TooltipSet);
+	var AreaStackTooltip = (function (_VoronoiEvt) {
+	  _inherits(AreaStackTooltip, _VoronoiEvt);
 
 	  function AreaStackTooltip(props) {
 	    _classCallCheck(this, AreaStackTooltip);
 
 	    _get(Object.getPrototypeOf(AreaStackTooltip.prototype), 'constructor', this).call(this, props);
-
-	    var _props = this.props;
-	    var margins = _props.margins;
-	    var width = _props.width;
-	    var height = _props.height;
-
-	    this.state = {
-	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
-	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
-	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 },
-	      xTooltip: null,
-	      yTooltip: null,
-	      contentTooltip: null
-	    };
-
-	    this.mkXDomain();
-	    this.mkYDomain(true);
-	    this.mkXScale(this.setXDomain);
-	    this.mkYScale(this.setYDomain);
-	    this.mkSeries();
 	  }
 
 	  _createClass(AreaStackTooltip, [{
 	    key: 'render',
 	    value: function render() {
+	      var focus = this.props.focus;
 
-	      var xScaleSet = this.setXScale;
-	      var yScaleSet = this.setYScale;
-	      var chartSeriesData = this.setSeries;
+	      var focusDom;
 
-	      var voronoi = _react2['default'].createElement(_utilsVoronoi2['default'], _extends({}, this.props, this.state, {
-	        xScaleSet: xScaleSet,
-	        yScaleSet: yScaleSet,
-	        dataset: chartSeriesData,
-	        stack: true,
-	        focus: true,
+	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state));
+
+	      var areaStack = _react2['default'].createElement(_componentsAreaStack2['default'], _extends({}, this.props, this.state, {
 	        onMouseOver: this.voronoiMouseOver.bind(this),
 	        onMouseOut: this.voronoiMouseOut.bind(this)
 	      }));
 
-	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, {
-	        chartSeriesData: chartSeriesData
-	      }, this.state));
+	      if (focus) {
+	        focusDom = _react2['default'].createElement(_utilsFocus2['default'], _extends({}, this.props, this.state));
+	      }
 
 	      return _react2['default'].createElement(
 	        'div',
@@ -12775,8 +12957,8 @@ var ReactD3Tooltip =
 	        _react2['default'].createElement(
 	          _reactD3Core.Chart,
 	          this.props,
-	          _react2['default'].createElement(_reactD3Basic.AreaStackChart, _extends({}, this.props, this.state)),
-	          voronoi
+	          areaStack,
+	          focusDom
 	        )
 	      );
 	    }
@@ -12787,13 +12969,13 @@ var ReactD3Tooltip =
 	  }]);
 
 	  return AreaStackTooltip;
-	})(_inheritIndex2['default']);
+	})(_inheritVoronoiEvt2['default']);
 
 	exports['default'] = AreaStackTooltip;
 	module.exports = exports['default'];
 
 /***/ },
-/* 99 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12818,33 +13000,228 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
-
-	var _reactD3Basic = __webpack_require__(74);
-
-	var _inheritIndex = __webpack_require__(94);
+	var _inheritIndex = __webpack_require__(77);
 
 	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
 
-	var _utilsTooltip = __webpack_require__(95);
+	var _reactD3Basic = __webpack_require__(78);
 
-	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
-
-	var _utilsVoronoi = __webpack_require__(96);
+	var _utilsVoronoi = __webpack_require__(98);
 
 	var _utilsVoronoi2 = _interopRequireDefault(_utilsVoronoi);
 
-	var _commonProps = __webpack_require__(97);
+	var _utilsTooltipUpdate = __webpack_require__(99);
+
+	var AreaStackContainer = (function (_TooltipSet) {
+	  _inherits(AreaStackContainer, _TooltipSet);
+
+	  function AreaStackContainer(props) {
+	    _classCallCheck(this, AreaStackContainer);
+
+	    _get(Object.getPrototypeOf(AreaStackContainer.prototype), 'constructor', this).call(this, props);
+
+	    var _props = this.props;
+	    var margins = _props.margins;
+	    var width = _props.width;
+	    var height = _props.height;
+
+	    this.state = {
+	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
+	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
+	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 }
+	    };
+
+	    this.mkXDomain();
+	    this.mkYDomain(true);
+	    this.mkXScale(this.setXDomain);
+	    this.mkYScale(this.setYDomain);
+	    this.mkSeries();
+	  }
+
+	  _createClass(AreaStackContainer, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return !(0, _utilsTooltipUpdate.isTooltipUpdate)(nextProps, nextState, this);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var xScaleSet = this.setXScale;
+	      var yScaleSet = this.setYScale;
+	      var chartSeriesData = this.setSeries;
+
+	      var _props2 = this.props;
+	      var onMouseOut = _props2.onMouseOut;
+	      var onMouseOver = _props2.onMouseOver;
+
+	      var voronoi = _react2['default'].createElement(_utilsVoronoi2['default'], _extends({}, this.props, {
+	        xScaleSet: xScaleSet,
+	        yScaleSet: yScaleSet,
+	        dataset: chartSeriesData,
+	        stack: true,
+	        onMouseOver: onMouseOver,
+	        onMouseOut: onMouseOut
+	      }));
+
+	      return _react2['default'].createElement(
+	        'g',
+	        null,
+	        _react2['default'].createElement(_reactD3Basic.AreaStackChart, this.props),
+	        voronoi
+	      );
+	    }
+	  }]);
+
+	  return AreaStackContainer;
+	})(_inheritIndex2['default']);
+
+	exports['default'] = AreaStackContainer;
+	module.exports = exports['default'];
+
+/***/ },
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _utilsTooltip = __webpack_require__(3);
+
+	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
+
+	var _reactD3Core = __webpack_require__(4);
+
+	var _utilsFocus = __webpack_require__(75);
+
+	var _utilsFocus2 = _interopRequireDefault(_utilsFocus);
+
+	var _componentsScatterPlot = __webpack_require__(105);
+
+	var _componentsScatterPlot2 = _interopRequireDefault(_componentsScatterPlot);
+
+	var _inheritVoronoiEvt = __webpack_require__(100);
+
+	var _inheritVoronoiEvt2 = _interopRequireDefault(_inheritVoronoiEvt);
+
+	var _commonProps = __webpack_require__(101);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
-	var ScatterTooltip = (function (_TooltipSet) {
-	  _inherits(ScatterTooltip, _TooltipSet);
+	var ScatterTooltip = (function (_VoronoiEvt) {
+	  _inherits(ScatterTooltip, _VoronoiEvt);
 
 	  function ScatterTooltip(props) {
 	    _classCallCheck(this, ScatterTooltip);
 
 	    _get(Object.getPrototypeOf(ScatterTooltip.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(ScatterTooltip, [{
+	    key: 'render',
+	    value: function render() {
+	      var focus = this.props.focus;
+
+	      var focusDom;
+
+	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state));
+
+	      var Scatter = _react2['default'].createElement(_componentsScatterPlot2['default'], _extends({}, this.props, this.state, {
+	        onMouseOver: this.voronoiMouseOver.bind(this),
+	        onMouseOut: this.voronoiMouseOut.bind(this)
+	      }));
+
+	      if (focus) {
+	        focusDom = _react2['default'].createElement(_utilsFocus2['default'], _extends({}, this.props, this.state));
+	      }
+
+	      return _react2['default'].createElement(
+	        'div',
+	        null,
+	        tooltip,
+	        _react2['default'].createElement(
+	          _reactD3Core.Chart,
+	          this.props,
+	          Scatter,
+	          focusDom
+	        )
+	      );
+	    }
+	  }], [{
+	    key: 'defaultProps',
+	    value: _commonProps2['default'],
+	    enumerable: true
+	  }]);
+
+	  return ScatterTooltip;
+	})(_inheritVoronoiEvt2['default']);
+
+	exports['default'] = ScatterTooltip;
+	module.exports = exports['default'];
+
+/***/ },
+/* 105 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactD3Basic = __webpack_require__(78);
+
+	var _inheritIndex = __webpack_require__(77);
+
+	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
+
+	var _utilsVoronoi = __webpack_require__(98);
+
+	var _utilsVoronoi2 = _interopRequireDefault(_utilsVoronoi);
+
+	var _utilsTooltipUpdate = __webpack_require__(99);
+
+	var ScatterContainer = (function (_TooltipSet) {
+	  _inherits(ScatterContainer, _TooltipSet);
+
+	  function ScatterContainer(props) {
+	    _classCallCheck(this, ScatterContainer);
+
+	    _get(Object.getPrototypeOf(ScatterContainer.prototype), 'constructor', this).call(this, props);
 
 	    var _props = this.props;
 	    var margins = _props.margins;
@@ -12867,7 +13244,12 @@ var ReactD3Tooltip =
 	    this.mkSeries();
 	  }
 
-	  _createClass(ScatterTooltip, [{
+	  _createClass(ScatterContainer, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return !(0, _utilsTooltipUpdate.isTooltipUpdate)(nextProps, nextState, this);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 
@@ -12875,50 +13257,39 @@ var ReactD3Tooltip =
 	      var yScaleSet = this.setYScale;
 	      var chartSeriesData = this.setSeries;
 
+	      var _props2 = this.props;
+	      var onMouseOut = _props2.onMouseOut;
+	      var onMouseOver = _props2.onMouseOver;
+
 	      var voronoi = _react2['default'].createElement(_utilsVoronoi2['default'], _extends({}, this.props, this.state, {
 	        xScaleSet: xScaleSet,
 	        yScaleSet: yScaleSet,
 	        dataset: chartSeriesData,
 	        focus: true,
-	        onMouseOver: this.voronoiMouseOver.bind(this),
-	        onMouseOut: this.voronoiMouseOut.bind(this)
-	      }));
-
-	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state, {
-	        xScaleSet: xScaleSet,
-	        yScaleSet: yScaleSet,
-	        dataset: chartSeriesData
+	        onMouseOver: onMouseOver,
+	        onMouseOut: onMouseOut
 	      }));
 
 	      return _react2['default'].createElement(
-	        'div',
+	        'g',
 	        null,
-	        tooltip,
-	        _react2['default'].createElement(
-	          _reactD3Core.Chart,
-	          this.props,
-	          _react2['default'].createElement(_reactD3Basic.ScatterPlot, _extends({}, this.props, this.state)),
-	          voronoi
-	        )
+	        _react2['default'].createElement(_reactD3Basic.ScatterPlot, this.props),
+	        voronoi
 	      );
 	    }
-	  }], [{
-	    key: 'defaultProps',
-	    value: _commonProps2['default'],
-	    enumerable: true
 	  }]);
 
-	  return ScatterTooltip;
+	  return ScatterContainer;
 	})(_inheritIndex2['default']);
 
-	exports['default'] = ScatterTooltip;
+	exports['default'] = ScatterContainer;
 	module.exports = exports['default'];
 
 /***/ },
-/* 100 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
+	"use strict";
 
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
@@ -12940,83 +13311,51 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
-
-	var _reactD3Basic = __webpack_require__(74);
-
-	var _inheritIndex = __webpack_require__(94);
-
-	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
-
-	var _utilsTooltip = __webpack_require__(95);
+	var _utilsTooltip = __webpack_require__(3);
 
 	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
 
-	var _commonProps = __webpack_require__(97);
+	var _utilsFocus = __webpack_require__(75);
+
+	var _utilsFocus2 = _interopRequireDefault(_utilsFocus);
+
+	var _componentsBar = __webpack_require__(107);
+
+	var _componentsBar2 = _interopRequireDefault(_componentsBar);
+
+	var _inheritBarEvt = __webpack_require__(108);
+
+	var _inheritBarEvt2 = _interopRequireDefault(_inheritBarEvt);
+
+	var _commonProps = __webpack_require__(101);
 
 	var _commonProps2 = _interopRequireDefault(_commonProps);
 
-	var BarTooltip = (function (_TooltipSet) {
-	  _inherits(BarTooltip, _TooltipSet);
+	var BarTooltip = (function (_BarEvt) {
+	  _inherits(BarTooltip, _BarEvt);
 
 	  function BarTooltip(props) {
 	    _classCallCheck(this, BarTooltip);
 
 	    _get(Object.getPrototypeOf(BarTooltip.prototype), 'constructor', this).call(this, props);
-
-	    var _props = this.props;
-	    var margins = _props.margins;
-	    var width = _props.width;
-	    var height = _props.height;
-
-	    this.state = {
-	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
-	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
-	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 },
-	      xTooltip: null,
-	      yTooltip: null,
-	      contentTooltip: null
-	    };
-
-	    this.mkSeries();
 	  }
 
 	  _createClass(BarTooltip, [{
-	    key: '_mouseOver',
-	    value: function _mouseOver(d, i) {
-	      this.setState({
-	        xTooltip: d3.event.clientX,
-	        yTooltip: d3.event.clientY,
-	        contentTooltip: d
-	      });
-	    }
-	  }, {
-	    key: '_mouseOut',
-	    value: function _mouseOut() {
-	      this.setState({
-	        xTooltip: null,
-	        yTooltip: null,
-	        contentTooltip: null
-	      });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var chartSeriesData = this.setSeries;
+	      var mouseOut = this.mouseOut.bind(this);
+	      var mouseOver = this.mouseOver.bind(this);
 
-	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state, {
-	        dataset: chartSeriesData
-	      }));
+	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state));
 
 	      return _react2['default'].createElement(
 	        'div',
 	        null,
 	        tooltip,
-	        _react2['default'].createElement(
-	          _reactD3Core.Chart,
-	          this.props,
-	          _react2['default'].createElement(_reactD3Basic.BarChart, _extends({}, this.props, this.state, { onMouseOver: this._mouseOver.bind(this), onMouseOut: this._mouseOut.bind(this) }))
-	        )
+	        _react2['default'].createElement(_componentsBar2['default'], _extends({}, this.props, this.state, {
+	          onMouseOut: mouseOut,
+	          onMouseOver: mouseOver
+	        }))
 	      );
 	    }
 	  }], [{
@@ -13026,17 +13365,16 @@ var ReactD3Tooltip =
 	  }]);
 
 	  return BarTooltip;
-	})(_inheritIndex2['default']);
+	})(_inheritBarEvt2['default']);
 
 	exports['default'] = BarTooltip;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 101 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
+	"use strict";
 
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
@@ -13058,30 +13396,23 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
-
-	var _reactD3Basic = __webpack_require__(74);
-
-	var _inheritIndex = __webpack_require__(94);
+	var _inheritIndex = __webpack_require__(77);
 
 	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
 
-	var _utilsTooltip = __webpack_require__(95);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
+	var _reactD3Basic = __webpack_require__(78);
 
-	var _commonProps = __webpack_require__(97);
+	var _utilsTooltipUpdate = __webpack_require__(99);
 
-	var _commonProps2 = _interopRequireDefault(_commonProps);
+	var BarContainer = (function (_TooltipSet) {
+	  _inherits(BarContainer, _TooltipSet);
 
-	var BarStackTooltip = (function (_TooltipSet) {
-	  _inherits(BarStackTooltip, _TooltipSet);
+	  function BarContainer(props) {
+	    _classCallCheck(this, BarContainer);
 
-	  function BarStackTooltip(props) {
-	    _classCallCheck(this, BarStackTooltip);
-
-	    _get(Object.getPrototypeOf(BarStackTooltip.prototype), 'constructor', this).call(this, props);
-
+	    _get(Object.getPrototypeOf(BarContainer.prototype), 'constructor', this).call(this, props);
 	    var _props = this.props;
 	    var margins = _props.margins;
 	    var width = _props.width;
@@ -13090,27 +13421,83 @@ var ReactD3Tooltip =
 	    this.state = {
 	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
 	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
-	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 },
-	      xTooltip: null,
-	      yTooltip: null,
-	      contentTooltip: null
+	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 }
 	    };
 
 	    this.mkSeries();
 	  }
 
-	  _createClass(BarStackTooltip, [{
-	    key: '_mouseOver',
-	    value: function _mouseOver(d, i) {
-	      this.setState({
-	        xTooltip: d3.event.clientX,
-	        yTooltip: d3.event.clientY,
-	        contentTooltip: d
-	      });
+	  _createClass(BarContainer, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return !(0, _utilsTooltipUpdate.isTooltipUpdate)(nextProps, nextState, this);
 	    }
 	  }, {
-	    key: '_mouseOut',
-	    value: function _mouseOut() {
+	    key: 'render',
+	    value: function render() {
+	      var _props2 = this.props;
+	      var onMouseOut = _props2.onMouseOut;
+	      var onMouseOver = _props2.onMouseOver;
+
+	      var chartSeriesData = this.setSeries;
+
+	      return _react2['default'].createElement(
+	        _reactD3Core.Chart,
+	        this.props,
+	        _react2['default'].createElement(_reactD3Basic.BarChart, _extends({}, this.props, { onMouseOver: onMouseOver, onMouseOut: onMouseOut }))
+	      );
+	    }
+	  }]);
+
+	  return BarContainer;
+	})(_inheritIndex2['default']);
+
+	exports['default'] = BarContainer;
+	module.exports = exports['default'];
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var BarEvt = (function (_Component) {
+	  _inherits(BarEvt, _Component);
+
+	  function BarEvt(props) {
+	    _classCallCheck(this, BarEvt);
+
+	    _get(Object.getPrototypeOf(BarEvt.prototype), "constructor", this).call(this, props);
+
+	    this.state = {
+	      xTooltip: null,
+	      yTooltip: null,
+	      contentTooltip: null
+	    };
+	  }
+
+	  _createClass(BarEvt, [{
+	    key: "mouseOut",
+	    value: function mouseOut(d, i) {
+
 	      this.setState({
 	        xTooltip: null,
 	        yTooltip: null,
@@ -13118,9 +13505,83 @@ var ReactD3Tooltip =
 	      });
 	    }
 	  }, {
+	    key: "mouseOver",
+	    value: function mouseOver(d, i) {
+	      this.setState({
+	        xTooltip: d3.event.clientX,
+	        yTooltip: d3.event.clientY,
+	        contentTooltip: d
+	      });
+	    }
+	  }]);
+
+	  return BarEvt;
+	})(_react.Component);
+
+	exports["default"] = BarEvt;
+	module.exports = exports["default"];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 109 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _utilsTooltip = __webpack_require__(3);
+
+	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
+
+	var _utilsFocus = __webpack_require__(75);
+
+	var _utilsFocus2 = _interopRequireDefault(_utilsFocus);
+
+	var _componentsBarStack = __webpack_require__(110);
+
+	var _componentsBarStack2 = _interopRequireDefault(_componentsBarStack);
+
+	var _inheritBarEvt = __webpack_require__(108);
+
+	var _inheritBarEvt2 = _interopRequireDefault(_inheritBarEvt);
+
+	var _commonProps = __webpack_require__(101);
+
+	var _commonProps2 = _interopRequireDefault(_commonProps);
+
+	var BarStackTooltip = (function (_BarEvt) {
+	  _inherits(BarStackTooltip, _BarEvt);
+
+	  function BarStackTooltip(props) {
+	    _classCallCheck(this, BarStackTooltip);
+
+	    _get(Object.getPrototypeOf(BarStackTooltip.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(BarStackTooltip, [{
 	    key: 'render',
 	    value: function render() {
-	      var chartSeriesData = this.setSeries;
+	      var mouseOut = this.mouseOut.bind(this);
+	      var mouseOver = this.mouseOver.bind(this);
 
 	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state));
 
@@ -13128,11 +13589,10 @@ var ReactD3Tooltip =
 	        'div',
 	        null,
 	        tooltip,
-	        _react2['default'].createElement(
-	          _reactD3Core.Chart,
-	          this.props,
-	          _react2['default'].createElement(_reactD3Basic.BarStackChart, _extends({}, this.props, this.state, { onMouseOver: this._mouseOver.bind(this), onMouseOut: this._mouseOut.bind(this) }))
-	        )
+	        _react2['default'].createElement(_componentsBarStack2['default'], _extends({}, this.props, this.state, {
+	          onMouseOut: mouseOut,
+	          onMouseOver: mouseOver
+	        }))
 	      );
 	    }
 	  }], [{
@@ -13142,17 +13602,16 @@ var ReactD3Tooltip =
 	  }]);
 
 	  return BarStackTooltip;
-	})(_inheritIndex2['default']);
+	})(_inheritBarEvt2['default']);
 
 	exports['default'] = BarStackTooltip;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 102 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
+	"use strict";
 
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
@@ -13174,30 +13633,23 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
-
-	var _reactD3Basic = __webpack_require__(74);
-
-	var _inheritIndex = __webpack_require__(94);
+	var _inheritIndex = __webpack_require__(77);
 
 	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
 
-	var _utilsTooltip = __webpack_require__(95);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
+	var _reactD3Basic = __webpack_require__(78);
 
-	var _commonProps = __webpack_require__(97);
+	var _utilsTooltipUpdate = __webpack_require__(99);
 
-	var _commonProps2 = _interopRequireDefault(_commonProps);
+	var BarStackContainer = (function (_TooltipSet) {
+	  _inherits(BarStackContainer, _TooltipSet);
 
-	var BarGroupTooltip = (function (_TooltipSet) {
-	  _inherits(BarGroupTooltip, _TooltipSet);
+	  function BarStackContainer(props) {
+	    _classCallCheck(this, BarStackContainer);
 
-	  function BarGroupTooltip(props) {
-	    _classCallCheck(this, BarGroupTooltip);
-
-	    _get(Object.getPrototypeOf(BarGroupTooltip.prototype), 'constructor', this).call(this, props);
-
+	    _get(Object.getPrototypeOf(BarStackContainer.prototype), 'constructor', this).call(this, props);
 	    var _props = this.props;
 	    var margins = _props.margins;
 	    var width = _props.width;
@@ -13206,37 +13658,100 @@ var ReactD3Tooltip =
 	    this.state = {
 	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
 	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
-	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 },
-	      xTooltip: null,
-	      yTooltip: null,
-	      contentTooltip: null
+	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 }
 	    };
 
 	    this.mkSeries();
 	  }
 
-	  _createClass(BarGroupTooltip, [{
-	    key: '_mouseOver',
-	    value: function _mouseOver(d, i) {
-	      this.setState({
-	        xTooltip: d3.event.clientX,
-	        yTooltip: d3.event.clientY,
-	        contentTooltip: d
-	      });
-	    }
-	  }, {
-	    key: '_mouseOut',
-	    value: function _mouseOut() {
-	      this.setState({
-	        xTooltip: null,
-	        yTooltip: null,
-	        contentTooltip: null
-	      });
+	  _createClass(BarStackContainer, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return !(0, _utilsTooltipUpdate.isTooltipUpdate)(nextProps, nextState, this);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _props2 = this.props;
+	      var onMouseOut = _props2.onMouseOut;
+	      var onMouseOver = _props2.onMouseOver;
+
 	      var chartSeriesData = this.setSeries;
+
+	      return _react2['default'].createElement(
+	        _reactD3Core.Chart,
+	        this.props,
+	        _react2['default'].createElement(_reactD3Basic.BarStackChart, _extends({}, this.props, { onMouseOver: onMouseOver, onMouseOut: onMouseOut }))
+	      );
+	    }
+	  }]);
+
+	  return BarStackContainer;
+	})(_inheritIndex2['default']);
+
+	exports['default'] = BarStackContainer;
+	module.exports = exports['default'];
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _utilsTooltip = __webpack_require__(3);
+
+	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
+
+	var _utilsFocus = __webpack_require__(75);
+
+	var _utilsFocus2 = _interopRequireDefault(_utilsFocus);
+
+	var _componentsBarGroup = __webpack_require__(112);
+
+	var _componentsBarGroup2 = _interopRequireDefault(_componentsBarGroup);
+
+	var _inheritBarEvt = __webpack_require__(108);
+
+	var _inheritBarEvt2 = _interopRequireDefault(_inheritBarEvt);
+
+	var _commonProps = __webpack_require__(101);
+
+	var _commonProps2 = _interopRequireDefault(_commonProps);
+
+	var BarGroupTooltip = (function (_BarEvt) {
+	  _inherits(BarGroupTooltip, _BarEvt);
+
+	  function BarGroupTooltip(props) {
+	    _classCallCheck(this, BarGroupTooltip);
+
+	    _get(Object.getPrototypeOf(BarGroupTooltip.prototype), 'constructor', this).call(this, props);
+	  }
+
+	  _createClass(BarGroupTooltip, [{
+	    key: 'render',
+	    value: function render() {
+	      var mouseOut = this.mouseOut.bind(this);
+	      var mouseOver = this.mouseOver.bind(this);
 
 	      var tooltip = _react2['default'].createElement(_utilsTooltip2['default'], _extends({}, this.props, this.state));
 
@@ -13244,11 +13759,10 @@ var ReactD3Tooltip =
 	        'div',
 	        null,
 	        tooltip,
-	        _react2['default'].createElement(
-	          _reactD3Core.Chart,
-	          this.props,
-	          _react2['default'].createElement(_reactD3Basic.BarGroupChart, _extends({}, this.props, this.state, { onMouseOver: this._mouseOver.bind(this), onMouseOut: this._mouseOut.bind(this) }))
-	        )
+	        _react2['default'].createElement(_componentsBarGroup2['default'], _extends({}, this.props, this.state, {
+	          onMouseOut: mouseOut,
+	          onMouseOver: mouseOver
+	        }))
 	      );
 	    }
 	  }], [{
@@ -13258,14 +13772,98 @@ var ReactD3Tooltip =
 	  }]);
 
 	  return BarGroupTooltip;
-	})(_inheritIndex2['default']);
+	})(_inheritBarEvt2['default']);
 
 	exports['default'] = BarGroupTooltip;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 103 */
+/* 112 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _inheritIndex = __webpack_require__(77);
+
+	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
+
+	var _reactD3Core = __webpack_require__(4);
+
+	var _reactD3Basic = __webpack_require__(78);
+
+	var _utilsTooltipUpdate = __webpack_require__(99);
+
+	var BarGroupContainer = (function (_TooltipSet) {
+	  _inherits(BarGroupContainer, _TooltipSet);
+
+	  function BarGroupContainer(props) {
+	    _classCallCheck(this, BarGroupContainer);
+
+	    _get(Object.getPrototypeOf(BarGroupContainer.prototype), 'constructor', this).call(this, props);
+	    var _props = this.props;
+	    var margins = _props.margins;
+	    var width = _props.width;
+	    var height = _props.height;
+
+	    this.state = {
+	      xRange: this.props.xRange || [0, width - margins.left - margins.right],
+	      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
+	      xRangeRoundBands: this.props.xRangeRoundBands || { interval: [0, width - margins.left - margins.right], padding: .1 }
+	    };
+
+	    this.mkSeries();
+	  }
+
+	  _createClass(BarGroupContainer, [{
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      return !(0, _utilsTooltipUpdate.isTooltipUpdate)(nextProps, nextState, this);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _props2 = this.props;
+	      var onMouseOut = _props2.onMouseOut;
+	      var onMouseOver = _props2.onMouseOver;
+
+	      var chartSeriesData = this.setSeries;
+
+	      return _react2['default'].createElement(
+	        _reactD3Core.Chart,
+	        this.props,
+	        _react2['default'].createElement(_reactD3Basic.BarGroupChart, _extends({}, this.props, { onMouseOver: onMouseOver, onMouseOut: onMouseOut }))
+	      );
+	    }
+	  }]);
+
+	  return BarGroupContainer;
+	})(_inheritIndex2['default']);
+
+	exports['default'] = BarGroupContainer;
+	module.exports = exports['default'];
+
+/***/ },
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(d3) {"use strict";
@@ -13290,19 +13888,19 @@ var ReactD3Tooltip =
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactD3Core = __webpack_require__(3);
+	var _reactD3Core = __webpack_require__(4);
 
-	var _reactD3Basic = __webpack_require__(74);
+	var _reactD3Basic = __webpack_require__(78);
 
-	var _inheritIndex = __webpack_require__(94);
+	var _inheritIndex = __webpack_require__(77);
 
 	var _inheritIndex2 = _interopRequireDefault(_inheritIndex);
 
-	var _utilsTooltip = __webpack_require__(95);
+	var _utilsTooltip = __webpack_require__(3);
 
 	var _utilsTooltip2 = _interopRequireDefault(_utilsTooltip);
 
-	var _commonProps = __webpack_require__(97);
+	var _commonProps = __webpack_require__(101);
 
 	var PieTooltip = (function (_TooltipSet) {
 	  _inherits(PieTooltip, _TooltipSet);
@@ -13373,7 +13971,7 @@ var ReactD3Tooltip =
 
 	exports['default'] = PieTooltip;
 	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ }
 /******/ ]);
