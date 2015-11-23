@@ -68,7 +68,6 @@ export default class PieTooltip extends TooltipSet {
 
     var tooltip = <Tooltip {...this.props} {...this.state}/>
 
-
     return (
       <div>
         {tooltip}
