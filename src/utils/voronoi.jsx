@@ -6,9 +6,7 @@ import {
   PropTypes,
 } from 'react';
 
-import {
-  default as d3
-} from 'd3';
+import d3 from 'd3';
 
 import {
   default as ReactFauxDOM

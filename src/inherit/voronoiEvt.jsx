@@ -6,6 +6,8 @@ import {
   PropTypes
 } from 'react'
 
+import d3 from 'd3';
+
 export default class VoronoiEvt extends Component {
   constructor(props) {
     super(props);

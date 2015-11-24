@@ -6,6 +6,8 @@ import {
   PropTypes,
 } from 'react';
 
+import d3 from 'd3';
+
 import {
   Chart as Chart,
 } from 'react-d3-core';
