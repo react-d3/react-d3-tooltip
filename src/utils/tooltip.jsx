@@ -16,6 +16,15 @@ export default class Tooltip extends Component {
     dist: 15
   }
 
+  static propTypes = {
+    contentTooltip: React.PropTypes.shape({
+      title: React.PropTypes.any,
+      color: React.PropTypes.any,
+      fieldTitle: React.PropTypes.string,
+      value: React.PropTypes.any
+    })
+  }
+
   _mkContent() {
     const {
       contentTooltip
@@ -86,14 +95,4 @@ export default class Tooltip extends Component {
       </div>
     )
   }
-}
-
-// accept proptype of tool tip
-Tooltip.propTypes = {
-  contentTooltip: React.PropTypes.shape({
-    title: React.PropTypes.any,
-    color: React.PropTypes.any,
-    fieldTitle: React.PropTypes.string,
-    value: React.PropTypes.any
-  })
 }
