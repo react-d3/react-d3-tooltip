@@ -1,5 +1,5 @@
 "use strict";
-
+// Please check bottom propTypes to know which props is accepted.
 import {
   default as React,
   Component,
@@ -13,65 +13,50 @@ export default class Tooltip extends Component {
 
   static defaultProps = {
     gravity: 's',
-    dist: 35
+    dist: 15
+  }
+
+  static propTypes = {
+    contentTooltip: React.PropTypes.shape({
+      title: React.PropTypes.any,
+      color: React.PropTypes.any,
+      fieldTitle: React.PropTypes.string,
+      value: React.PropTypes.any
+    })
   }
 
   _mkContent() {
     const {
       contentTooltip
     } = this.props;
+    const title = contentTooltip.title;
+    const fieldTitle = contentTooltip.fieldTitle;
+    const value = contentTooltip.value;
+    const tooltip_bkg_style = {
+      backgroundColor: 'rgba(50, 50, 50, 0.8)',
+      borderRadius: '4px',
+      padding: '10px',
+      border: '0'
+    }
 
-    var cv = Object.keys(contentTooltip).map((d, i) => {
-      if(d === 'color') {
-        var colorStyle = {
-          backgroundColor: contentTooltip[d],
-          color: '#FFF'
-        };
-      }
+    const tooltip_title = {
+      color: 'white',
+      fontWeight: 'bold',
+      marginBottom: '5px'
+    }
 
-      var trStyle = {
-        display: 'table-row',
-        backgroundImage: 'linear-gradient(#FFF, #EEE)',
-        padding: '3px',
-        height: '30px'
-      }
+    const tooltip_content = {
+      color: 'white'
+    }
 
-      var tdStyle = {
-        display: 'table-cell',
-        padding: '3px',
-        verticalAlign: 'middle',
-        whiteSpace: 'normal',
-        border: '1px solid #D3D3D3'
-      }
-
-      var tdHeadStyle = {
-        display: 'table-cell',
-        padding: '3px',
-        verticalAlign: 'middle',
-        whiteSpace: 'normal',
-        border: '1px solid #D3D3D3',
-        backgroundColor: '#555',
-        color: '#FFF',
-        textTransform: 'capitalize'
-      }
-
-      if(colorStyle) {
-        var tdColorStyle = Object.assign(tdStyle, colorStyle);
-      }
-
-      return (
-        <div className= "tooltip_tr" style={trStyle} key={i}>
-          <div className= "tooltip_td" style={tdHeadStyle} key={i}>
-            {d}
-          </div>
-          <div className= "tooltip_td" style={colorStyle? tdColorStyle: tdStyle} key={i.i}>
-            {contentTooltip[d].toString()}
-          </div>
+    return (
+      <div className= "tooltip_bkg" style={tooltip_bkg_style} key="tooltip">
+        <div style={tooltip_title}>{title}</div>
+        <div style={tooltip_content}>
+          {fieldTitle}: {value}
         </div>
-      )
-    })
-
-    return cv;
+      </div>
+    )
   }
 
   render() {
@@ -103,9 +88,8 @@ export default class Tooltip extends Component {
       <div
         style= {style}
         className= "react-d3-basics__tooltip_utils"
-        ref= "tooltip"
         >
-        <div className= "tooltip_table" style={tableStyle}>
+        <div className= "tooltip_table">
           {cvContent}
         </div>
       </div>

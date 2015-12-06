@@ -51,10 +51,15 @@ export default class PieTooltip extends TooltipSet {
   static defaultProps = pieProps
 
   _mouseOver(d, i) {
+    const contentTooltip = {
+      fieldTitle: d.data.name,
+      value: d.value,
+      color: d.color
+    }
     this.setState({
       xTooltip: d3.event.clientX,
       yTooltip: d3.event.clientY,
-      contentTooltip: d.data
+      contentTooltip: contentTooltip
     })
   }
 

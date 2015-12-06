@@ -29,10 +29,11 @@ export default class BarEvt extends Component {
   }
 
   mouseOver(d, i) {
+    const contentTooltip = {title: d.name, value:d.y, fieldTitle: d.x, color: d.color};
     this.setState({
       xTooltip: d3.event.clientX,
       yTooltip: d3.event.clientY,
-      contentTooltip: d
+      contentTooltip: contentTooltip
     })
   }
 }
