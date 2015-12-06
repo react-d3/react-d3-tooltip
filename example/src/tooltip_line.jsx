@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var LineTooltip = require('../../lib').LineTooltip;
-
+var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
 (function() {
 
   var generalChartData = require('json!./data/user.json');
@@ -26,7 +26,9 @@ var LineTooltip = require('../../lib').LineTooltip;
         data= {generalChartData}
         chartSeries= {chartSeries}
         x= {x}
-      />
+      >
+        <SimpleTooltipStyle/>
+      </LineTooltip>
     , document.getElementById('data_tooltip_line')
   )
 
@@ -63,7 +65,8 @@ var LineTooltip = require('../../lib').LineTooltip;
         interpolate = {interpolate}
         x= {x}
         xScale= {xScale}
-      />
+      >
+      </LineTooltip>
 
   , document.getElementById('data_tooltip_line_multi')
   )

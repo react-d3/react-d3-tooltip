@@ -44,12 +44,7 @@ export default class LineTooltip extends VoronoiEvt {
       focus
     } = this.props;
     var focusDom;
-
-    var tooltip = (<Tooltip
-      {...this.props}
-      {...this.state}
-      />);
-
+    let tooltip;
     var LineChart = (
       <LineChartVoronoi
         {...this.props}
@@ -65,7 +60,9 @@ export default class LineTooltip extends VoronoiEvt {
 
     return (
       <div>
-        {tooltip}
+        <Tooltip {...this.props} {...this.state}>
+          {this.props.children}
+        </Tooltip>
         <Chart {...this.props}>
           {LineChart}
           {focusDom}
