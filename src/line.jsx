@@ -43,7 +43,6 @@ export default class LineTooltip extends VoronoiEvt {
     const {
       focus
     } = this.props;
-
     var focusDom;
 
     var tooltip = (<Tooltip
