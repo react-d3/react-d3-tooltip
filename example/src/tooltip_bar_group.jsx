@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var BarGroupTooltip = require('../../lib').BarGroupTooltip;
+var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=,!./data/age.csv')
@@ -53,7 +54,9 @@ var BarGroupTooltip = require('../../lib').BarGroupTooltip;
       x= {x}
       xScale= {xScale}
       yTickFormat= {yTickFormat}
-    />
+    >
+      <SimpleTooltipStyle/>
+    </BarGroupTooltip>
   , document.getElementById('data_tooltip_bar_group')
   )
 })()

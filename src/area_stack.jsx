@@ -46,11 +46,6 @@ export default class AreaStackTooltip extends VoronoiEvt {
 
     var focusDom;
 
-    var tooltip = (<Tooltip
-      {...this.props}
-      {...this.state}
-      />);
-
     var areaStack = (
       <AreaStackVoronoi
         {...this.props}
@@ -66,7 +61,9 @@ export default class AreaStackTooltip extends VoronoiEvt {
 
     return (
       <div>
-        {tooltip}
+        <Tooltip {...this.props} {...this.state}>
+          {this.props.children}
+        </Tooltip>
         <Chart {...this.props}>
           {areaStack}
           {focusDom}

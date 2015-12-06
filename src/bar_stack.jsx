@@ -39,14 +39,11 @@ export default class BarStackTooltip extends BarEvt {
     const mouseOut = this.mouseOut.bind(this);
     const mouseOver = this.mouseOver.bind(this);
 
-    var tooltip = (<Tooltip
-      {...this.props}
-      {...this.state}
-      />);
-
     return (
       <div>
-        {tooltip}
+        <Tooltip {...this.props} {...this.state}>
+          {this.props.children}
+        </Tooltip>
         <BarStackContainer
           {...this.props}
           {...this.state}

@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var PieTooltip = require('../../lib').PieTooltip;
+var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=,!./data/age_pie.csv')
@@ -49,7 +50,9 @@ var PieTooltip = require('../../lib').PieTooltip;
       value = {value}
       name = {name}
       chartSeries = {chartSeries}
-    />
+    >
+      <SimpleTooltipStyle/>
+    </PieTooltip>
   , document.getElementById('data_tooltip_pie')
   )
 })()

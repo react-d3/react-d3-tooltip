@@ -45,11 +45,6 @@ export default class ScatterTooltip extends VoronoiEvt {
 
     var focusDom;
 
-    var tooltip = (<Tooltip
-      {...this.props}
-      {...this.state}
-      />);
-
     var Scatter = (
       <ScatterVoronoi
         {...this.props}
@@ -65,7 +60,9 @@ export default class ScatterTooltip extends VoronoiEvt {
 
     return (
       <div>
-        {tooltip}
+        <Tooltip {...this.props} {...this.state}>
+          {this.props.children}
+        </Tooltip>
         <Chart {...this.props}>
           {Scatter}
           {focusDom}

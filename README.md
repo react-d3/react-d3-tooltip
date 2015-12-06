@@ -113,6 +113,33 @@ You'll also need `react`, `react-dom`, `d3`
 </html>
 ```
 
+### Customization
+
+Choose one of the components in [tooltip folder](https://github.com/react-d3/react-d3-tooltip/tree/master/src/tooltip).
+
+Then require it in your project, take `Simple` as example.
+
+After you require it, render the tooltip as the children. Like below example.
+
+```js
+ReactDOM.render(
+    <LineTooltip
+      data= {generalChartData}
+      chartSeries = {chartSeries}
+      interpolate = {interpolate}
+      x= {x}
+      xScale= {xScale}
+    >
+      <Simple/>  //<---------
+    </LineTooltip>
+
+, document.getElementById('data_tooltip_line_multi')
+)
+
+```
+
+Then you can change tooltip style!
+
 ## Install
 
 ```

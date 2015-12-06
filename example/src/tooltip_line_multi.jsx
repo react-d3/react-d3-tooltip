@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var LineTooltip = require('../../lib').LineTooltip;
+var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
@@ -38,7 +39,8 @@ var LineTooltip = require('../../lib').LineTooltip;
         interpolate = {interpolate}
         x= {x}
         xScale= {xScale}
-      />
+      >
+      </LineTooltip>
 
   , document.getElementById('data_tooltip_line_multi')
   )

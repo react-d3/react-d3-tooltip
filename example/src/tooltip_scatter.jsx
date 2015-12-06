@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ScatterTooltip = require('../../lib').ScatterTooltip;
+var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
@@ -42,7 +43,8 @@ var ScatterTooltip = require('../../lib').ScatterTooltip;
       chartSeries = {chartSeries}
       x= {x}
       xScale= {xScale}
-    />
+    >
+    </ScatterTooltip>
   , document.getElementById('data_tooltip_scatter')
   )
 })()

@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var AreaStackTooltip = require('../../lib').AreaStackTooltip;
+var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=\t!./data/browser.tsv')
@@ -48,7 +49,8 @@ var AreaStackTooltip = require('../../lib').AreaStackTooltip;
       xScale= {xScale}
       y= {y}
       yTickFormat= {formatPercent}
-    />
+    >
+    </AreaStackTooltip>
   , document.getElementById('data_tooltip_area_stack')
   )
 })()

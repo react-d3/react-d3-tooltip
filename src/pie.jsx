@@ -72,12 +72,11 @@ export default class PieTooltip extends TooltipSet {
   }
 
   render() {
-
-    var tooltip = <Tooltip {...this.props} {...this.state}/>
-
     return (
       <div>
-        {tooltip}
+        <Tooltip {...this.props} {...this.state}>
+          {this.props.children}
+        </Tooltip>
         <Chart {...this.props}>
           <PieChart {...this.props} {...this.state} onMouseOver={this._mouseOver.bind(this)} onMouseOut={this._mouseOut.bind(this)}/>
         </Chart>

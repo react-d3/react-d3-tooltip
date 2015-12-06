@@ -3,6 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var BarStackTooltip = require('../../lib').BarStackTooltip;
+var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=,!./data/age.csv')
@@ -53,7 +54,9 @@ var BarStackTooltip = require('../../lib').BarStackTooltip;
       x= {x}
       xScale= {xScale}
       yTickFormat= {yTickFormat}
-    />
+    >
+      <SimpleTooltipStyle/>
+    </BarStackTooltip>
   , document.getElementById('data_tooltip_bar_stack')
   )
 })()

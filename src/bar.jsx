@@ -38,15 +38,12 @@ export default class BarTooltip extends BarEvt {
   render() {
     const mouseOut = this.mouseOut.bind(this);
     const mouseOver = this.mouseOver.bind(this);
-
-    var tooltip = (<Tooltip
-      {...this.props}
-      {...this.state}
-      />);
-
+    
     return (
       <div>
-        {tooltip}
+        <Tooltip {...this.props} {...this.state}>
+          {this.props.children}
+        </Tooltip>
         <BarContainer
           {...this.props}
           {...this.state}
