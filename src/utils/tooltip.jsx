@@ -8,7 +8,7 @@ import {
 
 import {
   default as TableTooltipStyle
-} from '../tooltip/Table';
+} from '../tooltip/table';
 
 
 export default class Tooltip extends Component {

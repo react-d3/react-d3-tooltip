@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var LineTooltip = require('../../lib').LineTooltip;
-var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
+var SimpleTooltipStyle = require('../../lib/tooltip/simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')

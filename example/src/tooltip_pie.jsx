@@ -3,7 +3,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var PieTooltip = require('../../lib').PieTooltip;
-var SimpleTooltipStyle = require('../../lib/tooltip/Simple');
+var SimpleTooltipStyle = require('../../lib/tooltip/simple');
 
 (function() {
   var generalChartData = require('dsv?delimiter=,!./data/age_pie.csv')

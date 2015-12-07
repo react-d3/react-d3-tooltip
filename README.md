@@ -117,11 +117,14 @@ You'll also need `react`, `react-dom`, `d3`
 
 Choose one of the components in [tooltip folder](https://github.com/react-d3/react-d3-tooltip/tree/master/src/tooltip).
 
-Then require it in your project, take `Simple` as example.
+Then require it in your project, take `simple` as example.
 
-After you require it, render the tooltip as the children. Like below example.
+After you require it, render the tooltip as children. Like below example.
 
 ```js
+var SimpleTooltipStyle = require('react-d3-tooltip').SimpleTooltip;
+
+
 ReactDOM.render(
     <LineTooltip
       data= {generalChartData}
