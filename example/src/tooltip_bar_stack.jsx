@@ -45,18 +45,53 @@ var SimpleTooltipStyle = require('../../lib/tooltip/simple');
     xScale = 'ordinal',
     yTickFormat = d3.format(".2s");
 
+  var Container = React.createClass({
+    getInitialState: function() {
+      return {
+        width: 600,
+        height: 400,
+        series: chartSeries
+      }
+    },
+    onClick: function() {
+      this.setState({
+        width: this.state.width === 600? 400: 600,
+        height: this.state.width === 600? 600: 400,
+        series: this.state.width === 600? [
+          {
+            field: '45 to 64 Years',
+            name: '45 to 64 Years'
+          },
+          {
+            field: '65 Years and Over',
+            name: '65 Years and Over'
+          }
+        ]: chartSeries
+      })
+    },
+    render: function() {
+
+      return (
+        <div>
+          <button onClick={this.onClick}>toggle</button>
+          <BarStackTooltip
+            width= {this.state.width}
+            height= {this.state.height}
+            data= {generalChartData}
+            chartSeries = {this.state.series}
+            x= {x}
+            xScale= {xScale}
+            yTickFormat= {yTickFormat}
+          >
+            <SimpleTooltipStyle/>
+          </BarStackTooltip>
+        </div>
+      )
+    }
+  })
+
   ReactDOM.render(
-    <BarStackTooltip
-      width= {600}
-      height= {400}
-      data= {generalChartData}
-      chartSeries = {chartSeries}
-      x= {x}
-      xScale= {xScale}
-      yTickFormat= {yTickFormat}
-    >
-      <SimpleTooltipStyle/>
-    </BarStackTooltip>
+    <Container/>
   , document.getElementById('data_tooltip_bar_stack')
   )
 })()

@@ -39,19 +39,54 @@ var SimpleTooltipStyle = require('../../lib').SimpleTooltip;
       return d / 100;
     };
 
+  var Container = React.createClass({
+    getInitialState: function() {
+      return {
+        width: 600,
+        height: 400,
+        series: chartSeries
+      }
+    },
+    onClick: function() {
+      this.setState({
+        width: this.state.width === 600? 400: 600,
+        height: this.state.width === 600? 600: 400,
+        series: this.state.width === 600? [
+          {
+            field: 'IE',
+            name: 'IE browser'
+          },
+          {
+            field: 'Chrome',
+            name: 'Chrome browser'
+          }
+        ]: chartSeries
+      })
+    },
+    render: function() {
+
+      return (
+        <div>
+          <button onClick={this.onClick}>toggle</button>
+          <AreaStackTooltip
+            width= {this.state.width}
+            height= {this.state.height}
+            data= {generalChartData}
+            chartSeries = {this.state.series}
+            x= {x}
+            xScale= {xScale}
+            y= {y}
+            yTickFormat= {formatPercent}
+          >
+            <SimpleTooltipStyle/>
+          </AreaStackTooltip>
+        </div>
+      )
+    }
+  })
+
   ReactDOM.render(
-    <AreaStackTooltip
-      width= {600}
-      height= {400}
-      data= {generalChartData}
-      chartSeries = {chartSeries}
-      x= {x}
-      xScale= {xScale}
-      y= {y}
-      yTickFormat= {formatPercent}
-    >
-      <SimpleTooltipStyle/>
-    </AreaStackTooltip>
+    <Container/>
   , document.getElementById('data_tooltip_area_stack')
   )
 })()

@@ -27,19 +27,6 @@ export default class BarGroupContainer extends TooltipSet {
 
   constructor(props) {
     super(props);
-    const {
-      margins,
-      width,
-      height
-    } = this.props;
-
-    this.state = {
-      xRange: this.props.xRange || [0, width - margins.left - margins.right],
-      yRange: this.props.yRange || [height - margins.top - margins.bottom, 0],
-      xRangeRoundBands: this.props.xRangeRoundBands || {interval: [0, width - margins.left - margins.right], padding: .1}
-    }
-
-    this.mkSeries();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -48,15 +35,30 @@ export default class BarGroupContainer extends TooltipSet {
 
   render() {
     const {
+      margins,
+      width,
+      height,
       onMouseOut,
       onMouseOver
     } = this.props;
+
+    this.xRange = this.props.xRange || [0, width - margins.left - margins.right],
+    this.yRange = this.props.yRange || [height - margins.top - margins.bottom, 0],
+    this.xRangeRoundBands = this.props.xRangeRoundBands || {interval: [0, width - margins.left - margins.right], padding: .1},
+
+    this.mkSeries();
 
     const chartSeriesData = this.setSeries;
 
     return (
       <Chart {...this.props}>
-        <BarGroupChart {...this.props} onMouseOver={onMouseOver} onMouseOut={onMouseOut}/>
+        <BarGroupChart
+          {...this.props}
+          xRange= {this.xRange}
+          yRange= {this.yRange}
+          onMouseOver={onMouseOver}
+          onMouseOut={onMouseOut}
+          />
       </Chart>
     )
   }

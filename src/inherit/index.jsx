@@ -52,10 +52,8 @@ export default class TooltipSet extends Component {
       xScale,
     } = this.props;
 
-    const {
-      xRange,
-      xRangeRoundBands
-    } = this.state;
+    let xRange = this.xRange;
+    let xRangeRoundBands = this.xRangeRoundBands;
 
     var newXScale = {
       scale: xScale,
@@ -73,10 +71,8 @@ export default class TooltipSet extends Component {
       yScale
     } = this.props;
 
-    const {
-      yRange,
-      yRangeRoundBands
-    } = this.state;
+    let yRange = this.yRange;
+    let yRangeRoundBands = this.yRangeRoundBands;
 
     var newYScale = {
       scale: yScale,

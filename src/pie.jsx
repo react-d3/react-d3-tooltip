@@ -32,16 +32,7 @@ export default class PieTooltip extends TooltipSet {
   constructor(props) {
     super(props);
 
-    const {
-      width,
-      height
-    } = this.props;
-
-    const radius = this.props.radius || Math.min(width, height - 120) / 2;
-
     this.state = {
-      radius: radius,
-      outerRadius: radius - 10,
       xTooltip: null,
       yTooltip: null,
       contentTooltip: null
@@ -72,13 +63,28 @@ export default class PieTooltip extends TooltipSet {
   }
 
   render() {
+
+    const {
+      width,
+      height
+    } = this.props;
+
+    const radius = this.props.radius || Math.min(width, height - 120) / 2;
+    const outerRadius = radius - 10,
+
     return (
       <div>
-        <Tooltip {...this.props} {...this.state}>
+        <Tooltip {...this.props}>
           {this.props.children}
         </Tooltip>
         <Chart {...this.props}>
-          <PieChart {...this.props} {...this.state} onMouseOver={this._mouseOver.bind(this)} onMouseOut={this._mouseOut.bind(this)}/>
+          <PieChart
+            {...this.props}
+            radius= {radius}
+            outerRadius= {outerRadius}
+            onMouseOver={this._mouseOver.bind(this)}
+            onMouseOut={this._mouseOut.bind(this)}
+            />
         </Chart>
       </div>
     )

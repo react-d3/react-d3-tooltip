@@ -19,55 +19,87 @@ var SimpleTooltipStyle = require('../../lib/tooltip/simple');
       return d.index;
     }
 
+  var Container = React.createClass({
+    getInitialState: function() {
+      return {
+        width: 600,
+        height: 400,
+        series: chartSeries
+      }
+    },
+    onClick: function() {
+      this.setState({
+        width: this.state.width === 600? 400: 600,
+        height: this.state.width === 600? 600: 400,
+        series: this.state.width === 600? [
+          {
+            field: 'age',
+            name: 'Age',
+            color: 'blue'
+          }
+        ]: chartSeries
+      })
+    },
+    render: function() {
+
+      return (
+        <div>
+          <button onClick={this.onClick}>toggle</button>
+          <LineTooltip
+            width= {this.state.width}
+            height= {this.state.height}
+            data= {generalChartData}
+            chartSeries= {this.state.series}
+            x= {x}
+          >
+            <SimpleTooltipStyle/>
+          </LineTooltip>
+        </div>
+      )
+    }
+  })
+
   ReactDOM.render(
-      <LineTooltip
-        width= {600}
-        height= {300}
-        data= {generalChartData}
-        chartSeries= {chartSeries}
-        x= {x}
-      >
-        <SimpleTooltipStyle/>
-      </LineTooltip>
+    <Container/>
     , document.getElementById('data_tooltip_line')
   )
-
-  var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
-  var parseDate = d3.time.format("%Y%m%d").parse;
-
-  var chartSeries = [
-      {
-        field: 'New York',
-        name: 'New York Temp',
-        color: '#ff7f0e'
-      },
-      {
-        field: 'San Francisco',
-        name: 'San Francisco Temp',
-        color: '#2ca02c'
-      },
-      {
-        field: 'Austin',
-        name: 'Austin Temp',
-        color: '#7777ff'
-      }
-    ],
-    interpolate = 'monotone',
-    x = function(d) {
-      return parseDate(d.date);
-    },
-    xScale = 'time';
-
-  ReactDOM.render(
-      <LineTooltip
-        data= {generalChartData}
-        chartSeries = {chartSeries}
-        interpolate = {interpolate}
-        x= {x}
-        xScale= {xScale}
-      >
-      </LineTooltip>
-
-  , document.getElementById('data_tooltip_line_multi')
-  )
+  //
+  // var generalChartData = require('dsv?delimiter=\t!./data/temp.tsv')
+  // var parseDate = d3.time.format("%Y%m%d").parse;
+  //
+  // var chartSeries = [
+  //     {
+  //       field: 'New York',
+  //       name: 'New York Temp',
+  //       color: '#ff7f0e'
+  //     },
+  //     {
+  //       field: 'San Francisco',
+  //       name: 'San Francisco Temp',
+  //       color: '#2ca02c'
+  //     },
+  //     {
+  //       field: 'Austin',
+  //       name: 'Austin Temp',
+  //       color: '#7777ff'
+  //     }
+  //   ],
+  //   interpolate = 'monotone',
+  //   x = function(d) {
+  //     return parseDate(d.date);
+  //   },
+  //   xScale = 'time';
+  //
+  // ReactDOM.render(
+  //     <LineTooltip
+  //       data= {generalChartData}
+  //       chartSeries = {chartSeries}
+  //       interpolate = {interpolate}
+  //       x= {x}
+  //       xScale= {xScale}
+  //     >
+  //     </LineTooltip>
+  //
+  // , document.getElementById('data_tooltip_line_multi')
+  // )
 })()
