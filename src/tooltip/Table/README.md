@@ -2,4 +2,4 @@
 
 table style tooltip
 
-![image](http://i.imgur.com/tzlvKk3.png)
+![image](../../../example/img/table.png)
