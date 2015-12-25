@@ -7,10 +7,7 @@ import {
 } from 'react';
 
 import d3 from 'd3';
-
-import {
-  default as ReactFauxDOM
-} from 'react-faux-dom';
+import ReactFauxDOM from 'react-faux-dom';
 
 export default class Focus extends Component {
   constructor (props) {

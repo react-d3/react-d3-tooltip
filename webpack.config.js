@@ -15,6 +15,7 @@ module.exports = [{
     tooltip_line_multi: js_root + '/tooltip_line_multi.jsx',
     tooltip_scatter: js_root + '/tooltip_scatter.jsx',
     tooltip_area_stack: js_root + '/tooltip_area_stack.jsx',
+    tooltip_area_stack_negative: js_root + '/tooltip_area_stack_negative.jsx',
     tooltip_bar: js_root + '/tooltip_bar.jsx',
     tooltip_bar_stack: js_root + '/tooltip_bar_stack.jsx',
     tooltip_bar_group: js_root + '/tooltip_bar_group.jsx',

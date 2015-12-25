@@ -6,29 +6,17 @@ import {
   PropTypes,
 } from 'react';
 
+import {
+  ChartPie,
+  Pie
+} from 'react-d3-shape';
+
 import d3 from 'd3';
+import {Legend} from 'react-d3-core';
+import Tooltip from './utils/tooltip';
+import pieProps from './commonProps';
 
-import {
-  Chart as Chart,
-} from 'react-d3-core';
-
-import {
-  PieChart as PieChart,
-} from 'react-d3-basic';
-
-import {
-  default as TooltipSet
-} from './inherit/index';
-
-import {
-  default as Tooltip
-} from './utils/tooltip';
-
-import {
-  pieProps,
-} from './commonProps';
-
-export default class PieTooltip extends TooltipSet {
+export default class PieTooltip extends Component {
   constructor(props) {
     super(props);
 
@@ -69,23 +57,28 @@ export default class PieTooltip extends TooltipSet {
       height
     } = this.props;
 
-    const radius = this.props.radius || Math.min(width, height - 120) / 2;
-    const outerRadius = radius - 10,
+    const radius = this.props.radius || Math.min(width - 120, height - 120) / 2;
+    const outerRadius = radius - 10;
 
     return (
       <div>
-        <Tooltip {...this.props}>
+        <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <Chart {...this.props}>
-          <PieChart
+        <Legend
+          {...this.props}
+        />
+        <ChartPie
+          {...this.props}
+          >
+          <Pie
             {...this.props}
             radius= {radius}
             outerRadius= {outerRadius}
             onMouseOver={this._mouseOver.bind(this)}
             onMouseOut={this._mouseOut.bind(this)}
             />
-        </Chart>
+        </ChartPie>
       </div>
     )
   }

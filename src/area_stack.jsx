@@ -6,31 +6,15 @@ import {
   PropTypes,
 } from 'react';
 
-import {
-  default as Tooltip
-} from './utils/tooltip';
+import {Legend} from 'react-d3-core';
+import {Chart} from 'react-d3-shape';
+import Tooltip from './utils/tooltip';
+import Focus from './utils/focus';
+import AreaStackVoronoi from './charts/areaStack';
+import VoronoiEvt from './inherit/voronoiEvt';
+import CommonProps from './commonProps';
 
-import {
-  Chart as Chart,
-} from 'react-d3-core';
-
-import {
-  default as Focus
-} from './utils/focus';
-
-import {
-  default as AreaStackVoronoi
-} from './components/areaStack'
-
-import {
-  default as VoronoiEvt
-} from './inherit/voronoiEvt'
-
-import {
-  default as CommonProps,
-} from './commonProps';
-
-export default class AreaStackTooltip extends VoronoiEvt {
+export default class LineTooltip extends VoronoiEvt {
 
   constructor(props) {
     super(props);
@@ -41,19 +25,12 @@ export default class AreaStackTooltip extends VoronoiEvt {
   render() {
 
     const {
+      width,
+      height,
       focus
     } = this.props;
 
     var focusDom;
-
-    var areaStack = (
-      <AreaStackVoronoi
-        {...this.props}
-        {...this.state}
-        onMouseOver= {this.voronoiMouseOver.bind(this)}
-        onMouseOut= {this.voronoiMouseOut.bind(this)}
-        />
-    )
 
     if(focus) {
       focusDom = <Focus {...this.props} {...this.state}/>
@@ -64,8 +41,21 @@ export default class AreaStackTooltip extends VoronoiEvt {
         <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <Chart {...this.props}>
-          {areaStack}
+        <Legend
+          {...this.props}
+        />
+        <Chart
+          {...this.props}
+          {...this.state}
+          stack= {true}
+          >
+          <AreaStackVoronoi
+            {...this.props}
+            {...this.state}
+            stack= {true}
+            onMouseOver= {this.voronoiMouseOver.bind(this)}
+            onMouseOut= {this.voronoiMouseOut.bind(this)}
+          />
           {focusDom}
         </Chart>
       </div>

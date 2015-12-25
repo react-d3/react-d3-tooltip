@@ -13,7 +13,9 @@ export default {
   y: (d) => {return +d;},
   xScale: 'linear',
   yScale: 'linear',
-  focus: true
+  focus: true,
+  showXGrid: true,
+  showYGrid: true
 }
 
 export const pieProps = {

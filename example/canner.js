@@ -29,6 +29,13 @@ module.exports = [{
   }
 },{
   "layout": "./charts.hbs",
+  "filename": "./tooltip_area_stack_negative.html",
+  "data": {
+    "title": "Tooltip Area Stack Chart with Negative",
+    "type": "tooltip_area_stack_negative"
+  }
+},{
+  "layout": "./charts.hbs",
   "filename": "./tooltip_bar.html",
   "data": {
     "title": "Tooltip Bar Chart",

@@ -22,7 +22,6 @@ export default class VoronoiEvt extends Component {
   }
 
   voronoiMouseOut(d, i) {
-
     this.setState({
       focusX: -100,
       focusY: -100,
@@ -35,6 +34,7 @@ export default class VoronoiEvt extends Component {
   voronoiMouseOver(d, i, xScaleSet, yScaleSet, stack) {
     var newY = stack? yScaleSet(d.y + d.y0): yScaleSet(d.y);
     const contentTooltip = {title: d.x.toString(), fieldTitle: d.name.toString(), value: d.y.toString(), color: d.color};
+
     this.setState({
       focusX: xScaleSet(d.x),
       focusY: newY,

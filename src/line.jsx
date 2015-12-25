@@ -7,28 +7,15 @@ import {
 } from 'react';
 
 import {
-  default as Tooltip
-} from './utils/tooltip';
-
-import {
-  Chart as Chart,
+  Legend
 } from 'react-d3-core';
 
-import {
-  default as Focus
-} from './utils/focus';
-
-import {
-  default as LineChartVoronoi
-} from './components/lineChart'
-
-import {
-  default as VoronoiEvt
-} from './inherit/voronoiEvt'
-
-import {
-  default as CommonProps,
-} from './commonProps';
+import {Chart} from 'react-d3-shape';
+import Tooltip from './utils/tooltip';
+import Focus from './utils/focus';
+import LineVoronoi from './charts/line';
+import VoronoiEvt from './inherit/voronoiEvt';
+import CommonProps from './commonProps';
 
 export default class LineTooltip extends VoronoiEvt {
 
@@ -41,18 +28,12 @@ export default class LineTooltip extends VoronoiEvt {
   render() {
 
     const {
+      width,
+      height,
       focus
     } = this.props;
+
     var focusDom;
-    let tooltip;
-    var LineChart = (
-      <LineChartVoronoi
-        {...this.props}
-        {...this.state}
-        onMouseOver= {this.voronoiMouseOver.bind(this)}
-        onMouseOut= {this.voronoiMouseOut.bind(this)}
-        />
-    )
 
     if(focus) {
       focusDom = <Focus {...this.props} {...this.state}/>
@@ -63,8 +44,19 @@ export default class LineTooltip extends VoronoiEvt {
         <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <Chart {...this.props}>
-          {LineChart}
+        <Legend
+          {...this.props}
+        />
+        <Chart
+          {...this.props}
+          {...this.state}
+          >
+          <LineVoronoi
+            {...this.props}
+            {...this.state}
+            onMouseOver= {this.voronoiMouseOver.bind(this)}
+            onMouseOut= {this.voronoiMouseOut.bind(this)}
+          />
           {focusDom}
         </Chart>
       </div>

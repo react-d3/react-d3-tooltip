@@ -6,31 +6,17 @@ import {
   PropTypes,
 } from 'react';
 
-import {
-  default as Tooltip
-} from './utils/tooltip';
+import {Legend} from 'react-d3-core';
+import {Chart} from 'react-d3-shape';
 
-import {
-  Chart as Chart,
-} from 'react-d3-core';
+import Tooltip from './utils/tooltip';
+import Focus from './utils/focus';
+import ScatterVoronoi from './charts/scatterPlot';
+import VoronoiEvt from './inherit/voronoiEvt';
+import CommonProps from './commonProps';
 
-import {
-  default as Focus
-} from './utils/focus';
+export default class LineTooltip extends VoronoiEvt {
 
-import {
-  default as ScatterVoronoi
-} from './components/scatterPlot'
-
-import {
-  default as VoronoiEvt
-} from './inherit/voronoiEvt'
-
-import {
-  default as CommonProps,
-} from './commonProps';
-
-export default class ScatterTooltip extends VoronoiEvt {
   constructor(props) {
     super(props);
   }
@@ -40,19 +26,12 @@ export default class ScatterTooltip extends VoronoiEvt {
   render() {
 
     const {
+      width,
+      height,
       focus
     } = this.props;
 
     var focusDom;
-
-    var Scatter = (
-      <ScatterVoronoi
-        {...this.props}
-        {...this.state}
-        onMouseOver= {this.voronoiMouseOver.bind(this)}
-        onMouseOut= {this.voronoiMouseOut.bind(this)}
-        />
-    )
 
     if(focus) {
       focusDom = <Focus {...this.props} {...this.state}/>
@@ -63,8 +42,19 @@ export default class ScatterTooltip extends VoronoiEvt {
         <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <Chart {...this.props}>
-          {Scatter}
+        <Legend
+          {...this.props}
+        />
+        <Chart
+          {...this.props}
+          {...this.state}
+          >
+          <ScatterVoronoi
+            {...this.props}
+            {...this.state}
+            onMouseOver= {this.voronoiMouseOver.bind(this)}
+            onMouseOut= {this.voronoiMouseOut.bind(this)}
+          />
           {focusDom}
         </Chart>
       </div>

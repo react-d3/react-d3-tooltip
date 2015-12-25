@@ -28,13 +28,15 @@ export default class Tooltip extends Component {
       contentTooltip,
       dist
     } = this.props;
+
     let contentTooltipTmpl;
+
     var style = {
       left: xTooltip? xTooltip + dist: -100,
       top: yTooltip? yTooltip + dist: -100,
       position: 'fixed'
     }
-    // console.log(contentTooltip)
+
     if (contentTooltip) {
       if (this.props.children) {
         contentTooltipTmpl = React.cloneElement(this.props.children, {contentTooltip: contentTooltip});

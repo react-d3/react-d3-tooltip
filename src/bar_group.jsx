@@ -6,26 +6,14 @@ import {
   PropTypes,
 } from 'react';
 
-import {
-  default as Tooltip
-} from './utils/tooltip';
+import {Legend} from 'react-d3-core';
+import {Chart} from 'react-d3-shape';
 
-import {
-  default as Focus
-} from './utils/focus';
-
-import {
-  default as BarGroupContainer
-} from './components/barGroup'
-
-import {
-  default as BarEvt
-} from './inherit/barEvt'
-
-import {
-  default as CommonProps,
-} from './commonProps';
-
+import BarGroupContainer from './charts/barGroup';
+import Tooltip from './utils/tooltip';
+import Focus from './utils/focus';
+import BarEvt from './inherit/barEvt';
+import CommonProps from './commonProps';
 
 export default class BarGroupTooltip extends BarEvt {
 
@@ -36,20 +24,31 @@ export default class BarGroupTooltip extends BarEvt {
   static defaultProps = CommonProps
 
   render() {
-    const mouseOut = this.mouseOut.bind(this);
-    const mouseOver = this.mouseOver.bind(this);
+
+    const {
+      width,
+      height
+    } = this.props;
 
     return (
       <div>
         <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <BarGroupContainer
+        <Legend
+          {...this.props}
+        />
+        <Chart
           {...this.props}
           {...this.state}
-          onMouseOut= {mouseOut}
-          onMouseOver= {mouseOver}
-        />
+          >
+          <BarGroupContainer
+            {...this.props}
+            {...this.state}
+            onMouseOver= {this.mouseOver.bind(this)}
+            onMouseOut= {this.mouseOut.bind(this)}
+          />
+        </Chart>
       </div>
     )
   }
