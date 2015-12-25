@@ -8,10 +8,6 @@ export {default as BarStackTooltip} from './bar_stack';
 export {default as BarGroupTooltip} from './bar_group';
 export {default as PieTooltip} from './pie';
 
-// inherit
-
-export {default as TooltipSet} from './inherit/index';
-
 // utils
 
 export {default as Tooltip} from './utils/tooltip';
