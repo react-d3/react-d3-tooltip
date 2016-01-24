@@ -13,8 +13,8 @@ export default class VoronoiEvt extends Component {
     super(props);
 
     this.state = {
-      focusX: -100,
-      focusY: -100,
+      focusX: -10000,
+      focusY: -10000,
       xTooltip: null,
       yTooltip: null,
       contentTooltip: null
@@ -23,8 +23,8 @@ export default class VoronoiEvt extends Component {
 
   voronoiMouseOut(d, i) {
     this.setState({
-      focusX: -100,
-      focusY: -100,
+      focusX: -10000,
+      focusY: -10000,
       xTooltip: null,
       yTooltip: null,
       contentTooltip: null

@@ -32,8 +32,8 @@ export default class Tooltip extends Component {
     let contentTooltipTmpl;
 
     var style = {
-      left: xTooltip? xTooltip + dist: -100,
-      top: yTooltip? yTooltip + dist: -100,
+      left: xTooltip? xTooltip + dist: -10000,
+      top: yTooltip? yTooltip + dist: -10000,
       position: 'fixed'
     }
 
