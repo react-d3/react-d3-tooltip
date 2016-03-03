@@ -1,11 +1,11 @@
 {
   "name": "react-d3-tooltip",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "react-d3 tooltip implementation",
   "main": "./lib/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf ./lib && ./node_modules/.bin/babel ./src --out-dir ./lib",
+    "build": "rm -rf ./lib && BABEL_ENV=production ./node_modules/.bin/babel ./src --out-dir ./lib",
     "prod": "NODE_ENV=0 webpack --config webpack.prod.config.js && NODE_ENV=1 webpack --config webpack.prod.config.js"
   },
   "repository": {
@@ -58,9 +58,9 @@
     "d3-collection": "^0.1.2",
     "d3-selection": "^0.7.0",
     "d3-voronoi": "^0.3.2",
-    "react-d3-basic": "^1.6.1",
-    "react-d3-core": "^1.2.3",
-    "react-d3-shape": "^0.2.5",
+    "react-d3-basic": "^1.6.6",
+    "react-d3-core": "^1.2.6",
+    "react-d3-shape": "^0.2.8",
     "react-dom": "^0.14.7",
     "react-faux-dom": "^2.1.0"
   }
