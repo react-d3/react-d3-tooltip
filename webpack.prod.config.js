@@ -30,7 +30,7 @@ module.exports = [{
       {
         test: [/\.jsx$/, /\.js$/],
         exclude: /node_modules/,
-        loaders: ["jsx-loader"],
+        loaders: ["babel"],
       },
       {
         test: /\.css$/,
@@ -51,9 +51,10 @@ module.exports = [{
     'd3': 'd3'
   },
 
-  plugins: ENV ? [
+  plugins: [
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       mangle: false
-    }):[]
+    })
+  ]
 }];
