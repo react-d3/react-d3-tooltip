@@ -11,7 +11,6 @@ import {
   Pie
 } from 'react-d3-shape';
 
-import d3 from 'd3';
 import {Legend} from 'react-d3-core';
 import Tooltip from './utils/tooltip';
 import pieProps from './commonProps';
@@ -29,20 +28,20 @@ export default class PieTooltip extends Component {
 
   static defaultProps = pieProps
 
-  _mouseOver(d, i) {
+  _mouseOver(e, d) {
     const contentTooltip = {
       fieldTitle: d.data.name,
       value: d.value,
       color: d.color
     }
     this.setState({
-      xTooltip: d3.event.clientX,
-      yTooltip: d3.event.clientY,
+      xTooltip: e.clientX,
+      yTooltip: e.clientY,
       contentTooltip: contentTooltip
     })
   }
 
-  _mouseOut(d) {
+  _mouseOut(e, d) {
     this.setState({
       xTooltip: null,
       yTooltip: null,

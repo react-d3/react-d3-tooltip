@@ -1,46 +1,50 @@
 'use strict';
+var path = require('path');
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var path            = require('path'),
-  webpack         = require('webpack'),
-  nodeModulesPath = path.join(__dirname, 'node_modules');
+var js_dist = path.join(__dirname, './example/dist/origin');
 
-var js_root = './example/src';
-var js_dist = path.join(__dirname, './example/dist/origin')
-
-
-module.exports = [{
-  name: 'chartComponent',
+module.exports = {
+  devtool: 'eval-source-map',
   entry: {
-    tooltip_line: js_root + '/tooltip_line.jsx',
-    tooltip_line_multi: js_root + '/tooltip_line_multi.jsx',
-    tooltip_scatter: js_root + '/tooltip_scatter.jsx',
-    tooltip_area_stack: js_root + '/tooltip_area_stack.jsx',
-    tooltip_area_stack_negative: js_root + '/tooltip_area_stack_negative.jsx',
-    tooltip_bar: js_root + '/tooltip_bar.jsx',
-    tooltip_bar_stack: js_root + '/tooltip_bar_stack.jsx',
-    tooltip_bar_group: js_root + '/tooltip_bar_group.jsx',
-    tooltip_pie: js_root + '/tooltip_pie.jsx'
+    index: ['webpack-hot-middleware/client', './example/index.js']
   },
-
   output: {
     path: js_dist,
-    filename: '[name].js'
+    filename: '[name].js',
+    publicPath: '/static/'
   },
-
+  resolve: {
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify("development")
+      }
+    }),
+    new ExtractTextPlugin('[name].css', { allChunks: true })
+  ],
   module: {
     loaders: [
       {
-        test: [/\.jsx$/],
-        loaders: ["jsx-loader?insertPragma=React.DOM&harmony"],
+        test: [/\.jsx$/, /\.js$/],
+        loaders: ["babel"],
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: 'style-loader!css-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.json$/,
+        loader: "json-loader",
+        exclude: /node_modules/
       }
     ],
-  },
-
-  resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
   }
-}];
+}

@@ -7,6 +7,10 @@ import {
 } from 'react';
 
 import d3 from 'd3';
+import D3Voronoi from 'd3-voronoi'
+import D3Selection from 'd3-selection'
+import D3Collection from 'd3-collection'
+import D3Array from 'd3-array'
 import ReactFauxDOM from 'react-faux-dom';
 import {series} from 'react-d3-shape';
 
@@ -16,19 +20,28 @@ export default class Voronoi extends Component {
   }
 
   static defaultProps = {
-    initVoronoi: d3.geom.voronoi,
     onMouseOver: (d) => {},
     onMouseOut: (d) => {}
   }
 
-  _mkVoronoi(dom) {
+  triggerOut(d, e) {
+    this.props.onMouseOut(e, d)
+  }
+
+  triggerOver(d, e) {
+    const {
+      xScaleSet,
+      yScaleSet,
+      stack
+    } = this.props
+
+    this.props.onMouseOver(e, d, xScaleSet, yScaleSet, stack)
+  }
+
+  _mkVoronoi() {
     const {
       x,
       y,
-      xScaleSet,
-      yScaleSet,
-      onMouseOut,
-      onMouseOver,
       stack,
       height
     } = this.props;
@@ -52,24 +65,22 @@ export default class Voronoi extends Component {
 
     var voronoiPolygon = this._setGeomVoronoi().call(this, nestData);
 
-    // make voronoi
-    var voronoiChart = d3.select(dom);
-
-    var voronoiPath = voronoiChart.selectAll('path')
-      .data(voronoiPolygon)
-    .enter().append("path")
-      .attr("d", (d) => { return "M" + d.join("L") + "Z"; })
-      .on("mouseover", (d, i) => {
-        onMouseOver(d, i, xScaleSet, yScaleSet, stack)
-      })
-      .on("mouseout", (d, i) => {
-        onMouseOut(d, i, stack)
-      })
-      .datum((d) => {return d.point; })
-      .style('fill', 'none')
-      .style('pointer-events', 'all');
-
-    return voronoiChart;
+    return (
+      <g>
+        {
+          voronoiPolygon.map((area) => {
+            return (
+              <path
+                d={"M" + area.join("L") + "Z"}
+                onMouseOut={this.triggerOut.bind(this, area.point)}
+                onMouseOver={this.triggerOver.bind(this, area.point)}
+                style={{fill: 'none', pointerEvents: 'all'}}
+                />
+            )
+          })
+        }
+      </g>
+    )
   }
 
   _setStack () {
@@ -111,7 +122,6 @@ export default class Voronoi extends Component {
       width,
       height,
       margins,
-      initVoronoi,
       x,
       xScaleSet,
       y,
@@ -119,7 +129,7 @@ export default class Voronoi extends Component {
       stack
     } = this.props;
 
-    var voronoi = initVoronoi()
+    var voronoi = d3.geom.voronoi()
       .x((d) => { return xScaleSet(d.x); })
       .y((d) => { return stack ? yScaleSet(d.y + d.y0): yScaleSet(d.y); })
       .clipExtent([
@@ -131,12 +141,12 @@ export default class Voronoi extends Component {
   }
 
   render() {
+    var voronoi = this._mkVoronoi();
 
-    var voronoiPath = ReactFauxDOM.createElement('g');
-    voronoiPath.setAttribute("class", "react-d3-basics__voronoi_utils")
-
-    var voronoi = this._mkVoronoi(voronoiPath);
-
-    return voronoi.node().toReact();
+    return (
+      <g className="react-d3-basics__voronoi_utils">
+        {voronoi}
+      </g>
+    );
   }
 }

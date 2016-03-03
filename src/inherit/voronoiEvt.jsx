@@ -6,8 +6,6 @@ import {
   PropTypes
 } from 'react'
 
-import d3 from 'd3';
-
 export default class VoronoiEvt extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +19,7 @@ export default class VoronoiEvt extends Component {
     };
   }
 
-  voronoiMouseOut(d, i) {
+  voronoiMouseOut(e, d) {
     this.setState({
       focusX: -10000,
       focusY: -10000,
@@ -31,15 +29,15 @@ export default class VoronoiEvt extends Component {
     })
   }
 
-  voronoiMouseOver(d, i, xScaleSet, yScaleSet, stack) {
+  voronoiMouseOver(e, d, xScaleSet, yScaleSet, stack) {
     var newY = stack? yScaleSet(d.y + d.y0): yScaleSet(d.y);
     const contentTooltip = {title: d.x.toString(), fieldTitle: d.name.toString(), value: d.y.toString(), color: d.color};
 
     this.setState({
       focusX: xScaleSet(d.x),
       focusY: newY,
-      xTooltip: d3.event.clientX,
-      yTooltip: d3.event.clientY,
+      xTooltip: e.clientX,
+      yTooltip: e.clientY,
       contentTooltip: contentTooltip
     })
   }

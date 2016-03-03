@@ -6,8 +6,6 @@ import {
   PropTypes
 } from 'react'
 
-import d3 from 'd3';
-
 export default class BarEvt extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +17,7 @@ export default class BarEvt extends Component {
     };
   }
 
-  mouseOut(d, i) {
+  mouseOut(e, d) {
 
     this.setState({
       xTooltip: null,
@@ -28,11 +26,12 @@ export default class BarEvt extends Component {
     })
   }
 
-  mouseOver(d, i) {
+  mouseOver(e, d) {
+
     const contentTooltip = {title: d.name, value:d.y, fieldTitle: d.x, color: d.color};
     this.setState({
-      xTooltip: d3.event.clientX,
-      yTooltip: d3.event.clientY,
+      xTooltip: e.clientX,
+      yTooltip: e.clientY,
       contentTooltip: contentTooltip
     })
   }

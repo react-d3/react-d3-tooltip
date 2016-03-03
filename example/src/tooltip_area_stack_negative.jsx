@@ -1,37 +1,37 @@
 "use strict";
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var AreaStackTooltip = require('../../lib').AreaStackTooltip;
+import React, {Component} from 'react'
+import {AreaStackTooltip} from '../../src'
 
-(function() {
-  var generalChartData = require('dsv?delimiter=,!./data/stack_test.csv')
+var generalChartData = require('dsv?delimiter=,!./data/stack_test.csv')
 
-  var parseDate = d3.time.format("%m/%d/%y").parse;
+var parseDate = d3.time.format("%m/%d/%y").parse;
 
-  var width = 700,
-    height = 400,
-    title = 'Stack Area Chart',
-    chartSeries = [
-      {
-        field: "Group1",
-        name: "Group 1"
-      },
-      {
-        field: "Group2",
-        name: "Group 2"
-      },
-      {
-        field: "Group3",
-        name: "Group 3"
-      }
-    ],
-    x = function(d) {
-      return parseDate(d.date);
+var width = 700,
+  height = 400,
+  title = 'Stack Area Chart',
+  chartSeries = [
+    {
+      field: "Group1",
+      name: "Group 1"
     },
-    xScale = 'time';
+    {
+      field: "Group2",
+      name: "Group 2"
+    },
+    {
+      field: "Group3",
+      name: "Group 3"
+    }
+  ],
+  x = function(d) {
+    return parseDate(d.date);
+  },
+  xScale = 'time';
 
-  ReactDOM.render(
+export default class AreaStackTooltipSample extends Component {
+  render() {
+    return (
       <AreaStackTooltip
         title= {title}
         data= {generalChartData}
@@ -41,6 +41,6 @@ var AreaStackTooltip = require('../../lib').AreaStackTooltip;
         x= {x}
         xScale= {xScale}
       />
-  , document.getElementById('data_tooltip_area_stack_negative')
-  )
-})()
+    )
+  }
+}
