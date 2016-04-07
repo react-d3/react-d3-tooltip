@@ -8,11 +8,11 @@ import {
 
 import {
   default as TableTooltipStyle
-} from '../tooltip/Table';
+} from '../tooltip/table';
 
 
 export default class Tooltip extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
   }
 
@@ -32,14 +32,14 @@ export default class Tooltip extends Component {
     let contentTooltipTmpl;
 
     var style = {
-      left: xTooltip? xTooltip + dist: -10000,
-      top: yTooltip? yTooltip + dist: -10000,
+      left: xTooltip ? xTooltip + dist : -10000,
+      top: yTooltip ? yTooltip + dist : -10000,
       position: 'fixed'
     }
 
     if (contentTooltip) {
       if (this.props.children) {
-        contentTooltipTmpl = React.cloneElement(this.props.children, {contentTooltip: contentTooltip});
+        contentTooltipTmpl = React.cloneElement(this.props.children, { contentTooltip: contentTooltip });
       } else {
         contentTooltipTmpl = <TableTooltipStyle contentTooltip={contentTooltip}/>;
       }
