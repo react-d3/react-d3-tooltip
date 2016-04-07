@@ -155,7 +155,7 @@ npm install --save react-d3-tooltip
 - Area Stack Chart: export as `AreaStackTooltip`
 - Scatter Plot: export as `ScatterTooltip`
 - Bar Chart: export as `BarTooltip`
-- Bar Stack: export as `BarStackTooltip`
+- Bar Stack: export as `BarStackTooltip` (you can now pass in onClick handler via props)
 - Bar Group: export as `BarGroupTooltip`
 - Pie Chart: export as `PieTooltip`
 
