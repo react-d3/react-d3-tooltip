@@ -6,8 +6,8 @@ import {
   PropTypes,
 } from 'react';
 
-import {Legend} from 'react-d3-core';
-import {Chart} from 'react-d3-shape';
+import { Legend } from 'react-d3-core';
+import { Chart } from 'react-d3-shape';
 
 import BarStackContainer from './charts/barStack';
 import Tooltip from './utils/tooltip';
@@ -46,6 +46,7 @@ export default class BarGroupTooltip extends BarEvt {
           <BarStackContainer
             {...this.props}
             {...this.state}
+            onClick= {this.props.onClick}
             onMouseOver= {this.mouseOver.bind(this)}
             onMouseOut= {this.mouseOut.bind(this)}
           />

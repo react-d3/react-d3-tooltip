@@ -13,9 +13,9 @@ import {
   Ygrid
 } from 'react-d3-core';
 
-import {BarStack} from 'react-d3-shape';
+import { BarStack } from 'react-d3-shape';
 import CommonProps from '../commonProps';
-import {isTooltipUpdate} from '../utils/tooltipUpdate';
+import { isTooltipUpdate } from '../utils/tooltipUpdate';
 
 export default class BarStackContainer extends Component {
 
@@ -34,14 +34,15 @@ export default class BarStackContainer extends Component {
     const {
       onMouseOver,
       onMouseOut,
+      onClick,
       showXGrid,
       showYGrid
     } = this.props;
 
     var xgrid, ygrid;
 
-    if(showXGrid) xgrid = <Xgrid {...this.props}/>
-    if(showYGrid) ygrid = <Ygrid {...this.props}/>
+    if (showXGrid) xgrid = <Xgrid {...this.props}/>
+    if (showYGrid) ygrid = <Ygrid {...this.props}/>
 
     return (
       <g>
@@ -51,6 +52,7 @@ export default class BarStackContainer extends Component {
         <Yaxis {...this.props}/>
         <BarStack
           {...this.props}
+          onClick= {onClick}
           onMouseOver= {onMouseOver}
           onMouseOut= {onMouseOut}
         />
