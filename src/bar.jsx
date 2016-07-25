@@ -27,7 +27,8 @@ export default class BarTooltip extends BarEvt {
 
     const {
       width,
-      height
+      height,
+      showLegend
     } = this.props;
 
     return (
@@ -35,9 +36,12 @@ export default class BarTooltip extends BarEvt {
         <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <Legend
-          {...this.props}
-        />
+        {showLegend?
+          <Legend
+            {...this.props}
+          />
+          : null
+        }
         <Chart
           {...this.props}
           {...this.state}

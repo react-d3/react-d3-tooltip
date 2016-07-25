@@ -15,7 +15,8 @@ export default {
   yScale: 'linear',
   focus: true,
   showXGrid: true,
-  showYGrid: true
+  showYGrid: true,
+  showLegend: true
 }
 
 export const pieProps = {
@@ -24,5 +25,6 @@ export const pieProps = {
   margins: margins,
   innerRadius: 0,
   categoricalColors: d3.scale.category10(),
-  pieSort: d3.descending
+  pieSort: d3.descending,
+  showLegend: true
 }

@@ -53,7 +53,8 @@ export default class PieTooltip extends Component {
 
     const {
       width,
-      height
+      height,
+      showLegend
     } = this.props;
 
     const radius = this.props.radius || Math.min(width - 120, height - 120) / 2;
@@ -64,9 +65,12 @@ export default class PieTooltip extends Component {
         <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <Legend
-          {...this.props}
-        />
+        {showLegend?
+          <Legend
+            {...this.props}
+          />
+          : null
+        }
         <ChartPie
           {...this.props}
           >
