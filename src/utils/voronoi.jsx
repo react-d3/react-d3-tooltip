@@ -74,7 +74,8 @@ export default class Voronoi extends Component {
                 d={"M" + area.join("L") + "Z"}
                 onMouseOut={this.triggerOut.bind(this, area.point)}
                 onMouseOver={this.triggerOver.bind(this, area.point)}
-                style={{fill: 'none', pointerEvents: 'all'}}
+                style={{fill: 'none', pointerEvents: 'all'}},
+                key: Math.random()
                 />
             )
           })
