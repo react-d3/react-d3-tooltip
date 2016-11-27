@@ -28,7 +28,8 @@ export default class LineTooltip extends VoronoiEvt {
     const {
       width,
       height,
-      focus
+      focus,
+      showLegend
     } = this.props;
 
     var focusDom;
@@ -42,9 +43,12 @@ export default class LineTooltip extends VoronoiEvt {
         <Tooltip {...this.props} {...this.state}>
           {this.props.children}
         </Tooltip>
-        <Legend
-          {...this.props}
-        />
+        {showLegend?
+          <Legend
+            {...this.props}
+          />
+          : null
+        }
         <Chart
           {...this.props}
           {...this.state}
