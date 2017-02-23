@@ -13,41 +13,16 @@ import {
 
 import {Legend} from 'react-d3-core';
 import Tooltip from './utils/tooltip';
+import BarEvt from './inherit/barEvt';
 import pieProps from './commonProps';
 
-export default class PieTooltip extends Component {
+export default class PieTooltip extends BarEvt {
   constructor(props) {
     super(props);
 
-    this.state = {
-      xTooltip: null,
-      yTooltip: null,
-      contentTooltip: null
-    }
   }
 
   static defaultProps = pieProps
-
-  _mouseOver(e, d) {
-    const contentTooltip = {
-      fieldTitle: d.data.name,
-      value: d.value,
-      color: d.color
-    }
-    this.setState({
-      xTooltip: e.clientX,
-      yTooltip: e.clientY,
-      contentTooltip: contentTooltip
-    })
-  }
-
-  _mouseOut(e, d) {
-    this.setState({
-      xTooltip: null,
-      yTooltip: null,
-      contentTooltip: null
-    })
-  }
 
   render() {
 
@@ -74,8 +49,8 @@ export default class PieTooltip extends Component {
             {...this.props}
             radius= {radius}
             outerRadius= {outerRadius}
-            onMouseOver={this._mouseOver.bind(this)}
-            onMouseOut={this._mouseOut.bind(this)}
+            onMouseOver={this.mouseOver.bind(this)}
+            onMouseOut={this.mouseOut.bind(this)}
             />
         </ChartPie>
       </div>
