@@ -27,8 +27,8 @@ export default class BarEvt extends Component {
   }
 
   mouseOver(e, d) {
-
-    const contentTooltip = {title: d.name, value:d.y, fieldTitle: d.x, color: d.color};
+    const customContentToolTip = this.props.contentTooltip
+    const contentTooltip = customContentToolTip? customContentToolTip(d): {title: d.name, value:d.y, fieldTitle: d.x, color: d.color};
     this.setState({
       xTooltip: e.clientX,
       yTooltip: e.clientY,
