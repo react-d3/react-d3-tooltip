@@ -30,8 +30,9 @@ export default class VoronoiEvt extends Component {
   }
 
   voronoiMouseOver(e, d, xScaleSet, yScaleSet, stack) {
-    var newY = stack? yScaleSet(d.y + d.y0): yScaleSet(d.y);
-    const contentTooltip = {title: d.x.toString(), fieldTitle: d.name.toString(), value: d.y.toString(), color: d.color};
+    var newY = stack ? yScaleSet(d.y + d.y0) : yScaleSet(d.y);
+    const customContentToolTip = this.props.contentTooltip;
+    const contentTooltip = customContentToolTip ? customContentToolTip(d) : { title: d.x.toString(), fieldTitle: d.name.toString(), value: d.y.toString(), color: d.color };
 
     this.setState({
       focusX: xScaleSet(d.x),
